@@ -15,6 +15,7 @@
     "esri-leaflet-geocoder": "^2.3.3",
     "formik": "^2.2.3",
     "leaflet": "^1.7.1",
+    "loadash": "^1.0.0",
     "mapbox-gl": "^1.13.0",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",

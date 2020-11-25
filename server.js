@@ -16,7 +16,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 let users = { password: '' }
 
 app.get('/getusers', (req, res) => {
-  let qry = `select * from users `
+  let qry = `select count(*) from users `
   pool.query(qry,
     (err, results) => {
       if (err) {
@@ -141,12 +141,12 @@ app.patch('/update', jsonParser, (req, res) => {
 })
 
 app.post('/checkin', jsonParser, (req, res) => {
-  coordinates = req.body.coordinates
-  location = req.body.location
-  city = req.body.city
-  review = req.body.review
-  rating = req.body.rating
-  userID = req.body.userID
+  let coordinates = req.body.coordinates
+  let location = req.body.location
+  let city = req.body.city
+  let review = req.body.review
+  let rating = req.body.rating
+  let userID = req.body.userID
 
   if (review === '' && rating === 0) {
     return res.send({ message: "Please enter review and rating", status: 'fail' })
@@ -158,7 +158,7 @@ app.post('/checkin', jsonParser, (req, res) => {
     return res.send({ message: "Please enter rating", status: 'fail' })
   }
 
-  let qr = `insert into checkin(coordinate,location,city,review,rating,user_id) values ('{${coordinates}}','${location}','${city}','${review}','${rating}','${userID}')`
+  let qr = `insert into checkin(coordinate,location,city,review,rating,user_id) values ('{"latitude":${JSON.stringify(coordinates.latitude)},"longitude":${JSON.stringify(coordinates.longitude)}}','${location}','${city}','${review}','${rating}','${userID}')`
   pool.query(qr, (err, results) => {
     if (err) {
       res.send({ message: "error", error: err })
@@ -171,10 +171,10 @@ app.post('/checkin', jsonParser, (req, res) => {
 })
 
 app.patch('/updatefeed', jsonParser, (req, res) => {
-  review = req.body.review
-  rating = req.body.rating
-  userID = req.body.userID
-  coordinates = req.body.coordinates
+  let review = req.body.review
+  let rating = req.body.rating
+  let userID = req.body.userID
+  let coordinates = req.body.coordinates
 
   if (review === '' && rating === 0) {
     return res.send({ message: "Please enter review and rating", status: 'fail' })
@@ -186,20 +186,38 @@ app.patch('/updatefeed', jsonParser, (req, res) => {
     return res.send({ message: "Please enter rating", status: 'fail' })
   }
 
-  let qr = `update checkin set review = '${review}', rating = '${rating}' where user_id='${userID}' and coordinate='{${coordinates}}'`
+  let qr = `update checkin set review = '${review}', rating = '${rating}' where user_id='${userID}' and coordinate->>'latitude'= '${JSON.stringify(coordinates.latitude)}' and coordinate->>'longitude'= '${JSON.stringify(coordinates.longitude)}'`
   pool.query(qr, (results) => {
     res.send(results)
   })
 
 })
 
-app.get('/placeinfo',jsonParser,(req,res)=>{
-  coordinates = req.body.coordinates
-  console.log(coordinates)
-  let qry1 = `select count(*) from checkin where coordinate='{${coordinates}}'`
-  pool.query(qry1,(results)=>{
-    res.send(results)
-  })
+app.get('/placeinfo', (req, res) => {
+  let coordinates = JSON.parse(req.query.coordinates)
+  let output={
+    count:'',
+    rating:''
+  }
+  let qry1 = `select count(*) from checkin where coordinate->>'latitude'= '${coordinates.latitude}' and coordinate->>'longitude'= '${coordinates.longitude}'`
+  let qry2 = `select avg(rating) from checkin where coordinate->>'latitude'= '${coordinates.latitude}' and coordinate->>'longitude'= '${coordinates.longitude}'`
+  pool.query(qry1,
+    (err, results) => {
+      if (err) {
+        res.send(err)
+      }
+      output.count=results.rows[0].count
+    }
+  )
+  pool.query(qry2,
+    (err, results) => {
+      if (err) {
+        res.send(err)
+      }
+      output.rating=results.rows[0].avg
+      res.send(output)
+    }
+  )
 })
 
 app.listen(PORT, () => {

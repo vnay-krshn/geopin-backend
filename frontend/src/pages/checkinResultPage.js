@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import HomepageNav from '../comp/homepageNav'
-import Maps from '../comp/MapCopy'
+import Maps from '../comp/CheckinMap'
 import '../css/review.css'
 
 const CheckinResults=()=>{

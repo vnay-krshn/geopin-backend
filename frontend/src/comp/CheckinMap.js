@@ -9,13 +9,24 @@ import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import 'mapbox-gl/dist/mapbox-gl.css'
 import axios from 'axios'
 import '../css/review.css'
+import _ from 'lodash'
 
-var coordinates = []
+var coordinates = {
+  "latitude": '',
+  "longitude": ''
+}
 var userID = 0
 var updateChoice = false
 var firstFeedback = false
-var showPlaceinfo=false
-var prevCoordinates = []
+var showPlaceinfo = false
+var prevCoordinates = {
+  "latitude": '',
+  "longitude": ''
+}
+var output={
+  count:'',
+  rating:''
+}
 
 const Maps = () => {
 
@@ -26,26 +37,25 @@ const Maps = () => {
   const [city, setcity] = useState('')
 
   const getCity = (coordinates) => {
-    var lat = coordinates[1];
-    var lng = coordinates[0];
+    var lat = coordinates.latitude;
+    var lng = coordinates.longitude;
     axios.get("https://us1.locationiq.com/v1/reverse.php?key=pk.a418ebb2be45d0efd214f1e25c8bdc65&lat=" +
       lat + "&lon=" + lng + "&format=json")
       .then(results => {
         if (results.data.address.city != undefined) {
           let cityName = results.data.address.city
-          //console.log(cityName)
           setcity(cityName)
         }
         else if (results.data.address.suburb != undefined) {
           let suburb = results.data.address.suburb
-          //console.log(suburb)
           setcity(suburb)
         }
-        else {
+        else if (results.data.address.suburb != undefined) {
           let county = results.data.address.county
-          //console.log(county)
           setcity(county)
-          //console.log(this.state.city)
+        }
+        else{
+          setcity(results.data.address.town)
         }
       })
   }
@@ -81,11 +91,13 @@ const Maps = () => {
     console.log(postFeed)
     axios.post('http://localhost:4000/checkin', postFeed)
       .then((response) => {
+        console.log(response)
         if (response.data.status === 'fail') {
           alert(response.data.message)
           setVisibleReview(true)
         } else {
           firstFeedback = true
+          alert("Thank you for your response")
         }
       })
   }
@@ -124,21 +136,23 @@ const Maps = () => {
     })
 
     geocoder.on('result', (e) => {
-      coordinates = e.result.geometry.coordinates
+      //console.log(e.result)
+      coordinates.latitude = e.result.geometry.coordinates[1]
+      coordinates.longitude = e.result.geometry.coordinates[0]
+      bla()
       setlocation(e.result.text)
       getCity(coordinates)
     })
 
     map.addControl(geocoder)
     const mapSearch = document.querySelector('.mapboxgl-ctrl-geocoder--input')
-    mapSearch.addEventListener('change',()=>{
-      showPlaceinfo=true
+    mapSearch.addEventListener('change', () => {
+      showPlaceinfo = true
     })
 
     button.addEventListener('click', () => {
       if (flag && (mapSearch.value)) {
-        bla()
-        if ((JSON.stringify(coordinates) === JSON.stringify(prevCoordinates)) && (firstFeedback)) {
+        if ((_.isEqual(prevCoordinates, coordinates)) && (firstFeedback)) {
           if (window.confirm("Do you wish to update your feedback?")) {
             updateChoice = true
             setVisibleReview(!(visibleReview))
@@ -152,13 +166,14 @@ const Maps = () => {
           setVisibleReview(true)
           updateChoice = false
           firstFeedback = false
-          showPlaceinfo=false
+          //showPlaceinfo = false
         }
       }
       else {
         alert("Please enter a location")
       }
-      prevCoordinates = coordinates
+      prevCoordinates.latitude = coordinates.latitude
+      prevCoordinates.longitude = coordinates.longitude
 
     })
 
@@ -177,12 +192,18 @@ const Maps = () => {
     }
   }, [visibleReview])
 
-  const bla=()=>{
-    console.log(coordinates)
-    axios.get('http://localhost:4000/placeinfo',coordinates)
-    .then(res=>{
-      console.log(res)
+  const bla = () => {
+      
+    axios.get('http://localhost:4000/placeinfo', {
+      params:{
+        coordinates:coordinates
+      }
     })
+      .then(res => {
+        console.log(res.data)
+        output.count= res.data.count
+        output.rating=res.data.rating
+      })
   }
 
   const updateProfile = () => {
@@ -195,11 +216,13 @@ const Maps = () => {
     console.log(updation)
     axios.patch('http://localhost:4000/updatefeed', updation)
       .then((response) => {
+        console.log(response)
         if (response.data.status === 'fail') {
           alert(response.data.message)
           setVisibleReview(true)
         } else {
           setVisibleReview(false)
+          alert("Your feedback has successfully been updated")
         }
       })
 
@@ -218,7 +241,7 @@ const Maps = () => {
   return (
     <div>
       <div id="map">
-        {showPlaceinfo && <PlaceInfo location={location} />}
+        {showPlaceinfo && <PlaceInfo location={location} output={output}/>}
       </div>
       <div className="divContainer">
         <button className="operation"></button>

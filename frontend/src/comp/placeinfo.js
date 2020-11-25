@@ -2,7 +2,13 @@ import React from 'react'
 import Ratings from './ratings'
 import '../css/ratings.css'
 
-const PlaceInfo=({location})=>{
+const PlaceInfo=({location, output})=>{
+    if(output.count===0){
+        output.count=0
+    }
+
+    output.rating = Math.floor(output.rating)
+
     return(
     <div className="placeInfo">
         <img src='/imgs/side_image.png'></img>
@@ -19,8 +25,8 @@ const PlaceInfo=({location})=>{
                 <label>Zip<pre>     :</pre></label>
             </div>
             <div className="details-info">
-                <label id="visitor-num">476</label>
-                <Ratings size={10}/>
+                <label id="visitor-num">{output.count}</label>
+                <Ratings size={10} value={output.rating}/>
                 <label id="zip">1108</label>
             </div>
         </div> 
