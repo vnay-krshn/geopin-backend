@@ -1,0 +1,54 @@
+/* Review */
+
+.review{
+    /* background: rgb(173, 173, 224); */
+    width: 30vw;
+    height: 50vh;
+    padding: 1em;
+
+    position: absolute;
+    top:11.5em;
+    left: 26em;
+    z-index: 100;
+}
+
+.review-box{
+    border:none;
+    width: 20.9vw;
+    margin: 1em;
+}
+
+.review-box textarea{
+    padding: 1em;
+    width: 27.7vw;
+    height: 25vh;
+    border-top:none;
+    border-left: none;
+    border-right: none;
+    border-bottom: #c9c5c5 solid 1.2px;
+    resize: none;
+}
+
+.review-rating{
+    display: flex;
+    padding: 0.7em;
+    justify-content: space-between;
+    width: 28vw;
+    margin-top: -0.3em;
+    background: #ffff;
+}
+
+.review button{
+    margin: 0em 0em 0.5em 20em;
+    background-color: #00d3b8;
+    color: #ffff;
+    border: none;
+    outline: none;
+    width: 10vw;
+    padding: 0.8em;
+    border-radius: 0.2em;
+}
+
+.review button:hover{
+    background: #09c2a9;
+}

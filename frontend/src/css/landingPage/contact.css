@@ -1,0 +1,134 @@
+/* Contact */
+
+.footer-align{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-image: url('/imgs/contact_bg.png');
+}
+    
+.footer{
+    height: 100vh;
+    /* background-image: url('/imgs/contact_bg.png'); */
+    display: flex;  
+    justify-content: space-evenly;
+    align-items: center;  
+}
+
+.footer .footer-form{
+    /* background: rebeccapurple; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25vw;
+}
+
+.footer-form input, .footer-form textarea{
+    margin: 0.15em 0em;
+    padding: 0.75em;
+    border-radius: 0.25em;
+    border: none;
+}
+
+.footer-form textarea{
+    resize: none;
+    height: 8em;
+    font-family: sans-serif;
+}
+
+.footer-form button{
+    margin: 0.15em 0em;
+    padding: 1em 1em;
+    width: 8vw;
+   
+
+    border-radius: 0.25em;
+    border: none;
+    background: #00d3b8;
+    color: #ffff;
+    cursor: pointer;
+}
+
+.footer-form button:hover{
+    background: #09c2a9;
+}
+
+.footer-details{
+    /* background: red; */
+    color: #ffff;
+    width: 35vw;
+    display: flex;
+    height: 34vh;
+}
+
+.footer-details-type{
+    /* background: salmon; */
+    display: flex;
+    flex-direction: column;
+    width: 5em;
+    padding: 0em 0.75em;
+    align-items: flex-start;
+}
+
+.footer-details-type pre{
+    display: inline;
+}
+
+.footer-details-type label{
+    margin: 0.7em 0em;
+}
+
+.footer-details-info{
+    /* background: rgb(218, 228, 87); */
+    display: flex;
+    flex-direction: column;
+    width: 18vw;
+}
+
+.footer-details-info label{
+    margin: 0.7em 1em;
+}
+
+.footer-form .errorFooter{
+    color: rgb(241, 151, 151);
+}
+
+@media(max-width:768px){
+   .footer{
+       flex-direction: column;
+       padding: 1em;
+   }
+
+   .footer .footer-details{
+      margin-left: 2.5em;
+      margin-top: -4em;
+      width: 70vw;
+      font-size: 0.8rem;
+   }
+
+   .footer-details #addr{
+      width: 40vw;
+   }
+
+   .footer .footer-form{
+        width: 60vw;
+        height: 50vh;
+   }
+
+   .footer .footer-form input{
+       padding: 0.8em;
+   }
+
+   
+    .footer-form button{
+        margin: 0.15em 0em;
+        padding: 0.8em 0.2em;
+        width: 15vw;
+    }
+
+    .footer-align .connections{
+        display: none;
+    }
+
+}
+

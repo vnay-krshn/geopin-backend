@@ -1,0 +1,82 @@
+/* place info*/
+
+.placeInfo{
+    background: #314049;
+    color: white;
+    display: flex;
+    justify-content: space-evenly;
+    width: 69vw;
+         
+
+    position: absolute;
+    z-index: 100;
+    top: 35em;
+    left: 15em;
+ }
+
+ .placeInfo img{
+     margin:0.6em 0em 0.6em -2em;
+     height: 24vh;
+     width: 20vw;
+ }
+ 
+ .information{
+     /* background: #21aaff; */
+     width: 24vw;
+     margin-left: -2em;
+     padding:2.2em 0em 0em 0.8em;
+     
+ }
+
+ .information h2{
+     font-size: large;
+     margin-bottom:0.7em;
+ }
+ .details{
+   /* background: red; */
+   color: #ffff;
+   width: 18vw;
+   display: flex;
+
+   position: relative;
+}
+
+.details-type{
+   /* background: salmon; */
+   display: flex;
+   flex-direction: column;
+   width: 7vw;
+   padding: 1.8em 0.75em;
+   align-items: flex-start;
+}
+
+.details-type pre{
+   display: inline;
+}
+
+.details-type label{
+   margin: 0.7em 0em;
+}
+
+.details-type label, .details-info label{
+   font-size: small;
+}
+
+.details-info{
+   /* background: rgb(218, 228, 87); */
+   display: flex;
+   flex-direction: column;
+   width: 18vw;
+   padding: 2.3em 0em;
+}
+
+.details-info #visitor-num{
+   margin-bottom: 1.2em;
+   margin-left: 0.7em;
+   margin-top: 0.4em;
+}
+
+.details-info #zip{
+   margin-top: 1.3em;
+   margin-left: 0.7em;
+}

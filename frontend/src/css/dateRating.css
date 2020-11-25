@@ -1,0 +1,11 @@
+/* date-rating */
+
+.date-rating{
+    width: auto;
+    /* background: blue; */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    min-height: 8vh;
+}

@@ -1,0 +1,12 @@
+  /* ratings */
+
+  .rate{
+    /* background: chartreuse; */
+     /* padding: 0.25em; */
+     width: 16vw;
+     height: 3.5vh;
+   }
+
+ .rate input[type='radio']{
+     visibility: hidden;
+ }

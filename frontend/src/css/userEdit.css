@@ -1,0 +1,59 @@
+/* user edit*/
+.useredit{
+    background: #ffff;
+    width: 28vw;
+    height: 82.5vh;
+    position: absolute;
+    top: 8.5em;
+    left: 29em;
+}
+
+.useredit .editprofile .edit-title{
+    /* background: rgb(166, 166, 235); */
+    padding: 1em;
+    text-align: center;
+    margin-left: 0em;
+    border-bottom: #c9c5c5 solid 0.05em;
+}
+
+.useredit .editprofile .profile-pic #user-pic{
+    border-radius: 50%;
+    width: 8em;
+    margin: 1em 1em 1em 7em;
+}
+
+.useredit .editprofile .profile-pic #user-pic-edit{
+  position: relative;
+  bottom: 6em;
+  right: 2.8em;
+}
+
+.useredit .profile-edit-form .form-group {
+    /* background: chocolate; */
+    display: flex;
+    flex-direction: column;
+    padding: 0.4em 0.5em;
+}
+
+.useredit .form-group input{
+    margin: 0.4em 0em;
+    padding:0.3em;
+    border: #c9c5c5 solid 0.09em;
+    border-radius: 0.1em;
+}
+
+.useredit #edit-done{
+    background: #00d3b8;
+    border: none;
+    color: white;
+    padding: 0.6em 2.5em;
+    margin: 1em 14.5em;
+    font-size: 1em;
+    border-radius: 0.2em;
+    cursor: pointer;
+}
+
+.useredit #edit-done:hover{
+    background: #09c2a9;
+}
+

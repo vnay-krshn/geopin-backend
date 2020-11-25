@@ -1,0 +1,1066 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* LandingPage */
+.landingpage-main {
+  background-image: url("/imgs/bg.png");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.landingpage-main #logo {
+  height: 16vh;
+  width: 56vw;
+  margin: 7em 16.5em;
+}
+
+.landingpage-main li:hover {
+  color: #00d3b8;
+  cursor: pointer;
+}
+
+.landingpage-main .tagline {
+  text-align: center;
+  width: 45vw;
+  margin: -5em 0em 0em 24em;
+  color: white;
+  font-size: 0.9em;
+}
+
+.landingpage-main .tagline button {
+  padding: 1em 5em;
+  margin: 2em;
+  font-size: 1em;
+  cursor: pointer;
+  background: #00d3b8;
+  border: none;
+  outline: none;
+  color: #ffff;
+  border-radius: 0.2em;
+}
+
+.landingpage-main .tagline button:hover {
+  background: #09c2a9;
+}
+
+.landing-nav {
+  height: 15vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.landing-nav ul {
+  width: 50%;
+  list-style: none;
+  text-decoration: none;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.landing-nav #login-button {
+  border: none;
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .landing-nav {
+    height: auto;
+  }
+  .landing-nav ul {
+    margin-top: 1em;
+    width: 90vw;
+  }
+  .landing-nav ul li, #login-button {
+    margin: 1em 0.1em;
+  }
+  .landingpage-main #logo {
+    height: 9vh;
+    width: 76vw;
+    margin: 3em;
+  }
+  .landingpage-main .tagline {
+    text-align: center;
+    width: 65vw;
+    margin: 0em 9.5em;
+    color: white;
+    font-size: 0.6em;
+  }
+  .landingpage-main .tagline button {
+    padding: 1em 2.5em;
+    margin: 2em;
+    font-size: 1em;
+    background: #00d3b8;
+    border: none;
+    outline: none;
+    color: #ffff;
+    border-radius: 0.2em;
+  }
+}
+
+/* Register */
+.register-box .error {
+  color: #f19797;
+  font-size: 0.9rem;
+}
+
+.register {
+  background-image: url("/imgs/bg.png");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.register img {
+  margin: 2em 35.6em;
+}
+
+.register-box {
+  width: 25vw;
+  margin: 1em 30em;
+}
+
+.register-box h3 {
+  font-weight: 400;
+  color: #ffff;
+  padding: 0.5em 0em;
+}
+
+.register-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.register-form input {
+  padding: 0.75em;
+  margin: 0.25em 0;
+  border: none;
+  outline: none;
+  width: 23.5vw;
+  border-radius: 0.2em;
+}
+
+.register-form .contact .flag-select__btn {
+  background: #ffff;
+  color: #8d8c8c;
+  width: 7vw;
+  height: 5.5vh;
+  padding: 0;
+}
+
+.register-form .flag-select__option {
+  height: 2vh;
+  width: 4vw;
+  font-size: 0.85rem;
+}
+
+.register-form .flag-select__option .flag-select__option__label {
+  display: none;
+}
+
+.register-form .flag-select__options {
+  height: 10vh;
+  width: 7vw;
+  overflow: hidden;
+}
+
+.register-form .flag-select__options .filterBox input {
+  border: solid 1px black;
+  margin: 0em 0.1em 0.3em 0.3em;
+  height: 2vh;
+  width: 6vw;
+  padding: 0.2em 0em 0.2em 0.2em;
+  text-indent: 0.3em;
+}
+
+.register-form .flag-select__option__icon {
+  width: 18vw;
+  margin-left: -6em;
+  margin-top: -0.5em;
+}
+
+.register-form button {
+  width: 25vw;
+  padding: 0.8em;
+  margin-top: 0.25em;
+  cursor: pointer;
+  background: #00d3b8;
+  border: none;
+  outline: none;
+  color: #ffff;
+  border-radius: 0.2em;
+}
+
+.register-form button:hover {
+  background: #09c2a9;
+}
+
+.register-form .contact {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.register-form .contact input {
+  margin-left: 0.4em;
+  width: 16vw;
+  border: none;
+  outline: none;
+}
+
+.register-form .contact .phone {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 22vw;
+}
+
+.register-form .contact .errorPhone {
+  color: #f19797;
+  margin-left: 0.5em;
+}
+
+.register-form label {
+  color: #ffff;
+  margin: 1em 2.9em;
+}
+
+.register-form label a {
+  text-decoration: none;
+  color: #00d3b8;
+  margin-left: 0.4em;
+  cursor: pointer;
+}
+
+.register-form label a:hover {
+  color: #ffff;
+}
+
+@media (max-width: 768px) {
+  .register-box {
+    margin-left: 7em;
+    width: 60vw;
+  }
+  .register img {
+    margin: 2em 0em 2em 11.5em;
+  }
+  .register-form .phone input {
+    width: 45vw;
+  }
+  .register-form button {
+    width: 60vw;
+  }
+  .register-form label {
+    width: 48vw;
+    margin-left: 2em;
+  }
+}
+
+/* Login */
+.login {
+  background-image: url("/imgs/bg.png");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login img {
+  margin: 2em 35.6em;
+}
+
+.login-box {
+  width: 25vw;
+  margin: 1em 30em;
+}
+
+.login-box h3 {
+  font-weight: 400;
+  color: #ffff;
+  padding: 0.5em 0em;
+}
+
+.login-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.login-form input {
+  padding: 0.75em;
+  margin: 0.25em 0;
+  border: none;
+  outline: none;
+  border-radius: 0.2em;
+  width: 23.5vw;
+}
+
+.login-form label {
+  color: #ffff;
+  margin: 1em 1.5em;
+}
+
+.login-form label a {
+  text-decoration: none;
+  color: #00d3b8;
+  margin-left: 0.2em;
+  cursor: pointer;
+}
+
+.login-form label a:hover {
+  color: #ffff;
+}
+
+.login-form button {
+  width: 25vw;
+  padding: 0.8em;
+  margin-top: 0.25em;
+  cursor: pointer;
+  background: #00d3b8;
+  border: none;
+  outline: none;
+  color: #ffff;
+  border-radius: 0.2em;
+}
+
+.login-form button:hover {
+  background: #09c2a9;
+}
+
+@media (max-width: 768px) {
+  .login-box {
+    margin-left: 7em;
+    width: 60vw;
+  }
+  .login img {
+    margin: 2em 0em 2em 11.5em;
+  }
+  .login-form button {
+    width: 60vw;
+  }
+  .login-form label {
+    width: 54vw;
+    margin-left: 1em;
+  }
+}
+
+/* homepage */
+.homepage {
+  background-image: url("/imgs/bg.png");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.home-display {
+  text-align: center;
+  margin: 4em auto;
+  height: 10em;
+  width: 19em;
+  color: white;
+  font-size: 1.7em;
+}
+
+.home-options {
+  width: 30vw;
+  margin: 2em auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.home-options button {
+  width: 15vw;
+  padding: 0.8em;
+  margin: 0.25em 0.8em;
+  background: #00d3b8;
+  border: none;
+  outline: none;
+  color: #ffff;
+  border-radius: 0.2em;
+}
+
+.home-options button:hover {
+  background: #09c2a9;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .home-display {
+    width: auto;
+    height: auto;
+  }
+  .home-display p {
+    font-size: 1.3rem;
+    width: 70vw;
+    margin: 0 auto;
+  }
+  .home-options {
+    margin-top: 1.2em;
+    width: 50vw;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .home-options button {
+    width: 20vw;
+    padding: 0.8em 0.8em;
+    border-radius: 0.2em;
+  }
+}
+
+/* searchPage */
+.searchpage {
+  background-image: url("/imgs/bg.png");
+  height: 100vh;
+}
+
+.searchpage h2 {
+  margin: 5em  0em 2em 19em;
+  color: #ffff;
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .searchpage h2 {
+    font-size: 1.8rem;
+    margin: 4.5em 0.5em 1em 1.8em;
+    font-weight: 300;
+  }
+  .searchpage .options {
+    margin: 0 auto;
+    width: auto;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .searchpage .options input {
+    width: 20em;
+  }
+  .searchpage .options button {
+    width: 15vw;
+  }
+}
+
+/* check in page */
+.checkInPage {
+  background-image: url("/imgs/bg.png");
+  height: 100vh;
+}
+
+.checkInPage h2 {
+  margin: 5em  0em 2em 19em;
+  color: #ffff;
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .checkInPage h2 {
+    font-size: 1.8rem;
+    margin: 4.5em 0em 1em 0.5em;
+    font-weight: 300;
+  }
+  .checkInPage .options {
+    margin: 0 auto;
+    width: auto;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .checkInPage .options input {
+    width: 20em;
+  }
+  .checkInPage .options button {
+    width: 15vw;
+  }
+}
+
+/* search result page */
+.visitor-details {
+  padding: 2em 10em;
+}
+
+.visitor-details button {
+  margin: 0.5em 0em 0em 60em;
+  width: 10vw;
+  padding: 0.8em;
+  cursor: pointer;
+  background: #00d3b8;
+  border: none;
+  outline: none;
+  color: #ffff;
+  border-radius: 0.2em;
+}
+
+.visitor-details button:hover {
+  background: #02e4c6;
+}
+
+.visitor-details-header {
+  margin: 1em 1em 0.5em 1em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.visitor-details-cards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.visitor-details-header ul {
+  width: 8%;
+  list-style: none;
+  text-decoration: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.visitor-details-header ul img {
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .searchResults-options {
+    width: 96.7vw;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .searchResults-options .options {
+    margin-left: 2.5em;
+    width: 80vw;
+  }
+  .searchResults-options .options input {
+    width: 60vw;
+  }
+  .searchResults-options .options button {
+    width: 18vw;
+  }
+  .visitor-details-header {
+    margin: 2em 0em 1em -7.5em;
+    width: 81vw;
+  }
+  .visitor-details-cards {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .visitor-details-cards .visitor {
+    width: auto;
+    margin-left: -7.5em;
+  }
+  .visitor-details button {
+    margin-left: 14.8em;
+    width: 20vw;
+  }
+  .searchResults .placeInfo {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    position: relative;
+    margin-bottom: 1.8em;
+    top: 1.8em;
+    left: 2.1em;
+    width: 84vw;
+  }
+  .searchResults .placeInfo .details-info {
+    width: 30vw;
+  }
+  .searchResults .placeInfo img {
+    width: 52vw;
+    height: 22vh;
+    margin: 1em 0em 0em 5em;
+  }
+  .searchResults .placeInfo .details {
+    padding: 0;
+    width: auto;
+    margin-left: 6em;
+  }
+  .searchResults .placeInfo .information {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    width: auto;
+  }
+  .searchResults .placeInfo .information p {
+    font-size: 0.8em;
+    margin-left: 0em;
+  }
+  .searchResults .filter {
+    top: 70em;
+    left: 15.2em;
+    width: auto;
+  }
+  .searchResults .filter div {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .searchResults .filter div input {
+    width: 32.5vw;
+  }
+}
+
+/* check in result page */
+.checkinResults-options {
+  padding: 2em 0em 1em 0em;
+  background: #314049;
+  opacity: 0.9;
+  height: 10vh;
+  width: 78.95em;
+  position: absolute;
+  z-index: 100;
+}
+
+@media (max-width: 768px) {
+  .checkinResults-options {
+    width: 96.7vw;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .checkinResults-options .options {
+    margin-left: 2.5em;
+    width: 80vw;
+  }
+  .checkinResults-options .options input {
+    width: 60vw;
+  }
+  .checkinResults-options .options button {
+    width: 18vw;
+  }
+  .checkinResults .placeInfo {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    position: relative;
+    top: 1.8em;
+    left: 2.1em;
+    width: 84vw;
+    margin-bottom: 1.8em;
+  }
+  .checkinResults .placeInfo .details-info {
+    width: 30vw;
+  }
+  .checkinResults .placeInfo .details {
+    padding: 0;
+    width: auto;
+    margin-left: 6em;
+  }
+  .checkinResults .placeInfo img {
+    width: 52vw;
+    height: 22vh;
+    margin: 1em 0em 0em 5em;
+  }
+  .checkinResults .placeInfo .information {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    width: auto;
+  }
+  .checkinResults .placeInfo .information p {
+    font-size: 0.8em;
+    margin-left: 0em;
+  }
+}
+
+/* visitor profile */
+.place-cards-container {
+  padding: 6em 1em;
+}
+
+.place-cards-container #numberLog {
+  margin-left: 61.5em;
+}
+
+.place-cards-container button {
+  margin-left: 74.2em;
+  margin-top: 0.2em;
+  width: 10vw;
+  height: 7.5vh;
+  padding: 0.8em;
+  cursor: pointer;
+  background: #00d3b8;
+  border: none;
+  outline: none;
+  color: #ffff;
+  border-radius: 0.2em;
+}
+
+.place-cards-container button:hover {
+  background: #02e4c6;
+}
+
+.place-cards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 1em;
+}
+
+.visitor-profile #save {
+  position: absolute;
+  top: 15.8em;
+  left: 69.5em;
+  width: 10vw;
+  height: 7.5vh;
+  padding: 0.8em;
+  background: #00d3b8;
+  border: none;
+  outline: none;
+  color: #ffff;
+  border-radius: 0.2em;
+  cursor: pointer;
+}
+
+.visitor-profile #save:hover {
+  background: #02e4c6;
+}
+
+@media (max-width: 768px) {
+  .place-cards {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .place-cards .placesLogged {
+    width: auto;
+  }
+  .place-cards-container #numberLog {
+    margin-left: 19.5em;
+  }
+  .visitor-profile .profileHead-header #profile {
+    left: 1.5em;
+    top: 6.5em;
+    width: 5.5em;
+    height: 5.8em;
+  }
+  .visitor-profile .profileHead-name {
+    left: 1.5em;
+    top: 8em;
+    font-size: 0.85rem;
+  }
+  .visitor-profile .profileHead-nationality {
+    left: -0.5em;
+    top: 7.5em;
+    font-size: 0.85rem;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+        -ms-flex-flow: column-reverse;
+            flex-flow: column-reverse;
+    height: 8vh;
+  }
+  .visitor-profile .profileHead-contact {
+    left: -4em;
+    top: 7.9em;
+    font-size: 0.85rem;
+  }
+  .visitor-profile #save {
+    left: 37em;
+    width: 12vw;
+    height: 6vh;
+    padding: 0;
+    top: 18em;
+    font-size: 0.7rem;
+  }
+  .visitor-profile #more {
+    position: relative;
+    margin-left: 25.8em;
+    height: 7vh;
+    width: 20vw;
+  }
+}
+
+/* user-profile */
+.userprofile .profileHead .profileHead-contact {
+  left: -2.2em;
+}
+
+.userprofile .edit {
+  background: transparent;
+  border: #00d3b8 solid 0.1em;
+  outline: none;
+  padding: 0.5em 1em;
+  border-radius: 0.3em;
+  color: #00d3b8;
+  cursor: pointer;
+  position: absolute;
+  top: 8em;
+  left: 75em;
+}
+
+.userprofile .edit:hover {
+  background: #abfff4;
+  color: black;
+}
+
+.userprofile-cards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.userprofile-cards .latest-search-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-left: 0.1em;
+}
+
+.userprofile-cards .latest-search-info label:nth-child(2) {
+  font-size: small;
+}
+
+.userprofile-cards .latest-search {
+  background: #a7d4d8;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 0.5em;
+  border-bottom: solid 0.01em #c4c4c4;
+}
+
+.userprofile-cards .latest-search:nth-child(5) {
+  border-bottom: none;
+}
+
+.userprofile-cards .latest-search .rate {
+  margin-top: 0.5em;
+}
+
+.userprofile-cards .sidebar {
+  width: 20em;
+  margin: 6em 10em;
+}
+
+.userprofile-cards .recent-searches .title {
+  background: #a7d4d8;
+  padding: 0.8em;
+  margin-left: 0em;
+  border-bottom: solid 0.01em #c4c4c4;
+}
+
+.userprofile-cards .search-post {
+  background: #a7d4d8;
+  min-height: 5vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  padding: 0.4em;
+  margin-bottom: 1em;
+  border: none;
+  outline: none;
+}
+
+.userprofile-cards .search-post button {
+  height: 7vh;
+  width: 3.6vw;
+  padding: 0.8em;
+  background: #00d3b8;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.userprofile-cards .search-post button:hover {
+  background: #09c2a9;
+}
+
+.userprofile-cards .search-post input {
+  border: none;
+  margin-right: 0.3em;
+  height: 6vh;
+  width: 16em;
+  padding: 0.2em 1em;
+}
+
+.userprofile .saved-contacts {
+  background: #d3e9eb;
+  margin-top: 1em;
+  width: 25vw;
+}
+
+.userprofile .title {
+  background: #a7d4d8;
+  padding: 0.8em;
+  margin-left: 0em;
+}
+
+.userprofile .contact-images {
+  background: #a7d4d8;
+  padding: 0.2em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+}
+
+.userprofile .contact-images img {
+  margin: 0.2em;
+  border-radius: 0.2em;
+}
+
+.userprofile-cards .main {
+  width: 20vw;
+  margin-bottom: 5.2em;
+  position: relative;
+  right: -1.2em;
+}
+
+.userprofile-cards .main .placesLogged {
+  width: 44vw;
+  margin-bottom: 0.3em;
+  position: relative;
+  right: 11em;
+  top: 5.5em;
+}
+
+.userprofile #more {
+  padding: 0.2em 2em;
+  height: 2.5em;
+  margin: 0.5em;
+  font-size: 1em;
+  position: relative;
+  left: 58.5em;
+  cursor: pointer;
+  background: #00d3b8;
+  border: none;
+  outline: none;
+  color: #ffff;
+  border-radius: 0.2em;
+}
+
+.userprofile #more:hover {
+  background: #09c2a9;
+}
+
+.profile-edit-form .flag-select__btn {
+  background: #ffff;
+  color: #8d8c8c;
+  width: 26.5vw;
+  height: 5.5vh;
+  padding-bottom: 0.5em;
+}
+
+.profile-edit-form .flag-select__option {
+  height: 2vh;
+  width: 20vw;
+  font-size: 0.85rem;
+}
+
+.profile-edit-form .flag-select__option .flag-select__option__label {
+  margin-left: 1em;
+}
+
+.profile-edit-form .flag-select__options {
+  height: 10vh;
+  width: 26vw;
+  overflow-x: hidden;
+}
+
+.profile-edit-form .flag-select__options .filterBox input {
+  border: solid 1px black;
+  margin: 0em 0.1em 0.3em 0.3em;
+  height: 4vh;
+  width: 24vw;
+  padding: 0.2em 0em 0.2em 0.2em;
+  text-indent: 0.3em;
+}
+
+.profile-edit-form .flag-select__option__icon {
+  width: 5vw;
+  height: 3vh;
+}
+/*# sourceMappingURL=styles.css.map */

@@ -1,0 +1,35 @@
+/* options */
+
+.options{
+    z-index: 2;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* border: violet solid 3px; */
+    width: 50%;
+    margin: 0 20em;
+}
+
+.options input{
+    padding: 0.75em;
+    margin: 0.25em 0.5em 0.25em 0em ;
+    width: 80vw;
+    border: none;
+    outline: none;
+    border-radius: 0.2em;
+}
+
+.options button{
+    background-color: #00d3b8;
+    color: #ffff;
+    border: none;
+    outline: none;
+    width: 10vw;
+    padding: 0.8em;
+    border-radius: 0.2em;
+    cursor: pointer;
+}
+
+.options button:hover{
+    background: #09c2a9;
+}

@@ -1,0 +1,45 @@
+/* howItWorks */
+
+.howItWorks{
+    background-image: url('/imgs/how_it_works_bg.png');
+    padding: 2em;
+    
+}
+
+.howItWorks h1{
+    color: black;
+    text-align: center;
+    margin: 0.8em;
+
+    font-size: 2em;
+}
+
+.howItWorks h4{
+    color: #c9c5c5;
+    text-align: center;
+    font-size: 1em;
+    margin-top: -1em;
+}
+
+.icon-container{
+    /*background-color: crimson;*/
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 2.5em;
+}
+
+@media (max-width:768px){
+    .icon-container{
+        flex-direction: column;
+    }
+
+    .howItWorks h1{
+        font-size: 1.5rem;
+    }
+
+    .howItWorks h4{
+        font-size: 0.9rem;
+    }
+}
+

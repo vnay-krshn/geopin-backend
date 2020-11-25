@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="60px" viewBox="0 0 48 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+    <title>searche_location_icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="website" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="01_landing-page" transform="translate(-333.000000, -957.000000)">
+            <g id="how_it_works" transform="translate(-18.000000, 756.000000)">
+                <g transform="translate(234.000000, 201.000000)" id="Search_location">
+                    <g>
+                        <g id="searche_location_icon" transform="translate(117.000000, 0.000000)">
+                            <path d="M18.4042955,56.9904001 C20.8974726,59.9437468 25.040492,60.0309397 27.592622,57.1410513 C27.592622,57.1410513 47.3099031,36.7192206 47.3099031,23.6549516 C47.3099031,10.5906826 36.7192206,0 23.6549516,0 C10.5906826,0 0,10.5906826 0,23.6549516 C0,36.7192206 18.4042955,56.9904001 18.4042955,56.9904001 Z M23.7351332,37.4702663 C31.3208377,37.4702663 37.4702663,31.3208377 37.4702663,23.7351332 C37.4702663,16.1494286 31.3208377,10 23.7351332,10 C16.1494286,10 10,16.1494286 10,23.7351332 C10,31.3208377 16.1494286,37.4702663 23.7351332,37.4702663 Z" id="Search-location-icon" fill="#00D3B8"></path>
+                            <g id="lence" transform="translate(16.000000, 16.000000)" stroke="#00D3B8" stroke-width="2">
+                                <circle id="Oval-7" cx="7.5" cy="7.5" r="7.5"></circle>
+                                <path d="M12.7157862,12.3458277 L19.1849758,17.5616699" id="Path-5"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

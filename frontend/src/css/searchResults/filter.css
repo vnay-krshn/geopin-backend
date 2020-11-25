@@ -1,0 +1,81 @@
+/* filter */
+
+.filter{
+    margin: 2em;
+    display: flex;
+    flex-direction: column;
+    background: #d3e9eb;;
+    width: 30vw;
+    justify-content: space-evenly;
+
+   position: absolute;
+   top: 47.9em;
+   left: 44em;
+   border-radius: 0.3em;
+   box-shadow: #e6e4e4 -1px 1px 5px;
+}
+
+.filter div{
+    display: flex;
+    justify-content: space-evenly;
+    width: 30vw;
+}
+
+.filter button{
+  background-color: #00d3b8;
+  color: #ffff;
+  cursor: pointer;
+}
+
+.filter button:hover{
+  background:#09c2a9;
+}
+
+.filter input,.filter button{
+    padding: 0.5em;
+    margin:0.5em;
+    border: none;
+    outline: none;
+    border-radius: 0.2em;
+}
+
+.filter select{
+  padding: 0.5em;
+  width: 14.2vw;
+  border: none;
+  outline: none;
+  border-radius: 0.2em;
+}
+
+.filter .nationality .flag-select__btn{
+  background: #ffff;
+  color: rgb(141, 140, 140);
+  width: 30vw;
+  height: 5.5vh;
+  padding: 0;
+}
+
+.filter .nationality .flag-select__option{
+  height: 2vh;
+  width: 25vw;
+  font-size: 0.85rem;
+  text-align: start;
+ }
+
+ .filter .nationality .flag-select__option img{
+  display: none;
+}
+
+
+.filter .nationality .flag-select__options .filterBox input{
+  border: solid 1px black;
+  margin:0em 0.1em 0.3em 0.3em;
+  height: 2vh;
+  padding: 0.3em 0em 0.3em 0.2em;
+  text-indent: 0.3em;
+}
+
+.filter .nationality .flag-select__options {
+  width: 29vw;
+  overflow: hidden;
+}
