@@ -104,16 +104,17 @@ const Maps = () => {
 
   useEffect(() => {
     const button = document.querySelector('.operation')
+    button.textContent='Check in'
 
-    var flag = false
+    // var flag = false
 
-    if (window.location.pathname.indexOf('checkinResults') > -1) {
-      button.textContent = "Check in"
-      flag = true
-    }
-    else {
-      button.textContent = "Search"
-    }
+    // if (window.location.pathname.indexOf('checkinResults') > -1) {
+    //   button.textContent = "Check in"
+    //   flag = true
+    // }
+    // else {
+    //   button.textContent = "Search"
+    // }
 
     var divContainer = document.querySelector('.divContainer')
     var mapContainer = document.querySelector('#map')
@@ -139,7 +140,7 @@ const Maps = () => {
       //console.log(e.result)
       coordinates.latitude = e.result.geometry.coordinates[1]
       coordinates.longitude = e.result.geometry.coordinates[0]
-      bla()
+      getPlaceInfo()
       setlocation(e.result.text)
       getCity(coordinates)
     })
@@ -151,7 +152,7 @@ const Maps = () => {
     })
 
     button.addEventListener('click', () => {
-      if (flag && (mapSearch.value)) {
+      if (mapSearch.value) {
         if ((_.isEqual(prevCoordinates, coordinates)) && (firstFeedback)) {
           if (window.confirm("Do you wish to update your feedback?")) {
             updateChoice = true
@@ -166,7 +167,6 @@ const Maps = () => {
           setVisibleReview(true)
           updateChoice = false
           firstFeedback = false
-          //showPlaceinfo = false
         }
       }
       else {
@@ -192,7 +192,7 @@ const Maps = () => {
     }
   }, [visibleReview])
 
-  const bla = () => {
+  const getPlaceInfo = () => {
       
     axios.get('http://localhost:4000/placeinfo', {
       params:{

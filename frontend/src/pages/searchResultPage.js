@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import HomepageNav from '../comp/homepageNav'
-import Maps from '../comp/maps'
+import Maps from '../comp/SearchMap'
 import Visitors from '../comp/searchResults/visitors'
 import { YearPicker, MonthPicker } from 'react-dropdown-date'
 import ReactFlagsSelect from 'react-flags-select';

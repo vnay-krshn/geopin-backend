@@ -220,6 +220,25 @@ app.get('/placeinfo', (req, res) => {
   )
 })
 
+app.post('/sendsearch', jsonParser, (req, res) => {
+  let coordinates = req.body.coordinates
+  let location = req.body.location
+  let city = req.body.city
+  let userID = req.body.userID
+
+  let qr = `insert into searches(coordinate,location,city,user_id) values ('{"latitude":${JSON.stringify(coordinates.latitude)},"longitude":${JSON.stringify(coordinates.longitude)}}','${location}','${city}','${userID}')`
+  pool.query(qr, (err, results) => {
+    if (err) {
+      res.send({ message: "error", error: err })
+    }
+    else {
+      res.send({ message: "success", results: results })
+    }
+  })
+
+})
+
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
