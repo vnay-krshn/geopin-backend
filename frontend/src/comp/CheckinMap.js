@@ -18,14 +18,16 @@ var coordinates = {
 var userID = 0
 var updateChoice = false
 var firstFeedback = false
-var showPlaceinfo = false
+//var showPlaceinfo = false
 var prevCoordinates = {
   "latitude": '',
   "longitude": ''
 }
-var output={
-  count:'',
-  rating:''
+var output = {
+  count: '',
+  rating: '',
+  location: '',
+  city: ''
 }
 
 const Maps = () => {
@@ -33,8 +35,10 @@ const Maps = () => {
   const [visibleReview, setVisibleReview] = useState(false)
   const [review, setreview] = useState('')
   const [rating, setrating] = useState(0)
-  const [location, setlocation] = useState('')
-  const [city, setcity] = useState('')
+  const[showPlaceinfo,setPlaceinfo]=useState(false)
+
+  // const [location, setlocation] = useState('')
+  // const [city, setcity] = useState('')
 
   const getCity = (coordinates) => {
     var lat = coordinates.latitude;
@@ -42,20 +46,22 @@ const Maps = () => {
     axios.get("https://us1.locationiq.com/v1/reverse.php?key=pk.a418ebb2be45d0efd214f1e25c8bdc65&lat=" +
       lat + "&lon=" + lng + "&format=json")
       .then(results => {
-        if (results.data.address.city != undefined) {
-          let cityName = results.data.address.city
-          setcity(cityName)
+        let arr = results.data.address
+        if (arr.hasOwnProperty("city")) {
+          output.city = arr.city
+          console.log(output.city)
         }
-        else if (results.data.address.suburb != undefined) {
-          let suburb = results.data.address.suburb
-          setcity(suburb)
+        else if (arr.hasOwnProperty("suburb")) {
+          output.city = arr.suburb
+          console.log(output.city)
         }
-        else if (results.data.address.suburb != undefined) {
-          let county = results.data.address.county
-          setcity(county)
+        else if (arr.hasOwnProperty("county")) {
+          output.city = arr.county
+          console.log(output.city)
         }
-        else{
-          setcity(results.data.address.town)
+        else {
+          output.city = arr.town
+          console.log(output.city)
         }
       })
   }
@@ -81,8 +87,8 @@ const Maps = () => {
   const postReview = () => {
 
     let postFeed = {
-      location: location,
-      city: city,
+      location: output.location,
+      city: output.city,
       coordinates: coordinates,
       review: review,
       rating: rating,
@@ -104,7 +110,7 @@ const Maps = () => {
 
   useEffect(() => {
     const button = document.querySelector('.operation')
-    button.textContent='Check in'
+    button.textContent = 'Check in'
 
     // var flag = false
 
@@ -138,18 +144,19 @@ const Maps = () => {
 
     geocoder.on('result', (e) => {
       //console.log(e.result)
+      setPlaceinfo(false)
       coordinates.latitude = e.result.geometry.coordinates[1]
       coordinates.longitude = e.result.geometry.coordinates[0]
-      getPlaceInfo()
-      setlocation(e.result.text)
+      getPlaceInfo(coordinates)
+      output.location = e.result.text
       getCity(coordinates)
     })
 
     map.addControl(geocoder)
     const mapSearch = document.querySelector('.mapboxgl-ctrl-geocoder--input')
-    mapSearch.addEventListener('change', () => {
-      showPlaceinfo = true
-    })
+    // mapSearch.addEventListener('change', () => {
+    //   showPlaceinfo = true
+    // })
 
     button.addEventListener('click', () => {
       if (mapSearch.value) {
@@ -192,17 +199,18 @@ const Maps = () => {
     }
   }, [visibleReview])
 
-  const getPlaceInfo = () => {
-      
+  const getPlaceInfo = (coordinates) => {
+
     axios.get('http://localhost:4000/placeinfo', {
-      params:{
-        coordinates:coordinates
+      params: {
+        coordinates: coordinates
       }
     })
       .then(res => {
         console.log(res.data)
-        output.count= res.data.count
-        output.rating=res.data.rating
+        output.count = res.data.count
+        output.rating = res.data.rating
+        setPlaceinfo(true)
       })
   }
 
@@ -241,7 +249,7 @@ const Maps = () => {
   return (
     <div>
       <div id="map">
-        {showPlaceinfo && <PlaceInfo location={location} output={output}/>}
+        {showPlaceinfo && <PlaceInfo output={output} />}
       </div>
       <div className="divContainer">
         <button className="operation"></button>

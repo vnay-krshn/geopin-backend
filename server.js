@@ -199,7 +199,7 @@ app.get('/placeinfo', (req, res) => {
     count:'',
     rating:''
   }
-  let qry1 = `select count(*) from checkin where coordinate->>'latitude'= '${coordinates.latitude}' and coordinate->>'longitude'= '${coordinates.longitude}'`
+  let qry1 = `select count(distinct(user_id)) from checkin where coordinate->>'latitude'= '${coordinates.latitude}' and coordinate->>'longitude'= '${coordinates.longitude}'`
   let qry2 = `select avg(rating) from checkin where coordinate->>'latitude'= '${coordinates.latitude}' and coordinate->>'longitude'= '${coordinates.longitude}'`
   pool.query(qry1,
     (err, results) => {

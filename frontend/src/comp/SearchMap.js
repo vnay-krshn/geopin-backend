@@ -30,21 +30,24 @@ const Maps = () => {
         axios.get("https://us1.locationiq.com/v1/reverse.php?key=pk.a418ebb2be45d0efd214f1e25c8bdc65&lat=" +
           lat + "&lon=" + lng + "&format=json")
           .then(results => {
-            let arr=[]
-            arr=Object.keys(results.data.address)
-            arr.map((item)=>{
-                switch(item){
-                    case 'city': console.log(results.data.address.city)
-                                    break;
-                    case 'suburb': console.log(results.data.address.suburb) 
-                                    break;
-                    case 'county': console.log(results.data.address.county) 
-                                    break;
-                    case 'town':console.log(results.data.address.town)
-                                    break;
-                }
-                return
-            })
+            let arr=results.data.address
+            console.log(arr)
+            if(arr.hasOwnProperty("city")){
+                output.city = arr.city
+                console.log(output.city)
+            }
+            else if(arr.hasOwnProperty("suburb")){
+                output.city = arr.suburb
+                console.log(output.city)
+            }
+            else if(arr.hasOwnProperty("county")){
+                output.city = arr.county
+                console.log(output.city)
+            }
+            else{
+                output.city = arr.town
+                console.log(output.city)
+            }
           })
 }
 
@@ -70,10 +73,10 @@ const Maps = () => {
             coordinates: coordinates,
             userID: userID
         }
-        //console.log(postFeed)
+        console.log(postFeed)
         axios.post('http://localhost:4000/sendsearch', postFeed)
             .then((response) => {
-                //console.log(response)
+                console.log(response)
             })
     }
 
@@ -103,14 +106,15 @@ const Maps = () => {
         })
 
         geocoder.on('result', (e) => {
+            setPlaceinfo(false)
+            output.location=e.result.text 
             coordinates.latitude = e.result.geometry.coordinates[1]
             coordinates.longitude = e.result.geometry.coordinates[0]
             getCity(coordinates)
-            //getPlaceInfo(coordinates)
-            //output.location=e.result.text         
+            getPlaceInfo(coordinates) 
+            setTimeout(sendSearch, 1000)            
         })
         map.addControl(geocoder)
-        const mapSearch = document.querySelector('.mapboxgl-ctrl-geocoder--input')
     }, [])
 
     const getPlaceInfo = (coordinates) => {
