@@ -263,6 +263,22 @@ app.get('/visitorprofile', (req, res) => {
   )
 })
 
+app.get('/visitoracitvity', (req, res) => {
+  let userID = req.query.userID
+  let qry = `select distinct on(location) location,user_id,city,review,rating,date from checkin where user_id='${userID}' order by location,place_id desc`
+  pool.query(qry,
+    (err, results) => {
+      if (err) {
+        res.send(err)
+      }else{
+      res.send(results.rows)
+      }
+    }
+  )
+})
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

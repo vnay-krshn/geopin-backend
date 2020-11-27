@@ -20,7 +20,7 @@ var output = {
     location: '',
     city: ''
 }
-const Maps = ({temp,titlePlace}) => {
+const Maps = ({temp}) => {
 
     const [showPlaceinfo, setPlaceinfo] = useState(false)
 
@@ -88,6 +88,7 @@ const Maps = ({temp,titlePlace}) => {
         })
             .then(res => {
                users = res.data
+               users.push({'titlePlace':output.location})
                temp(users)
             })
     }
@@ -120,7 +121,6 @@ const Maps = ({temp,titlePlace}) => {
         geocoder.on('result', (e) => {
             setPlaceinfo(false)
             output.location = e.result.text
-            titlePlace(output.location)
             coordinates.latitude = e.result.geometry.coordinates[1]
             coordinates.longitude = e.result.geometry.coordinates[0]
             getCity(coordinates)

@@ -1,40 +1,54 @@
 import React, { useEffect, useState } from 'react'
 import PlacesLogged from '../comp/placesLogged'
 import ProfileHead from '../comp/profileHead'
-import {placesData} from '../mockData/placesData'
 import '../css/profileHead.css'
 import '../css/placesLogged.css'
-import {OptionsContext} from '../comp/optionsContext'
 import { useContext } from 'react'
 import axios from 'axios'
+import { useParams } from 'react-router-dom'
+
+var placeData=[]
 
 const VisitorProfile=()=>{
+    const[visitorInfo,setvisitorinfo]=useState({})
+    const[placeData,setplaceData]=useState([])
 
-    const {visitorId} = useContext(OptionsContext)
-    const[getUser, setUserId] = visitorId
-    const[visitorInfo,setvisitorInfo]=useState({})
-
+    var id=(window.location.pathname).match(/\d/g)[0]
+   
     useEffect(()=>{
-        console.log(getUser)
+        
         axios.get('http://localhost:4000/visitorprofile',{
             params: {
-                userID:getUser
+                userID:id
             }
         })
         .then(res => {
-           setvisitorInfo(res.data[0])
+           setvisitorinfo(res.data[0])
+           console.log(visitorInfo)
+           getVisitorActivity()
         })
     },[])
 
+    const getVisitorActivity=()=>{
+        axios.get('http://localhost:4000/visitoracitvity',{
+            params: {
+                userID:id
+            }
+        })
+        .then(res => {
+           setplaceData(res.data)
+        })
+    }
+
     return(
     <div className="visitor-profile">
-        <ProfileHead props={visitorInfo}/> 
+        <ProfileHead props={visitorInfo} /> 
         <button id="save">Save contact</button>
         <div className="place-cards-container">
-            <label id="numberLog">Places Logged : 12</label>
+            <label id="numberLog">Places Logged : {placeData.length} </label>
             <div className="place-cards">
-                {placesData.map((data,key)=>(
-                    <PlacesLogged date={data.date} location={data.location} place={data.place} description={data.description} key={key}/>
+                {placeData.map((data)=>(
+                    <PlacesLogged data={data} key={data.location}/>
                 ))}
             </div>
             <button id="more">More</button>

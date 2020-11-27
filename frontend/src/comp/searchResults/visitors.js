@@ -3,12 +3,8 @@ import { Link } from 'react-router-dom'
 import DateRating from '../dateRating'
 import PropTypes from 'prop-types'
 import '../../css/dateRating.css'
-import {OptionsContext} from '../optionsContext'
 
 const Visitors=({data})=>{
-
-const {visitorId} = useContext(OptionsContext)
-const[getUser, setUserId] = visitorId
 
 var d = new Date(data.date);
 var day = ((d.toString()).split(" "))[1]
@@ -20,7 +16,7 @@ return(
    <div className="visitor">
         <img src='/imgs/user_image_bitmap.svg'></img>
         <div className='visitor-info'>
-            <Link to='/visitorProfile' onClick={()=>setUserId(data.user_id)} style={{ textDecoration: 'none' }}>
+            <Link to={`/visitorProfile/${data.user_id}`} style={{ textDecoration: 'none' }}>
                 <label id="username">{data.name}</label>
             </Link>
             <DateRating date={parsedDate} size={14} rating={data.rating}/>

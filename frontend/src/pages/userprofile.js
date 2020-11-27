@@ -4,21 +4,21 @@ import ReactFlagsSelect from 'react-flags-select';
 import 'react-flags-select/css/react-flags-select.css';
 import Ratings from '../comp/ratings'
 import PlacesLogged from '../comp/placesLogged'
-import { placesData } from '../mockData/placesData'
 import { usersData } from '../mockData/userData'
 import axios from 'axios'
 import '../css/userEdit.css'
 
 class UserProfile extends React.Component{
-    
+
     state={
         id:'',
-        username: '',
+        name: '',
         email: '',
         country: '',
         phone: '',
         visibleUserEdit:false,
-        flag:''
+        flag:'',
+        placesData:[]
     }
 
     token = localStorage.getItem('token')
@@ -37,14 +37,27 @@ class UserProfile extends React.Component{
                         country: response.data.country,
                         phone: response.data.phone
                     })
+                    this.userActitivity(this.state.id)
                     this.update = this.update.bind(this)
                 }
                 )
         }   
     }
 
+    userActitivity(id){
+        axios.get('http://localhost:4000/visitoracitvity',{
+            params: {
+                userID:id
+            }
+        })
+        .then(res => {
+           this.setState({ placesData:res.data}) 
+           console.log(this.state.placesData)
+        })
+    }
+
     componentDidMount(){
-        this.userLoad()
+        this.userLoad()       
     }
     
     flagSelect=(e)=>{
@@ -119,8 +132,8 @@ class UserProfile extends React.Component{
                             </div>
                         </div>
                         <div className="main">
-                            {placesData.slice(0, 2).map((data, key) => (
-                                <PlacesLogged date={data.date} location={data.location} place={data.place} description={data.description} key={key} />
+                            {this.state.placesData.map((data) => (
+                                <PlacesLogged data={data} key={data.location} />
                             ))}
                         </div>
                         <label style={{ position: "absolute", right: '13em', top: '20em' }}>Places logged : 12</label>

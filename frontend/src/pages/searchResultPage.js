@@ -11,17 +11,24 @@ import '../css/placeInfo.css'
 import '../css/searchResults/visitors.css'
 import '../css/searchResults/filter.css'
 
+var userlist = []
+var lastElement
 const SearchResults = () => {
     const[year, setyear] = useState(null)
     const[month, setmonth] = useState(null)
     const[visibleFilter, setFilterVisible] = useState(false)
-    const[userlist, setuserlist]=useState([])
     const[placename,setplacename]=useState('')
+
+    const getUserList=(e)=>{
+        userlist=e
+        lastElement=e.length-1
+        setplacename((userlist[lastElement]).titlePlace)
+    }
 
     return (
         <div className='searchResults'>
             <HomepageNav />
-            <Maps temp={(e)=>setuserlist(e)} titlePlace={(e)=>setplacename(e)}/>{console.log(userlist)}
+            <Maps temp={(e)=>{getUserList(e)}}/>
             {placename && <div className='visitor-details'>
                 <div className='visitor-details-header'>
                     <h3>Recent visitors of {placename} </h3>
@@ -32,7 +39,7 @@ const SearchResults = () => {
                 </div>
 
                 <div className="visitor-details-cards">
-                    {userlist.map((data) => (
+                    {userlist.slice(0,lastElement).map((data) => (
                         <Visitors data={data} key={data.user_id}/>
                     ))}
                 </div>

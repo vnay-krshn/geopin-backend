@@ -38,10 +38,10 @@ class HomepageNav extends React.Component{
             <div>
                 <nav className="homepage-nav">
                     <Link to='/'>
-                        <img src={'imgs/logo_inner_page.svg'}></img>
+                        <img src={'/imgs/logo_inner_page.svg'}></img>
                     </Link>
                     <ul>
-                        <img src={'imgs/user_image_bitmap.svg'}></img>
+                        <img src={'/imgs/user_image_bitmap.svg'}></img>
                         <Link to='/userProfile' style={{ textDecoration: 'none' }}>
                             <li> {this.username} </li>
                         </Link>
