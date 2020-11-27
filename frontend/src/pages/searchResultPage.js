@@ -32,8 +32,8 @@ const SearchResults = () => {
                 </div>
 
                 <div className="visitor-details-cards">
-                    {userlist.map((data,key) => (
-                        <Visitors username={data.name} date={data.date} phone={data.phone} rating={data.rating} key={data.id} />
+                    {userlist.map((data) => (
+                        <Visitors data={data} key={data.user_id}/>
                     ))}
                 </div>
                 <button>More</button>

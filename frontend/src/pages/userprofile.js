@@ -32,7 +32,7 @@ class UserProfile extends React.Component{
                 .then((response) => {
                     this.setState({
                         id:response.data.id,
-                        username: response.data.name,
+                        name: response.data.name,
                         email: response.data.email,
                         country: response.data.country,
                         phone: response.data.phone

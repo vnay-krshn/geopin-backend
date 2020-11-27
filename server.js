@@ -250,6 +250,19 @@ app.get('/listusers', (req, res) => {
   )
 })
 
+app.get('/visitorprofile', (req, res) => {
+  let userID = req.query.userID
+  let qry = `select id,name,phone,country,email from users where id='${userID}'`
+  pool.query(qry,
+    (err, results) => {
+      if (err) {
+        res.send(err)
+      }
+      res.send(results.rows)
+    }
+  )
+})
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

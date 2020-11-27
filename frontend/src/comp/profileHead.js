@@ -3,14 +3,14 @@ import HomepageNav from './homepageNav'
 import '../css/profileContact.css'
 
 const ProfileHead=({props})=>{
-
+    console.log(props.name,props.phone)
     return(
         <div className="profileHead">
             <HomepageNav/>
             <div className="profileHead-header">
                 <img id="profile" src='/imgs/user_image_bitmap.svg'></img>
                 <div className="profileHead-name">
-                    <h4> {props.username} </h4>
+                    <h4> {props.name} </h4>
                     <label> {props.email} </label>
                 </div>
                 <div className="profileHead-nationality">

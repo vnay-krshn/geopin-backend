@@ -13,10 +13,12 @@ import VisitorProfile from './pages/visitorProfile'
 import UserProfile from './pages/userprofile'
 import Protected from './ProtectedRoutes1'
 import ProtectAuth from './ProtectedRoutes2'
+import {OptionProvider} from './comp/optionsContext'
 
 function App(){
 
   return(
+    <OptionProvider>
       <Router>
             <Switch>
               <Route path='/' exact component={Landingpage}/>
@@ -31,6 +33,7 @@ function App(){
               <Protected path='/userProfile' component={UserProfile} />
             </Switch>
         </Router>
+    </OptionProvider>
   )
 } 
 
