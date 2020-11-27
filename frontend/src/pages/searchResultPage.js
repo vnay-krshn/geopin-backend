@@ -15,14 +15,16 @@ const SearchResults = () => {
     const[year, setyear] = useState(null)
     const[month, setmonth] = useState(null)
     const[visibleFilter, setFilterVisible] = useState(false)
+    const[userlist, setuserlist]=useState([])
+    const[placename,setplacename]=useState('')
 
     return (
         <div className='searchResults'>
             <HomepageNav />
-            <Maps />
-            <div className='visitor-details'>
+            <Maps temp={(e)=>setuserlist(e)} titlePlace={(e)=>setplacename(e)}/>{console.log(userlist)}
+            {placename && <div className='visitor-details'>
                 <div className='visitor-details-header'>
-                    <h3>Recent visitors of PLACE_NAME</h3>
+                    <h3>Recent visitors of {placename} </h3>
                     <ul>
                         <li>Filter</li>
                         <li><img onClick={() => setFilterVisible(!(visibleFilter))} src='/imgs/filter_icon.svg'></img></li>
@@ -30,12 +32,12 @@ const SearchResults = () => {
                 </div>
 
                 <div className="visitor-details-cards">
-                    {usersData.map((data, key) => (
-                        <Visitors username={data.name} date={data.date} phone={data.phone} key={key} />
+                    {userlist.map((data,key) => (
+                        <Visitors username={data.name} date={data.date} phone={data.phone} rating={data.rating} key={data.id} />
                     ))}
                 </div>
                 <button>More</button>
-            </div>
+            </div>}
             {visibleFilter &&
                 <div className="filter">
                     <div className="nationality">

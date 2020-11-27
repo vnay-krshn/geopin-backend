@@ -154,9 +154,6 @@ const Maps = () => {
 
     map.addControl(geocoder)
     const mapSearch = document.querySelector('.mapboxgl-ctrl-geocoder--input')
-    // mapSearch.addEventListener('change', () => {
-    //   showPlaceinfo = true
-    // })
 
     button.addEventListener('click', () => {
       if (mapSearch.value) {
@@ -233,8 +230,6 @@ const Maps = () => {
           alert("Your feedback has successfully been updated")
         }
       })
-
-    //updateChoice=false
   }
 
   const temp = () => {

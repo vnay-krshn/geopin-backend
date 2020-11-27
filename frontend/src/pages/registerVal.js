@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-import { Link ,Redirect} from 'react-router-dom'
+import { Link , Redirect,useHistory} from 'react-router-dom'
 import ReactFlagsSelect from 'react-flags-select';
 import 'react-flags-select/css/react-flags-select.css';
 import axios from 'axios'
@@ -43,17 +43,7 @@ const validationSchema = Yup.object({
 })
 
 const RegisterVal=()=>{
-
-    const flop=()=>{
-        const temp = document.querySelector('.flag-select__option')
-        console.log(temp)
-        if(temp.children.length)
-       {    
-            const temp2 = document.querySelector('.flag-select__option__label')
-            console.log(temp2.textContent)
-        }
-    }
-    
+    const history = useHistory();    
     let error ={message:''}
     let flag 
 
@@ -67,9 +57,9 @@ const RegisterVal=()=>{
                             alert(error.message)
                         }
                         else{
-                           console.log(res.data.token)
-                           return <Redirect to='/login'/>
+                            history.push('/login')
                         }
+                        
                     }
                     )
     }

@@ -12,46 +12,46 @@ var coordinates = {
     "latitude": '',
     "longitude": ''
 }
+var users=[]
 var userID = 0
 var output = {
     count: '',
     rating: '',
-    location:'',
-    city:''
+    location: '',
+    city: ''
 }
+const Maps = ({temp,titlePlace}) => {
 
-const Maps = () => {
-
-    const[showPlaceinfo,setPlaceinfo]=useState(false)
+    const [showPlaceinfo, setPlaceinfo] = useState(false)
 
     const getCity = (coordinates) => {
         var lat = coordinates.latitude;
         var lng = coordinates.longitude;
         axios.get("https://us1.locationiq.com/v1/reverse.php?key=pk.a418ebb2be45d0efd214f1e25c8bdc65&lat=" +
-          lat + "&lon=" + lng + "&format=json")
-          .then(results => {
-            let arr=results.data.address
-            console.log(arr)
-            if(arr.hasOwnProperty("city")){
-                output.city = arr.city
-                console.log(output.city)
-            }
-            else if(arr.hasOwnProperty("suburb")){
-                output.city = arr.suburb
-                console.log(output.city)
-            }
-            else if(arr.hasOwnProperty("county")){
-                output.city = arr.county
-                console.log(output.city)
-            }
-            else{
-                output.city = arr.town
-                console.log(output.city)
-            }
-          })
-}
+            lat + "&lon=" + lng + "&format=json")
+            .then(results => {
+                let arr = results.data.address
+                console.log(arr)
+                if (arr.hasOwnProperty("city")) {
+                    output.city = arr.city
+                    console.log(output.city)
+                }
+                else if (arr.hasOwnProperty("suburb")) {
+                    output.city = arr.suburb
+                    console.log(output.city)
+                }
+                else if (arr.hasOwnProperty("county")) {
+                    output.city = arr.county
+                    console.log(output.city)
+                }
+                else {
+                    output.city = arr.town
+                    console.log(output.city)
+                }
+            })
+    }
 
-    const userLoad = async() => {
+    const userLoad = async () => {
         let token = localStorage.getItem('token')
         if (token !== undefined) {
             await axios.get('http://localhost:4000/userlogin',
@@ -77,6 +77,18 @@ const Maps = () => {
         axios.post('http://localhost:4000/sendsearch', postFeed)
             .then((response) => {
                 console.log(response)
+            })
+    }
+
+    const listUsers = (coordinates) => {
+        axios.get('http://localhost:4000/listusers', {
+            params: {
+                coordinates: coordinates
+            }
+        })
+            .then(res => {
+               users = res.data
+               temp(users)
             })
     }
 
@@ -107,12 +119,14 @@ const Maps = () => {
 
         geocoder.on('result', (e) => {
             setPlaceinfo(false)
-            output.location=e.result.text 
+            output.location = e.result.text
+            titlePlace(output.location)
             coordinates.latitude = e.result.geometry.coordinates[1]
             coordinates.longitude = e.result.geometry.coordinates[0]
             getCity(coordinates)
-            getPlaceInfo(coordinates) 
-            setTimeout(sendSearch, 1000)            
+            getPlaceInfo(coordinates)
+            listUsers(coordinates)
+            setTimeout(sendSearch, 1000)
         })
         map.addControl(geocoder)
     }, [])

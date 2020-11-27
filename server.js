@@ -185,8 +185,7 @@ app.patch('/updatefeed', jsonParser, (req, res) => {
   if (rating === 0) {
     return res.send({ message: "Please enter rating", status: 'fail' })
   }
-
-  let qr = `update checkin set review = '${review}', rating = '${rating}' where user_id='${userID}' and coordinate->>'latitude'= '${JSON.stringify(coordinates.latitude)}' and coordinate->>'longitude'= '${JSON.stringify(coordinates.longitude)}'`
+  let qr = `update checkin set review = '${review}', rating = '${rating}' where place_id=(select max(place_id) from checkin where user_id='${userID}') and coordinate->>'latitude'= '${JSON.stringify(coordinates.latitude)}' and coordinate->>'longitude'= '${JSON.stringify(coordinates.longitude)}'`
   pool.query(qr, (results) => {
     res.send(results)
   })
@@ -236,6 +235,19 @@ app.post('/sendsearch', jsonParser, (req, res) => {
     }
   })
 
+})
+
+app.get('/listusers', (req, res) => {
+  let coordinates = JSON.parse(req.query.coordinates)
+  let qry = `select distinct on(user_id) user_id,date,rating,name,phone from users inner join checkin on checkin.user_id=users.id where coordinate ->> 'latitude'='${coordinates.latitude}' and coordinate->>'longitude'= '${coordinates.longitude}'`
+  pool.query(qry,
+    (err, results) => {
+      if (err) {
+        res.send(err)
+      }
+      res.send(results.rows)
+    }
+  )
 })
 
 
