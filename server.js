@@ -252,8 +252,8 @@ app.get('/listusers', (req, res) => {
 })
 
 app.get('/visitorprofile', (req, res) => {
-  let userID = req.query.userID
-  let qry = `select id,name,phone,country,email from users where id='${userID}'`
+  let visitorID = req.query.userID
+  let qry = `select id,name,phone,country,email from users where id='${visitorID}'`
   pool.query(qry,
     (err, results) => {
       if (err) {
@@ -265,8 +265,8 @@ app.get('/visitorprofile', (req, res) => {
 })
 
 app.get('/visitoracitvity', (req, res) => {
-  let userID = req.query.userID
-  let qry = `select distinct on(location) location,user_id,city,review,rating,date,place_id from checkin where user_id='${userID}' order by location,place_id desc`
+  let visitorID = req.query.userID
+  let qry = `select distinct on(location) location,user_id,city,review,rating,date,place_id from checkin where user_id='${visitorID}' order by location,place_id desc`
   pool.query(qry,
     (err, results) => {
       if (err) {
@@ -292,6 +292,20 @@ app.get('/latestsearch', (req, res) => {
   )
 })
 
+app.get('/checkfollower', (req, res) => {
+  let userID = req.query.userID
+  let visitorID = req.query.visitorID
+  let qry = `select exists(select contact_id from followers where user_id='${userID}' and visitor_id='${visitorID}')`
+  pool.query(qry,
+    (err, results) => {
+      if (err) {
+        res.send(err)
+      }else{
+      res.send(results.rows[0].exists)
+      }
+    }
+  )
+})
 
 
 

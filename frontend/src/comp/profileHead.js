@@ -3,10 +3,10 @@ import HomepageNav from './homepageNav'
 import '../css/profileContact.css'
 
 const ProfileHead=({props})=>{
-console.log(props)
+console.log(props.navbaredit)
     return(
         <div className="profileHead">
-            <HomepageNav/>
+            <HomepageNav props={props.navbaredit} />
             <div className="profileHead-header">
                 <img id="profile" src='/imgs/user_image_bitmap.svg'></img>
                 <div className="profileHead-name">

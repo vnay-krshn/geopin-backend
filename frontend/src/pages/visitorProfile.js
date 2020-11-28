@@ -9,30 +9,58 @@ const VisitorProfile=()=>{
     const[visitorInfo,setvisitorinfo]=useState({})
     const[placeData,setplaceData]=useState([])
 
-    var id=(window.location.pathname).match(/\d/g)[0]
+    var visitorId=(window.location.pathname).match(/\d/g)[0]
+    var token = localStorage.getItem('token')
+    var userID = ''
    
     useEffect(()=>{
-        
         axios.get('http://localhost:4000/visitorprofile',{
             params: {
-                userID:id
+                userID:visitorId
             }
         })
         .then(res => {
            setvisitorinfo(res.data[0])
            console.log(visitorInfo)
            getVisitorActivity()
+           
         })
     },[])
+
+    const onLoadUser=()=>{
+        if (token !== undefined) {
+            axios.get('http://localhost:4000/userlogin',
+                {
+                    headers: { "token": token }
+                })
+                .then((response) => {
+                  userID=response.data.id
+                }
+                )
+        }
+    }
+
+    const checkFollower=()=>{
+        axios.get('http://localhost:4000/visitoracitvity',{
+            params: {
+                userID:userID,
+                visitorId:visitorId
+            }
+        })
+        .then(res => {
+           console.log(res)
+        })
+    }
 
     const getVisitorActivity=()=>{
         axios.get('http://localhost:4000/visitoracitvity',{
             params: {
-                userID:id
+                userID:visitorId
             }
         })
         .then(res => {
            setplaceData(res.data)
+           checkFollower()
         })
     }
 

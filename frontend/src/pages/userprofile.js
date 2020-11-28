@@ -20,7 +20,8 @@ class UserProfile extends React.Component {
         flag: '',
         placesData: [],
         latestSearch: [],
-        dateParseReady:false
+        dateParseReady:false,
+        navbaredit:false
     }
 
     token = localStorage.getItem('token')
@@ -118,6 +119,7 @@ class UserProfile extends React.Component {
     }
 
     saveUpdate() {
+        this.setState({navbaredit:true})
         this.setState({ visibleUserEdit: !(this.state.visibleUserEdit) })
         axios.patch('http://localhost:4000/update', this.state)
             .then(res => {
