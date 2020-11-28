@@ -294,7 +294,7 @@ app.get('/latestsearch', (req, res) => {
 
 app.get('/checkfollower', (req, res) => {
   let userID = req.query.userID
-  let visitorID = req.query.visitorID
+  let visitorID = req.query.visitorId
   let qry = `select exists(select contact_id from followers where user_id='${userID}' and visitor_id='${visitorID}')`
   pool.query(qry,
     (err, results) => {
@@ -308,7 +308,34 @@ app.get('/checkfollower', (req, res) => {
 })
 
 
+app.post('/savefollower', jsonParser, (req, res) => {
+  let userID = req.body.userID
+  let visitorID = req.body.visitorId
 
+  let qr = `insert into followers(user_id,visitor_id) values ('${userID}','${visitorID}')`
+  pool.query(qr, (err, results) => {
+    if (err) {
+      res.send({ message: "error", error: err })
+    }
+    else {
+      res.send({ message: "success", results: results.rows })
+    }
+  })
+
+})
+
+app.delete('/deletefollower',(req,res)=>{
+  let userID = req.query.userID
+  let visitorID = req.query.visitorId
+  let qry =`delete from followers where user_id=${userID} and visitor_id=${visitorID}`
+  pool.query(qry,(err,results)=>{
+    if(err){
+      res.send(err)
+    }else{
+      res.send(results)
+    }
+  })
+})
 
 
 

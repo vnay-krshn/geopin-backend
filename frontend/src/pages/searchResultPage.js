@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import HomepageNav from '../comp/homepageNav'
 import SearchMap from '../comp/SearchMap'
 import Visitors from '../comp/visitors'
 import { YearPicker, MonthPicker } from 'react-dropdown-date'
 import ReactFlagsSelect from 'react-flags-select';
 import 'react-flags-select/css/react-flags-select.css';
-import { usersData } from '../mockData/userData'
+import axios from 'axios'
 import '../css/maps.css'
 import '../css/placeInfo.css'
 import '../css/searchResults/visitors.css'
@@ -13,11 +13,28 @@ import '../css/searchResults/filter.css'
 
 var userlist = []
 var lastElement
+var userID = 0
 const SearchResults = () => {
     const[year, setyear] = useState(null)
     const[month, setmonth] = useState(null)
     const[visibleFilter, setFilterVisible] = useState(false)
     const[placename,setplacename]=useState('')
+
+    var token = localStorage.getItem('token')
+
+    useEffect(()=>{
+        if (token !== undefined) {
+            axios.get('http://localhost:4000/userlogin',
+                {
+                    headers: { "token": token }
+                })
+                .then((response) => {
+                  userID=response.data.id
+                  console.log(userID)
+                }
+                )
+        }
+    },[placename])
 
     const getUserList=(e)=>{
         userlist=e
@@ -39,9 +56,11 @@ const SearchResults = () => {
                 </div>
 
                 <div className="visitor-details-cards">
-                    {userlist.slice(0,lastElement).map((data) => (
-                        <Visitors data={data} key={data.user_id}/>
-                    ))}
+                    {userlist.slice(0,lastElement).map((data) => {
+                        if(data.user_id!=userID){
+                            return <Visitors data={data} key={data.user_id}/>
+                        }
+                    })}
                 </div>
                 <button>More</button>
             </div>}

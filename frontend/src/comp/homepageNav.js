@@ -29,8 +29,6 @@ class HomepageNav extends React.Component{
         this.userload()
     }
 
-    
-
     componentDidUpdate(){
         if(this.props.props){
             this.userload()
