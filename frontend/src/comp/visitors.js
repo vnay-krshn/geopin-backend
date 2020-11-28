@@ -1,8 +1,8 @@
 import React,{useContext, useEffect} from 'react'
 import { Link } from 'react-router-dom'
-import DateRating from '../dateRating'
+import DateRating from './dateRating'
 import PropTypes from 'prop-types'
-import '../../css/dateRating.css'
+import '../css/dateRating.css'
 
 const Visitors=({data})=>{
 

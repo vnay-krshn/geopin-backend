@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import HomepageNav from '../comp/homepageNav'
-import Maps from '../comp/SearchMap'
-import Visitors from '../comp/searchResults/visitors'
+import SearchMap from '../comp/SearchMap'
+import Visitors from '../comp/visitors'
 import { YearPicker, MonthPicker } from 'react-dropdown-date'
 import ReactFlagsSelect from 'react-flags-select';
 import 'react-flags-select/css/react-flags-select.css';
@@ -28,7 +28,7 @@ const SearchResults = () => {
     return (
         <div className='searchResults'>
             <HomepageNav />
-            <Maps temp={(e)=>{getUserList(e)}}/>
+            <SearchMap temp={(e)=>{getUserList(e)}}/>
             {placename && <div className='visitor-details'>
                 <div className='visitor-details-header'>
                     <h3>Recent visitors of {placename} </h3>

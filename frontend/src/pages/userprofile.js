@@ -8,22 +8,24 @@ import { usersData } from '../mockData/userData'
 import axios from 'axios'
 import '../css/userEdit.css'
 
-class UserProfile extends React.Component{
+class UserProfile extends React.Component {
 
-    state={
-        id:'',
+    state = {
+        id: '',
         name: '',
         email: '',
         country: '',
         phone: '',
-        visibleUserEdit:false,
-        flag:'',
-        placesData:[]
+        visibleUserEdit: false,
+        flag: '',
+        placesData: [],
+        latestSearch: [],
+        dateParseReady:false
     }
 
     token = localStorage.getItem('token')
 
-    userLoad(){
+    userLoad() {
         if (this.token !== undefined) {
             axios.get('http://localhost:4000/userlogin',
                 {
@@ -31,7 +33,7 @@ class UserProfile extends React.Component{
                 })
                 .then((response) => {
                     this.setState({
-                        id:response.data.id,
+                        id: response.data.id,
                         name: response.data.name,
                         email: response.data.email,
                         country: response.data.country,
@@ -41,30 +43,56 @@ class UserProfile extends React.Component{
                     this.update = this.update.bind(this)
                 }
                 )
-        }   
+        }
     }
 
-    userActitivity(id){
-        axios.get('http://localhost:4000/visitoracitvity',{
+    dateParser() {
+        this.state.latestSearch.map(items=>{
+            var d = new Date(items.date);
+            var day = ((d.toString()).split(" "))[1]
+            var month = ((d.toString()).split(" "))[2]
+            var year = ((d.toString()).split(" "))[3]
+            var parsedDate = day + " " + month + " " + year
+            items.date= parsedDate
+        })
+        this.setState({dateParseReady:true})    
+    }
+
+    latestSearch(id) {
+        axios.get('http://localhost:4000/latestsearch', {
             params: {
-                userID:id
+                userID: id
             }
         })
-        .then(res => {
-           this.setState({ placesData:res.data}) 
-           console.log(this.state.placesData)
+            .then(res => {
+                this.setState({ latestSearch: res.data })
+                console.log(this.state.latestSearch)
+                this.dateParser()
+            })
+    }
+
+    userActitivity(id) {
+        axios.get('http://localhost:4000/visitoracitvity', {
+            params: {
+                userID: id
+            }
         })
+            .then(res => {
+                this.setState({ placesData: res.data })
+                console.log(this.state.placesData)
+                this.latestSearch(this.state.id)
+            })
     }
 
-    componentDidMount(){
-        this.userLoad()       
-    }
-    
-    flagSelect=(e)=>{
-        this.setState({flag:e})
+    componentDidMount() {
+        this.userLoad()
     }
 
-    componentDidUpdate(){
+    flagSelect = (e) => {
+        this.setState({ flag: e })
+    }
+
+    componentDidUpdate() {
         const profile = document.querySelector('.profile-blur')
         const editButton = document.querySelector('.edit')
         if (this.state.visibleUserEdit === true) {
@@ -77,33 +105,33 @@ class UserProfile extends React.Component{
         }
     }
 
-    update(e){
-       //console.log(e.target)
-     switch(e.target.name){
-        case 'username': this.setState({username: e.target.value});
-                        break;
-        case 'email': this.setState({email: e.target.value});
-                        break;
-        case 'phone': this.setState({phone: e.target.value});
-                        break;
-     }
-  }
+    update(e) {
+        //console.log(e.target)
+        switch (e.target.name) {
+            case 'name': this.setState({ name: e.target.value });
+                break;
+            case 'email': this.setState({ email: e.target.value });
+                break;
+            case 'phone': this.setState({ phone: e.target.value });
+                break;
+        }
+    }
 
-  saveUpdate(){
-    this.setState({visibleUserEdit:!(this.state.visibleUserEdit)})
-    axios.patch('http://localhost:4000/update',this.state)
-                .then(res=>{
-                    console.log(res)
-                })
-    this.userLoad()
-  }
-  
-    render(){
+    saveUpdate() {
+        this.setState({ visibleUserEdit: !(this.state.visibleUserEdit) })
+        axios.patch('http://localhost:4000/update', this.state)
+            .then(res => {
+                console.log(res)
+            })
+        this.userLoad()
+    }
+
+    render() {
         return (
             <div className="userprofile">
                 <div className="profile-blur">
-                    <ProfileHead props={this.state}/>
-                    <button className="edit" onClick={() => this.setState({visibleUserEdit:!(this.state.visibleUserEdit)})}>Edit</button>
+                    <ProfileHead props={this.state} />
+                    <button className="edit" onClick={() => this.setState({ visibleUserEdit: !(this.state.visibleUserEdit) })}>Edit</button>
                     <div className="userprofile-cards">
                         <div className="sidebar">
                             <div className="search-post">
@@ -112,15 +140,15 @@ class UserProfile extends React.Component{
                             </div>
                             <div className="recent-searches">
                                 <div className="title">Latest Searches</div>
-                                {/* {placesData.map((items, key) => (
-                                    <div className="latest-search">
+                                {this.state.dateParseReady && this.state.latestSearch.map((items) => (
+                                    <div className="latest-search" key={items.search_id}>
                                         <div className="latest-search-info">
-                                            <label key={key}>{items.place}</label>
-                                            <label key={key}>{items.date}</label>
+                                            <label>{items.location}</label>
+                                            <label>{items.date}</label>
                                         </div>
-                                        <Ratings />
+                                        <Ratings size={10} value={items.avg_rating}/>
                                     </div>
-                                ))} */}
+                                ))}
                             </div>
                             <div className="saved-contacts">
                                 <div className="title">Saved contacts</div>
@@ -136,7 +164,7 @@ class UserProfile extends React.Component{
                                 <PlacesLogged data={data} key={data.location} />
                             ))}
                         </div>
-                        <label style={{ position: "absolute", right: '13em', top: '20em' }}>Places logged : 12</label>
+                        <label style={{ position: "absolute", right: '13em', top: '20em' }}>Places logged : {this.state.placesData.length} </label>
                     </div>
                     <button id="more">MORE</button>
                 </div>
@@ -151,7 +179,7 @@ class UserProfile extends React.Component{
                             <form className="profile-edit-form">
                                 <div className="form-group">
                                     <label>Name</label>
-                                    <input type="text" value={this.state.username} name="username" onChange={(e)=>this.update(e)}></input>
+                                    <input type="text" value={this.state.name} name="name" onChange={(e) => this.update(e)}></input>
                                 </div>
                                 <div className="form-group">
                                     <label>Nationality</label>
@@ -166,15 +194,15 @@ class UserProfile extends React.Component{
                                 </div>
                                 <div className="form-group">
                                     <label>Phone number</label>
-                                    <input value={this.state.phone} name="phone" onChange={(e)=>this.update(e)}></input>
+                                    <input value={this.state.phone} name="phone" onChange={(e) => this.update(e)}></input>
                                 </div>
                                 <div className="form-group">
                                     <label>Email</label>
-                                    <input type="email" value={this.state.email} name="email" onChange={(e)=>this.update(e)}></input>
+                                    <input type="email" value={this.state.email} name="email" onChange={(e) => this.update(e)}></input>
                                 </div>
                             </form>
                         </div>
-                        <button id="edit-done" onClick={(e)=>this.saveUpdate(e)}>DONE</button>
+                        <button id="edit-done" onClick={(e) => this.saveUpdate(e)}>DONE</button>
                     </div>
                 }
             </div>)

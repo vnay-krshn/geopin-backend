@@ -20,7 +20,7 @@ var output = {
     location: '',
     city: ''
 }
-const Maps = ({temp}) => {
+const SearchMap = ({temp}) => {
 
     const [showPlaceinfo, setPlaceinfo] = useState(false)
 
@@ -67,11 +67,13 @@ const Maps = ({temp}) => {
     }
 
     const sendSearch = () => {
+        console.log(output.city)
         let postFeed = {
             location: output.location,
             city: output.city,
             coordinates: coordinates,
-            userID: userID
+            userID: userID,
+            avgRating:output.rating
         }
         console.log(postFeed)
         axios.post('http://localhost:4000/sendsearch', postFeed)
@@ -126,7 +128,7 @@ const Maps = ({temp}) => {
             getCity(coordinates)
             getPlaceInfo(coordinates)
             listUsers(coordinates)
-            setTimeout(sendSearch, 1000)
+            setTimeout(sendSearch, 2000)
         })
         map.addControl(geocoder)
     }, [])
@@ -157,4 +159,4 @@ const Maps = ({temp}) => {
 }
 
 
-export default Maps;
+export default SearchMap;

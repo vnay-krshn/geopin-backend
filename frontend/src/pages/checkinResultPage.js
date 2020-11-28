@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import HomepageNav from '../comp/homepageNav'
-import Maps from '../comp/CheckinMap'
+import CheckinMap from '../comp/CheckinMap'
 import '../css/review.css'
 
 const CheckinResults=()=>{
@@ -9,7 +9,7 @@ const CheckinResults=()=>{
     <div className='checkinResults'>
         <div className="checkin-blur">
             <HomepageNav/>
-            <Maps/>
+            <CheckinMap/>
         </div>
     </div>)
 }

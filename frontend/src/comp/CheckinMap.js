@@ -30,7 +30,7 @@ var output = {
   city: ''
 }
 
-const Maps = () => {
+const CheckinMap = () => {
 
   const [visibleReview, setVisibleReview] = useState(false)
   const [review, setreview] = useState('')
@@ -111,16 +111,6 @@ const Maps = () => {
   useEffect(() => {
     const button = document.querySelector('.operation')
     button.textContent = 'Check in'
-
-    // var flag = false
-
-    // if (window.location.pathname.indexOf('checkinResults') > -1) {
-    //   button.textContent = "Check in"
-    //   flag = true
-    // }
-    // else {
-    //   button.textContent = "Search"
-    // }
 
     var divContainer = document.querySelector('.divContainer')
     var mapContainer = document.querySelector('#map')
@@ -265,4 +255,4 @@ const Maps = () => {
 }
 
 
-export default Maps;
+export default CheckinMap;

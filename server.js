@@ -122,7 +122,7 @@ function auth(req, res, next) {
 };
 
 app.patch('/update', jsonParser, (req, res) => {
-  let username = req.body.username
+  let username = req.body.name
   let email = req.body.email
   let country = req.body.flag
   let phone = req.body.phone
@@ -223,9 +223,10 @@ app.post('/sendsearch', jsonParser, (req, res) => {
   let coordinates = req.body.coordinates
   let location = req.body.location
   let city = req.body.city
+  let avgRating = req.body.avgRating
   let userID = req.body.userID
 
-  let qr = `insert into searches(coordinate,location,city,user_id) values ('{"latitude":${JSON.stringify(coordinates.latitude)},"longitude":${JSON.stringify(coordinates.longitude)}}','${location}','${city}','${userID}')`
+  let qr = `insert into searches(coordinate,location,city,user_id,avg_rating) values ('{"latitude":${JSON.stringify(coordinates.latitude)},"longitude":${JSON.stringify(coordinates.longitude)}}','${location}','${city}','${userID}','${avgRating}')`
   pool.query(qr, (err, results) => {
     if (err) {
       res.send({ message: "error", error: err })
@@ -265,7 +266,7 @@ app.get('/visitorprofile', (req, res) => {
 
 app.get('/visitoracitvity', (req, res) => {
   let userID = req.query.userID
-  let qry = `select distinct on(location) location,user_id,city,review,rating,date from checkin where user_id='${userID}' order by location,place_id desc`
+  let qry = `select distinct on(location) location,user_id,city,review,rating,date,place_id from checkin where user_id='${userID}' order by location,place_id desc`
   pool.query(qry,
     (err, results) => {
       if (err) {
@@ -276,6 +277,24 @@ app.get('/visitoracitvity', (req, res) => {
     }
   )
 })
+
+app.get('/latestsearch', (req, res) => {
+  let userID = req.query.userID
+  let qry = `select location,avg_rating,date,search_id from searches where user_id='${userID}' order by search_id desc`
+  pool.query(qry,
+    (err, results) => {
+      if (err) {
+        res.send(err)
+      }else{
+      res.send(results.rows)
+      }
+    }
+  )
+})
+
+
+
+
 
 
 

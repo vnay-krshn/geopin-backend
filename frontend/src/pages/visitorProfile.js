@@ -3,11 +3,7 @@ import PlacesLogged from '../comp/placesLogged'
 import ProfileHead from '../comp/profileHead'
 import '../css/profileHead.css'
 import '../css/placesLogged.css'
-import { useContext } from 'react'
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
-
-var placeData=[]
 
 const VisitorProfile=()=>{
     const[visitorInfo,setvisitorinfo]=useState({})
@@ -48,7 +44,7 @@ const VisitorProfile=()=>{
             <label id="numberLog">Places Logged : {placeData.length} </label>
             <div className="place-cards">
                 {placeData.map((data)=>(
-                    <PlacesLogged data={data} key={data.location}/>
+                    <PlacesLogged data={data} key={data.place_id}/>
                 ))}
             </div>
             <button id="more">More</button>
