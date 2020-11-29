@@ -14,7 +14,7 @@ const ProfileHead=({props})=>{
                     <label> {props.email} </label>
                 </div>
                 <div className="profileHead-nationality">
-                    <img src='/imgs/india-flag.jpg'></img>
+                    <img src={props.countryIcon}></img>
                     <label>{props.country}</label>
                 </div>
                 <div className='profileHead-contact'>

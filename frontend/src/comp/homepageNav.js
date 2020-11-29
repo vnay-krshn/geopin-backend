@@ -20,6 +20,7 @@ class HomepageNav extends React.Component{
             .then((response) => {
                 this.username = response.data.name
                 this.setState({username:response.data.name})
+                
             }              
             ) 
         }

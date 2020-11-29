@@ -1,5 +1,7 @@
 const express = require("express");
 const { pool } = require("./dbConfig");
+const path = require('path')
+const fileUpload = require('express-fileupload')
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken')
 const bodyParser = require('body-parser')
@@ -11,9 +13,34 @@ const PORT = process.env.PORT || 4000;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(cors())
+app.use(express.static(path.join(__dirname, 'imgs')))
+app.use(fileUpload())
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 let users = { password: '' }
+
+app.post('/uploadpic', (req, res) => {
+  let file = req.files.imgs
+  let imgName = file.name
+  if (file.mimetype == "image/jpeg" || file.mimetype == "image/png"||file.mimetype == "image/svg") {
+    file.mv('imgs/' + file.name, function (err) {
+      if (err){
+        return res.status(500).send(err);
+      }
+      var sql = `INSERT INTO temp(images) VALUES ('${imgName}')`;
+      pool.query(sql, function (err, result) {
+        if(err){
+          res.send(err)
+        }else{
+          res.send(result)
+        }
+      });
+    });
+  } else {
+    message = "This format is not allowed , please upload file with '.png','.jpg'";
+    res.send({ message: message });
+  }
+})
 
 app.get('/getusers', (req, res) => {
   let qry = `select count(*) from users `
@@ -30,7 +57,9 @@ app.get('/getusers', (req, res) => {
 app.post('/register', jsonParser, (req, res) => {
   let username = req.body.username
   let email = req.body.email
-  let country = req.body.flag
+  let country = req.body.country
+  let countryIcon = req.body.countryIcon
+  let countryID = req.body.countryID
   let phone = req.body.phone
   let password = req.body.password
 
@@ -40,7 +69,7 @@ app.post('/register', jsonParser, (req, res) => {
       return res.send({ message: "email already exists" })
     }
     hashedPassword = await bcrypt.hash(password, 10)
-    pool.query(`insert into users(name, email, password, country, phone) values('${username}','${email}','${hashedPassword}','${country}','${phone}') returning id`, (err, results) => {
+    pool.query(`insert into users(name, email, password, country, country_icon, phone,country_id) values('${username}','${email}','${hashedPassword}','${country}','${countryIcon}','${phone}','${countryID}') returning id`, (err, results) => {
       const payload = {
         user: {
           id: results.rows[0].id
@@ -57,7 +86,7 @@ app.post('/register', jsonParser, (req, res) => {
             token
           });
         }
-      );
+       );
     })
 
   })
@@ -124,14 +153,16 @@ function auth(req, res, next) {
 app.patch('/update', jsonParser, (req, res) => {
   let username = req.body.name
   let email = req.body.email
-  let country = req.body.flag
+  let country = req.body.country
+  let countryID = req.body.countryID
+  let countryIcon = req.body.countryIcon
   let phone = req.body.phone
   let id = req.body.id
-
-  let qr = `update users set name = '${username}', email = '${email}', country = '${country}', phone='${phone}' where id='${id}'`
+  
+  let qr = `update users set name = '${username}', email = '${email}', country = '${country}', country_id='${countryID}',country_icon='${countryIcon}', phone='${phone}' where id='${id}'`
   pool.query(qr, (err, results) => {
     if (err) {
-      res.send({ message: "updation failed" })
+      res.send({ message: "updation failed" , result:err})
     }
     else {
       res.send({ message: "updation success" })
@@ -194,9 +225,9 @@ app.patch('/updatefeed', jsonParser, (req, res) => {
 
 app.get('/placeinfo', (req, res) => {
   let coordinates = JSON.parse(req.query.coordinates)
-  let output={
-    count:'',
-    rating:''
+  let output = {
+    count: '',
+    rating: ''
   }
   let qry1 = `select count(distinct(user_id)) from checkin where coordinate->>'latitude'= '${coordinates.latitude}' and coordinate->>'longitude'= '${coordinates.longitude}'`
   let qry2 = `select avg(rating) from checkin where coordinate->>'latitude'= '${coordinates.latitude}' and coordinate->>'longitude'= '${coordinates.longitude}'`
@@ -205,7 +236,7 @@ app.get('/placeinfo', (req, res) => {
       if (err) {
         res.send(err)
       }
-      output.count=results.rows[0].count
+      output.count = results.rows[0].count
     }
   )
   pool.query(qry2,
@@ -213,7 +244,7 @@ app.get('/placeinfo', (req, res) => {
       if (err) {
         res.send(err)
       }
-      output.rating=results.rows[0].avg
+      output.rating = results.rows[0].avg
       res.send(output)
     }
   )
@@ -271,8 +302,8 @@ app.get('/visitoracitvity', (req, res) => {
     (err, results) => {
       if (err) {
         res.send(err)
-      }else{
-      res.send(results.rows)
+      } else {
+        res.send(results.rows)
       }
     }
   )
@@ -285,8 +316,8 @@ app.get('/latestsearch', (req, res) => {
     (err, results) => {
       if (err) {
         res.send(err)
-      }else{
-      res.send(results.rows)
+      } else {
+        res.send(results.rows)
       }
     }
   )
@@ -300,8 +331,8 @@ app.get('/checkfollower', (req, res) => {
     (err, results) => {
       if (err) {
         res.send(err)
-      }else{
-      res.send(results.rows[0].exists)
+      } else {
+        res.send(results.rows[0].exists)
       }
     }
   )
@@ -324,14 +355,14 @@ app.post('/savefollower', jsonParser, (req, res) => {
 
 })
 
-app.delete('/deletefollower',(req,res)=>{
+app.delete('/deletefollower', (req, res) => {
   let userID = req.query.userID
   let visitorID = req.query.visitorId
-  let qry =`delete from followers where user_id=${userID} and visitor_id=${visitorID}`
-  pool.query(qry,(err,results)=>{
-    if(err){
+  let qry = `delete from followers where user_id=${userID} and visitor_id=${visitorID}`
+  pool.query(qry, (err, results) => {
+    if (err) {
       res.send(err)
-    }else{
+    } else {
       res.send(results)
     }
   })

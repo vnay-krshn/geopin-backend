@@ -15,13 +15,14 @@ class UserProfile extends React.Component {
         name: '',
         email: '',
         country: '',
+        countryIcon: '',
+        countryID: '',
         phone: '',
         visibleUserEdit: false,
-        flag: '',
         placesData: [],
         latestSearch: [],
-        dateParseReady:false,
-        navbaredit:false
+        dateParseReady: false,
+        navbaredit: false
     }
 
     token = localStorage.getItem('token')
@@ -38,6 +39,8 @@ class UserProfile extends React.Component {
                         name: response.data.name,
                         email: response.data.email,
                         country: response.data.country,
+                        countryIcon: response.data.country_icon,
+                        countryID: response.data.country_id,
                         phone: response.data.phone
                     })
                     this.userActitivity(this.state.id)
@@ -48,15 +51,15 @@ class UserProfile extends React.Component {
     }
 
     dateParser() {
-        this.state.latestSearch.map(items=>{
+        this.state.latestSearch.map(items => {
             var d = new Date(items.date);
             var day = ((d.toString()).split(" "))[1]
             var month = ((d.toString()).split(" "))[2]
             var year = ((d.toString()).split(" "))[3]
             var parsedDate = day + " " + month + " " + year
-            items.date= parsedDate
+            items.date = parsedDate
         })
-        this.setState({dateParseReady:true})    
+        this.setState({ dateParseReady: true })
     }
 
     latestSearch(id) {
@@ -67,7 +70,6 @@ class UserProfile extends React.Component {
         })
             .then(res => {
                 this.setState({ latestSearch: res.data })
-                console.log(this.state.latestSearch)
                 this.dateParser()
             })
     }
@@ -80,30 +82,18 @@ class UserProfile extends React.Component {
         })
             .then(res => {
                 this.setState({ placesData: res.data })
-                console.log(this.state.placesData)
                 this.latestSearch(this.state.id)
             })
     }
 
-    componentDidMount() {
-        this.userLoad()
-    }
+    flagSelect(e) {
+        const name = document.querySelector('.flag-select__option__label')
+        const icon = document.querySelector('.flag-select__option__icon')
+        setTimeout(()=>{
+            this.setState({ countryIcon: icon.src, countryID: e, country: name.textContent },()=>{
+                console.log(this.state)
+            })},1)     
 
-    flagSelect = (e) => {
-        this.setState({ flag: e })
-    }
-
-    componentDidUpdate() {
-        const profile = document.querySelector('.profile-blur')
-        const editButton = document.querySelector('.edit')
-        if (this.state.visibleUserEdit === true) {
-            profile.style.filter = 'blur(3px)'
-            editButton.disabled = true
-        }
-        else {
-            profile.style.filter = 'none'
-            editButton.disabled = false
-        }
     }
 
     update(e) {
@@ -119,12 +109,32 @@ class UserProfile extends React.Component {
     }
 
     saveUpdate() {
-        this.setState({navbaredit:true})
+        this.setState({ navbaredit: true })
         this.setState({ visibleUserEdit: !(this.state.visibleUserEdit) })
+        console.log(this.state)
         axios.patch('http://localhost:4000/update', this.state)
             .then(res => {
                 console.log(res)
+                this.userLoad()
+                this.setState({ navbaredit: false })
             })
+    }
+
+    componentDidUpdate() {
+        const profile = document.querySelector('.profile-blur')
+        const editButton = document.querySelector('.edit')
+        if (this.state.visibleUserEdit === true) {
+            profile.style.filter = 'blur(3px)'
+            editButton.disabled = true
+        }
+        else {
+            profile.style.filter = 'none'
+            editButton.disabled = false
+        }
+
+    }
+
+    componentDidMount() {
         this.userLoad()
     }
 
@@ -148,7 +158,7 @@ class UserProfile extends React.Component {
                                             <label>{items.location}</label>
                                             <label>{items.date}</label>
                                         </div>
-                                        <Ratings size={10} value={items.avg_rating}/>
+                                        <Ratings size={10} value={items.avg_rating} />
                                     </div>
                                 ))}
                             </div>
@@ -186,12 +196,11 @@ class UserProfile extends React.Component {
                                 <div className="form-group">
                                     <label>Nationality</label>
                                     <ReactFlagsSelect
-                                        defaultCountry={this.state.country}
+                                        defaultCountry={this.state.countryID}
                                         searchable={true}
                                         optionsSize={15}
-                                        showOptionLabel={false}
                                         onSelect={(e) => this.flagSelect(e)}
-                                        name="country"
+                                        className="menu-flags"
                                     />
                                 </div>
                                 <div className="form-group">
@@ -204,7 +213,9 @@ class UserProfile extends React.Component {
                                 </div>
                             </form>
                         </div>
-                        <button id="edit-done" onClick={(e) => this.saveUpdate(e)}>DONE</button>
+                        <button id="edit-done"
+                        onClick={(e) => this.saveUpdate(e)}
+                        >DONE</button>
                     </div>
                 }
             </div>)

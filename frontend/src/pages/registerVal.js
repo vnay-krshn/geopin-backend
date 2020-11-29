@@ -12,7 +12,7 @@ const initialValues = {
     email: '',
     phone: '',
     password: '',
-    re_password: ''
+    re_password: '',
 }
 
 const phoneRegExp = /(^$)|(^\d{10}$)/
@@ -45,11 +45,19 @@ const validationSchema = Yup.object({
 const RegisterVal=()=>{
     const history = useHistory();    
     let error ={message:''}
-    let flag 
+    let country,countryIcon,countryID
 
     const submit = e =>{
-        //console.log(flag)
-        let user ={ username: e.username, email:e.email, password:e.password,phone:e.phone,flag:flag }
+        let user ={ 
+            username: e.username, 
+            email:e.email, 
+            password:e.password,
+            phone:e.phone,
+            country:country,
+            countryIcon:countryIcon,
+            countryID:countryID,
+            defaultProfile: require('../imgs/user.svg')
+        }
         axios.post('http://localhost:4000/register',user)
                 .then(res=>{
                         if(res.data.message==='email already exists'){
@@ -66,7 +74,14 @@ const RegisterVal=()=>{
 
 
     const flagSelect=(e)=>{
-        flag=e
+        countryID=e
+        const menuFlags=document.querySelector('.menu-flags')
+        if(menuFlags){
+            const name=document.querySelector('.flag-select__option__label')
+            const icon=document.querySelector('.flag-select__option__icon')
+            country=name.textContent
+            countryIcon=icon.src
+        }
     }
   
      
@@ -103,8 +118,7 @@ const RegisterVal=()=>{
                                         placeholder="Country"
                                         searchable={true}
                                         optionsSize={2}
-                                        showOptionLabel={false}
-                                        onSelect={(e) => flagSelect(e)}
+                                        onSelect={(e)=>flagSelect(e)}
                                     />
                                 </div>
                                 <div className="phone">
