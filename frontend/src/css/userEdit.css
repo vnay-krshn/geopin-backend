@@ -57,3 +57,9 @@
     background: #09c2a9;
 }
 
+.useredit #uploadButton{
+    position: relative;
+    left:14em;
+    bottom: 10em;
+}
+

@@ -35,25 +35,27 @@
 
   position: relative;
   top: 8em;
-  left: -2.8em;
+  left: -1em;
 }
 
 .profileHead-nationality{
   /* background: chartreuse; */
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   padding:0.5em;
   height: 3vh;
-  width: 11vw;
+  width: 17.5vw;
+  font-size: 0.9rem;
 
   position: relative;
-  top: 8.2em;
-  left: -5em;
+  top: 9.5em;
+  left: -4em;
 }
 
 .profileHead-header .profileHead-nationality img{
-    max-width: 2.8vw;
+    max-width: 2.9vw;
 }
+
 

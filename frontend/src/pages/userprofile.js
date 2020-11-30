@@ -10,6 +10,11 @@ import '../css/userEdit.css'
 
 class UserProfile extends React.Component {
 
+    constructor(props){
+        super(props)
+        this.handleChange=this.handleChange.bind(this)
+    }
+
     state = {
         id: '',
         name: '',
@@ -18,17 +23,18 @@ class UserProfile extends React.Component {
         countryIcon: '',
         countryID: '',
         phone: '',
-        profilePic: '',
+        profile_pic:'',
         visibleUserEdit: false,
         placesData: [],
         latestSearch: [],
-        savedContacts:[],
-        savedContactsPics:[],
+        savedContacts: [],
+        savedContactsPics: [],
         dateParseReady: false,
         navbaredit: false
     }
 
     token = localStorage.getItem('token')
+    baseconverted=""
 
     userLoad() {
         if (this.token !== undefined) {
@@ -37,6 +43,9 @@ class UserProfile extends React.Component {
                     headers: { "token": this.token }
                 })
                 .then((response) => {
+                    if((response.data.profile_pic).indexOf("http")!==-1){
+                        this.setState({profile_pic:response.data.profile_pic})
+                    }
                     this.setState({
                         id: response.data.id,
                         name: response.data.name,
@@ -44,8 +53,7 @@ class UserProfile extends React.Component {
                         country: response.data.country,
                         countryIcon: response.data.country_icon,
                         countryID: response.data.country_id,
-                        phone: response.data.phone,
-                        profile_pic: response.data.profile_pic
+                        phone: response.data.phone
                     })
                     this.userActitivity(this.state.id)
                     this.findSavedContacts(this.state.id)
@@ -53,6 +61,24 @@ class UserProfile extends React.Component {
                 }
                 )
         }
+    }
+
+   handleChange(e){
+       var arr=e.target.files[0]
+       this.setState({profile_pic:URL.createObjectURL(arr)})       
+       var reader = new FileReader();
+       if (arr) {
+              reader.readAsDataURL(arr);
+              reader.onload = () => {
+                //var Base64 = reader.result;
+                this.baseconverted=reader.result
+                //console.log(Base64);
+              };
+              reader.onerror = (error) => {
+                console.log("error: ", error);
+              };
+            }
+      
     }
 
     dateParser() {
@@ -118,6 +144,9 @@ class UserProfile extends React.Component {
         this.setState({ navbaredit: true })
         this.setState({ visibleUserEdit: !(this.state.visibleUserEdit) })
         console.log(this.state)
+        if(this.baseconverted!=""){
+            this.setState({profile_pic:this.baseconverted})
+        }
         axios.patch('http://localhost:4000/update', this.state)
             .then(res => {
                 console.log(res)
@@ -126,31 +155,31 @@ class UserProfile extends React.Component {
             })
     }
 
-    getSavedContactPics(arr){
-        arr.map(item=>{
-            axios.get('http://localhost:4000/visitorprofile',{
+    getSavedContactPics(arr) {
+        arr.map(item => {
+            axios.get('http://localhost:4000/visitorprofile', {
                 params: {
                     userID: item.visitor_id
                 }
             })
-            .then(res=>{
-                this.setState({savedContactsPics:[...this.state.savedContactsPics,res.data[0].profile_pic]},()=>{
-                    console.log(this.state.savedContactsPics)
+                .then(res => {
+                    this.setState({ savedContactsPics: [...this.state.savedContactsPics, res.data[0].profile_pic] }, () => {
+                        console.log(this.state.savedContactsPics)
+                    })
                 })
-            })
         })
-        
+
     }
 
-    findSavedContacts(id){
+    findSavedContacts(id) {
         axios.get('http://localhost:4000/followerpic', {
             params: {
                 userID: id
             }
         })
             .then(res => {
-               this.setState({savedContacts:res.data.rows})
-               this.getSavedContactPics(this.state.savedContacts)               
+                this.setState({ savedContacts: res.data.rows })
+                this.getSavedContactPics(this.state.savedContacts)
             })
     }
 
@@ -219,8 +248,11 @@ class UserProfile extends React.Component {
                         <div className="editprofile">
                             <div className="edit-title">Edit Profile</div>
                             <div className="profile-pic">
-                                <img id="user-pic" src='/imgs/user_image_bitmap.svg'></img>
-                                <img id="user-pic-edit" src="/imgs/edit_photo.svg"></img>
+                                <img id="user-pic" src={this.state.profile_pic}></img>
+                                <label htmlFor="uploadButton">
+                                    <img id="user-pic-edit" src="/imgs/edit_photo.svg"></img>
+                                </label>
+                                <input type="file" id="uploadButton" style={{ display: "none" }} onChange={this.handleChange}></input>
                             </div>
                             <form className="profile-edit-form">
                                 <div className="form-group">

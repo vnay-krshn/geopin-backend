@@ -136,8 +136,9 @@ app.patch('/update', jsonParser, (req, res) => {
   let countryIcon = req.body.countryIcon
   let phone = req.body.phone
   let id = req.body.id
+  let profilePic= req.body.profile_pic
   
-  let qr = `update users set name = '${username}', email = '${email}', country = '${country}', country_id='${countryID}',country_icon='${countryIcon}', phone='${phone}' where id='${id}'`
+  let qr = `update users set name = '${username}', email = '${email}', country = '${country}', country_id='${countryID}',country_icon='${countryIcon}', phone='${phone}', profile_pic='${profilePic}' where id='${id}'`
   pool.query(qr, (err, results) => {
     if (err) {
       res.send({ message: "updation failed" , result:err})
