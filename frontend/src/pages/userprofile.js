@@ -18,9 +18,12 @@ class UserProfile extends React.Component {
         countryIcon: '',
         countryID: '',
         phone: '',
+        profilePic: '',
         visibleUserEdit: false,
         placesData: [],
         latestSearch: [],
+        savedContacts:[],
+        savedContactsPics:[],
         dateParseReady: false,
         navbaredit: false
     }
@@ -41,9 +44,11 @@ class UserProfile extends React.Component {
                         country: response.data.country,
                         countryIcon: response.data.country_icon,
                         countryID: response.data.country_id,
-                        phone: response.data.phone
+                        phone: response.data.phone,
+                        profile_pic: response.data.profile_pic
                     })
                     this.userActitivity(this.state.id)
+                    this.findSavedContacts(this.state.id)
                     this.update = this.update.bind(this)
                 }
                 )
@@ -89,10 +94,11 @@ class UserProfile extends React.Component {
     flagSelect(e) {
         const name = document.querySelector('.flag-select__option__label')
         const icon = document.querySelector('.flag-select__option__icon')
-        setTimeout(()=>{
-            this.setState({ countryIcon: icon.src, countryID: e, country: name.textContent },()=>{
+        setTimeout(() => {
+            this.setState({ countryIcon: icon.src, countryID: e, country: name.textContent }, () => {
                 console.log(this.state)
-            })},1)     
+            })
+        }, 1)
 
     }
 
@@ -117,6 +123,34 @@ class UserProfile extends React.Component {
                 console.log(res)
                 this.userLoad()
                 this.setState({ navbaredit: false })
+            })
+    }
+
+    getSavedContactPics(arr){
+        arr.map(item=>{
+            axios.get('http://localhost:4000/visitorprofile',{
+                params: {
+                    userID: item.visitor_id
+                }
+            })
+            .then(res=>{
+                this.setState({savedContactsPics:[...this.state.savedContactsPics,res.data[0].profile_pic]},()=>{
+                    console.log(this.state.savedContactsPics)
+                })
+            })
+        })
+        
+    }
+
+    findSavedContacts(id){
+        axios.get('http://localhost:4000/followerpic', {
+            params: {
+                userID: id
+            }
+        })
+            .then(res => {
+               this.setState({savedContacts:res.data.rows})
+               this.getSavedContactPics(this.state.savedContacts)               
             })
     }
 
@@ -165,8 +199,8 @@ class UserProfile extends React.Component {
                             <div className="saved-contacts">
                                 <div className="title">Saved contacts</div>
                                 <div className="contact-images">
-                                    {usersData.map((items, key) => (
-                                        <img src={items.image} key={key}></img>
+                                    {this.state.savedContactsPics.map((items, key) => (
+                                        <img src={items} key={key}></img>
                                     ))}
                                 </div>
                             </div>
@@ -214,7 +248,7 @@ class UserProfile extends React.Component {
                             </form>
                         </div>
                         <button id="edit-done"
-                        onClick={(e) => this.saveUpdate(e)}
+                            onClick={(e) => this.saveUpdate(e)}
                         >DONE</button>
                     </div>
                 }

@@ -14,7 +14,7 @@ var parsedDate = day + " " + month + " " + year
 
 return(
    <div className="visitor">
-        <img src='/imgs/user_image_bitmap.svg'></img>
+        <img src={data.profile_pic} style={{'background':'white'}}></img>
         <div className='visitor-info'>
             <Link to={`/visitorProfile/${data.user_id}`} style={{ textDecoration: 'none' }}>
                 <label id="username">{data.name}</label>

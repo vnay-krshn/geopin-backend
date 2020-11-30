@@ -8,7 +8,7 @@ const ProfileHead=({props})=>{
         <div className="profileHead">
             <HomepageNav props={props.navbaredit} />
             <div className="profileHead-header">
-                <img id="profile" src='/imgs/user_image_bitmap.svg'></img>
+                <img id="profile" style={{'background':'white'}} src={props.profile_pic}></img>
                 <div className="profileHead-name">
                     <h4> {props.name} </h4>
                     <label> {props.email} </label>

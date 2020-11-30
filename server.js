@@ -1,7 +1,5 @@
 const express = require("express");
 const { pool } = require("./dbConfig");
-const path = require('path')
-const fileUpload = require('express-fileupload')
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken')
 const bodyParser = require('body-parser')
@@ -13,46 +11,31 @@ const PORT = process.env.PORT || 4000;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(cors())
-app.use(express.static(path.join(__dirname, 'imgs')))
-app.use(fileUpload())
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
 let users = { password: '' }
 
-app.post('/uploadpic', (req, res) => {
-  let file = req.files.imgs
-  let imgName = file.name
-  if (file.mimetype == "image/jpeg" || file.mimetype == "image/png"||file.mimetype == "image/svg") {
-    file.mv('imgs/' + file.name, function (err) {
-      if (err){
-        return res.status(500).send(err);
-      }
-      var sql = `INSERT INTO temp(images) VALUES ('${imgName}')`;
-      pool.query(sql, function (err, result) {
-        if(err){
-          res.send(err)
-        }else{
-          res.send(result)
-        }
-      });
-    });
-  } else {
-    message = "This format is not allowed , please upload file with '.png','.jpg'";
-    res.send({ message: message });
-  }
+app.post('/uploadtodb',(req,res)=>{
+  console.log(req.body)
+  // pool.query(`insert into temp(images) values('${imageFile}')`,(err,results)=>{
+  //   if(err){
+  //     res.send(err)
+  //   }else{
+  //     res.send(results)
+  //   }
+  // })
 })
 
-app.get('/getusers', (req, res) => {
-  let qry = `select count(*) from users `
-  pool.query(qry,
-    (err, results) => {
-      if (err) {
-        console.log(err)
-      }
-      res.send(results.rows)
+app.get('/getfromdb',(req,res)=>{
+  pool.query(`select images from temp where id=1`,(err,results)=>{
+    if(err){
+      res.send(err)
+    }else{
+      res.send(results)
     }
-  )
-})
+  })
+})//test
 
 app.post('/register', jsonParser, (req, res) => {
   let username = req.body.username
@@ -62,29 +45,24 @@ app.post('/register', jsonParser, (req, res) => {
   let countryID = req.body.countryID
   let phone = req.body.phone
   let password = req.body.password
-
+  let profilePic = "https://www.flaticon.com/svg/static/icons/svg/848/848043.svg"
+ 
   let qry1 = `select * from users where email='${email}'`
   pool.query(qry1, async (err, results) => {
     if (results.rows.length > 0) {
       return res.send({ message: "email already exists" })
     }
     hashedPassword = await bcrypt.hash(password, 10)
-    pool.query(`insert into users(name, email, password, country, country_icon, phone,country_id) values('${username}','${email}','${hashedPassword}','${country}','${countryIcon}','${phone}','${countryID}') returning id`, (err, results) => {
+    let qry2=`insert into users(name, email, password, country, country_icon, phone,country_id,profile_pic) values('${username}','${email}','${hashedPassword}','${country}','${countryIcon}','${phone}','${countryID}','${profilePic}') returning id`
+    pool.query(qry2, (err, results) => {
       const payload = {
         user: {
           id: results.rows[0].id
         }
       };
-      jwt.sign(
-        payload,
-        "randomString", {
-        expiresIn: 10000
-      },
-        (err, token) => {
+      jwt.sign(payload, "randomString", { expiresIn: 10000 },(err, token) => {
           if (err) throw err;
-          res.status(200).json({
-            token
-          });
+          res.status(200).json({ token });
         }
        );
     })
@@ -271,7 +249,7 @@ app.post('/sendsearch', jsonParser, (req, res) => {
 
 app.get('/listusers', (req, res) => {
   let coordinates = JSON.parse(req.query.coordinates)
-  let qry = `select distinct on(user_id) user_id,date,rating,name,phone from users inner join checkin on checkin.user_id=users.id where coordinate ->> 'latitude'='${coordinates.latitude}' and coordinate->>'longitude'= '${coordinates.longitude}'`
+  let qry = `select distinct on(user_id) user_id,date,rating,name,phone,profile_pic from users inner join checkin on checkin.user_id=users.id where coordinate ->> 'latitude'='${coordinates.latitude}' and coordinate->>'longitude'= '${coordinates.longitude}'`
   pool.query(qry,
     (err, results) => {
       if (err) {
@@ -284,7 +262,7 @@ app.get('/listusers', (req, res) => {
 
 app.get('/visitorprofile', (req, res) => {
   let visitorID = req.query.userID
-  let qry = `select id,name,phone,country,email from users where id='${visitorID}'`
+  let qry = `select id,name,phone,country,email,profile_pic from users where id='${visitorID}'`
   pool.query(qry,
     (err, results) => {
       if (err) {
@@ -368,6 +346,17 @@ app.delete('/deletefollower', (req, res) => {
   })
 })
 
+app.get('/followerpic',(req,res)=>{
+  let userID= req.query.userID
+  let qry = `select distinct on(visitor_id) visitor_id from followers where user_id='${userID}';`
+  pool.query(qry,(err,results)=>{
+    if(err){
+      res.send(err)
+    }else{
+      res.send(results)
+    }
+  })
+})
 
 
 

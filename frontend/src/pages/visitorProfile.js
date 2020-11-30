@@ -102,7 +102,7 @@ const VisitorProfile=()=>{
         })
         .then(res => {
            setvisitorinfo(res.data[0])
-           console.log(visitorInfo)
+           //console.log(visitorInfo)
            getVisitorActivity()
         })
         const saveButton = document.querySelector('#save')

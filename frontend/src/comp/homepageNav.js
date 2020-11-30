@@ -9,7 +9,7 @@ class HomepageNav extends React.Component{
     }
 
     token = localStorage.getItem('token')
-    state={username :''}
+    state={username :'',logo:''}
 
     userload(){
         if(this.token!==undefined){
@@ -19,7 +19,11 @@ class HomepageNav extends React.Component{
             })
             .then((response) => {
                 this.username = response.data.name
-                this.setState({username:response.data.name})
+                this.logo=response.data.profile_pic
+                this.setState({
+                    username:response.data.name,
+                    logo:response.data.profile_pic
+                })
                 
             }              
             ) 
@@ -44,7 +48,7 @@ class HomepageNav extends React.Component{
                         <img src={'/imgs/logo_inner_page.svg'}></img>
                     </Link>
                     <ul>
-                        <img src={'/imgs/user_image_bitmap.svg'}></img>
+                        <img src={this.state.logo} style={{'background':'white'}}></img>
                         <Link to='/userProfile' style={{ textDecoration: 'none' }}>
                             <li> {this.username} </li>
                         </Link>

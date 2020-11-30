@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-import { Link , Redirect,useHistory} from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import ReactFlagsSelect from 'react-flags-select';
 import 'react-flags-select/css/react-flags-select.css';
 import axios from 'axios'
@@ -42,126 +42,127 @@ const validationSchema = Yup.object({
 
 })
 
-const RegisterVal=()=>{
-    const history = useHistory();    
-    let error ={message:''}
-    let country,countryIcon,countryID
+const RegisterVal = () => {
+    const history = useHistory();
+    let error = { message: '' }
+    let country, countryIcon, countryID
 
-    const submit = e =>{
-        let user ={ 
-            username: e.username, 
-            email:e.email, 
-            password:e.password,
-            phone:e.phone,
-            country:country,
-            countryIcon:countryIcon,
-            countryID:countryID,
-            defaultProfile: require('../imgs/user.svg')
+
+    const submit = e => {
+        let user = {
+            username: e.username,
+            email: e.email,
+            password: e.password,
+            phone: e.phone,
+            country: country,
+            countryIcon: countryIcon,
+            countryID: countryID
         }
-        axios.post('http://localhost:4000/register',user)
-                .then(res=>{
-                        if(res.data.message==='email already exists'){
-                            error.message=res.data.message
-                            alert(error.message)
-                        }
-                        else{
-                            history.push('/login')
-                        }
-                        
-                    }
-                    )
+        axios.post('http://localhost:4000/register', user)
+            .then(res => {
+                if (res.data.message === 'email already exists') {
+                    error.message = res.data.message
+                    alert(error.message)
+                    console.log(res.data)
+                }
+                else {
+                    history.push('/login')
+                }
+
+            }
+            )
     }
 
 
-    const flagSelect=(e)=>{
-        countryID=e
-        const menuFlags=document.querySelector('.menu-flags')
-        if(menuFlags){
-            const name=document.querySelector('.flag-select__option__label')
-            const icon=document.querySelector('.flag-select__option__icon')
-            country=name.textContent
-            countryIcon=icon.src
+    const flagSelect = (e) => {
+        countryID = e
+        const menuFlags = document.querySelector('.menu-flags')
+        if (menuFlags) {
+            const name = document.querySelector('.flag-select__option__label')
+            const icon = document.querySelector('.flag-select__option__icon')
+            country = name.textContent
+            countryIcon = icon.src
         }
     }
-  
-     
+
+
     return (
-            <div className="register">
-                <Link to='/'>
-                    <img src='/imgs/logo.svg'></img>
-                </Link>
-                <div className="register-box">
-                    <h3>REGISTER</h3>
-                    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={(e)=>submit(e)}>
-                        <Form className="register-form">
-                            <Field
-                                placeholder="Name"
-                                type="text"
-                                id="username"
-                                name="username" />
-                            <div className="error">
-                                <ErrorMessage name='username' />
-                            </div>
-                            <Field
-                                placeholder="Email"
-                                type="email"
-                                id="email"
-                                name="email" />
-                            <div className="error">
-                                <ErrorMessage name='email' />
-                            </div>
+        <div className="register">
+            <Link to='/'>
+                <img src='/imgs/logo.svg'></img>
+            </Link>
+            <div className="register-box">
+                <h3>REGISTER</h3>
+                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={(e) => submit(e)}>
+                    <Form className="register-form">
+                        <Field
+                            placeholder="Name"
+                            type="text"
+                            id="username"
+                            name="username" />
+                        <div className="error">
+                            <ErrorMessage name='username' />
+                        </div>
+                        <Field
+                            placeholder="Email"
+                            type="email"
+                            id="email"
+                            name="email" />
+                        <div className="error">
+                            <ErrorMessage name='email' />
+                        </div>
 
-                            <div className="contact" >
-                                <div className="dropdownErr">
-                                    <ReactFlagsSelect
-                                        className="menu-flags"
-                                        placeholder="Country"
-                                        searchable={true}
-                                        optionsSize={2}
-                                        onSelect={(e)=>flagSelect(e)}
-                                    />
-                                </div>
-                                <div className="phone">
-                                    <Field
-                                        placeholder="Phone number"
-                                        id="phone"
-                                        name="phone" />
-                                    <div className="errorPhone">
-                                        <ErrorMessage name='phone' />
-                                    </div>
+                        <div className="contact" >
+                            <div className="dropdownErr">
+                                <ReactFlagsSelect
+                                    className="menu-flags"
+                                    placeholder="Country"
+                                    searchable={true}
+                                    optionsSize={2}
+                                    onSelect={(e) => flagSelect(e)}
+                                />
+                            </div>
+                            <div className="phone">
+                                <Field
+                                    placeholder="Phone number"
+                                    id="phone"
+                                    name="phone" />
+                                <div className="errorPhone">
+                                    <ErrorMessage name='phone' />
                                 </div>
                             </div>
+                        </div>
 
-                            <Field
-                                placeholder="Password"
-                                type="password"
-                                id="password"
-                                name="password" />
-                            <div className="error">
-                                <ErrorMessage name='password' />
-                            </div>
-                            <Field
-                                placeholder="Confirm Password"
-                                type="password"
-                                id="re_password"
-                                name="re_password" />
-                            <div className="error">
-                                <ErrorMessage name='re_password' />
-                            </div>
-                                <button type="submit">CREATE AN ACCOUNT</button>
-                            <label>
-                                Already have an account?
+                        <Field
+                            placeholder="Password"
+                            type="password"
+                            id="password"
+                            name="password" />
+                        <div className="error">
+                            <ErrorMessage name='password' />
+                        </div>
+                        <Field
+                            placeholder="Confirm Password"
+                            type="password"
+                            id="re_password"
+                            name="re_password" />
+                        <div className="error">
+                            <ErrorMessage name='re_password' />
+                        </div>
+                        <button type="submit">CREATE AN ACCOUNT</button>
+                        <label>
+                            Already have an account?
                             <Link to='/login'>
-                                    Login
+                                Login
                             </Link>
-                            </label>
-                        </Form>
-                    </Formik>
-                  
-                </div>
-            </div>
+                        </label>
+                    </Form>
+                </Formik>
 
-        )
+            </div>
+        </div>
+
+    )
 }
 
 export default RegisterVal

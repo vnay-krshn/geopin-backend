@@ -22,7 +22,7 @@ const LoginVal=()=>{
 
     const[accountcreated, setaccount]=useState(false)
 
-    const submit = e =>{
+     const submit = e =>{
         let user ={ email:e.email, password:e.password }
         axios.post('http://localhost:4000/login',user)
                 .then(res=>{
