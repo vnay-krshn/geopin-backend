@@ -137,7 +137,7 @@ app.patch('/update', jsonParser, (req, res) => {
   let phone = req.body.phone
   let id = req.body.id
   let profilePic= req.body.profile_pic
-  
+    
   let qr = `update users set name = '${username}', email = '${email}', country = '${country}', country_id='${countryID}',country_icon='${countryIcon}', phone='${phone}', profile_pic='${profilePic}' where id='${id}'`
   pool.query(qr, (err, results) => {
     if (err) {
@@ -250,7 +250,7 @@ app.post('/sendsearch', jsonParser, (req, res) => {
 
 app.get('/listusers', (req, res) => {
   let coordinates = JSON.parse(req.query.coordinates)
-  let qry = `select distinct on(user_id) user_id,date,rating,name,phone,profile_pic from users inner join checkin on checkin.user_id=users.id where coordinate ->> 'latitude'='${coordinates.latitude}' and coordinate->>'longitude'= '${coordinates.longitude}'`
+  let qry = `select distinct on(user_id) user_id,date,rating,name,phone,profile_pic,country from users inner join checkin on checkin.user_id=users.id where coordinate ->> 'latitude'='${coordinates.latitude}' and coordinate->>'longitude'= '${coordinates.longitude}'`
   pool.query(qry,
     (err, results) => {
       if (err) {

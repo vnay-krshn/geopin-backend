@@ -13,6 +13,7 @@ class UserProfile extends React.Component {
     constructor(props){
         super(props)
         this.handleChange=this.handleChange.bind(this)
+        //this.searchBarPost=this.searchBarPost.bind(this)
     }
 
     state = {
@@ -30,7 +31,8 @@ class UserProfile extends React.Component {
         savedContacts: [],
         savedContactsPics: [],
         dateParseReady: false,
-        navbaredit: false
+        navbaredit: false,
+        search:null
     }
 
     token = localStorage.getItem('token')
@@ -43,17 +45,15 @@ class UserProfile extends React.Component {
                     headers: { "token": this.token }
                 })
                 .then((response) => {
-                    if((response.data.profile_pic).indexOf("http")!==-1){
-                        this.setState({profile_pic:response.data.profile_pic})
-                    }
-                    this.setState({
+                   this.setState({
                         id: response.data.id,
                         name: response.data.name,
                         email: response.data.email,
                         country: response.data.country,
                         countryIcon: response.data.country_icon,
                         countryID: response.data.country_id,
-                        phone: response.data.phone
+                        phone: response.data.phone,
+                        profile_pic:response.data.profile_pic
                     })
                     this.userActitivity(this.state.id)
                     this.findSavedContacts(this.state.id)
@@ -65,14 +65,15 @@ class UserProfile extends React.Component {
 
    handleChange(e){
        var arr=e.target.files[0]
-       this.setState({profile_pic:URL.createObjectURL(arr)})       
+      // this.setState({profile_pic:URL.createObjectURL(arr)})       
        var reader = new FileReader();
        if (arr) {
               reader.readAsDataURL(arr);
               reader.onload = () => {
                 //var Base64 = reader.result;
-                this.baseconverted=reader.result
-                //console.log(Base64);
+                //this.baseconverted=reader.result
+                this.setState({profile_pic: reader.result})
+                
               };
               reader.onerror = (error) => {
                 console.log("error: ", error);
@@ -144,13 +145,13 @@ class UserProfile extends React.Component {
         this.setState({ navbaredit: true })
         this.setState({ visibleUserEdit: !(this.state.visibleUserEdit) })
         console.log(this.state)
-        if(this.baseconverted!=""){
-            this.setState({profile_pic:this.baseconverted})
-        }
         axios.patch('http://localhost:4000/update', this.state)
             .then(res => {
                 console.log(res)
-                this.userLoad()
+                if(res.data.message==="updation success"){
+                     
+                     this.userLoad()
+                }
                 this.setState({ navbaredit: false })
             })
     }
@@ -164,7 +165,7 @@ class UserProfile extends React.Component {
             })
                 .then(res => {
                     this.setState({ savedContactsPics: [...this.state.savedContactsPics, res.data[0].profile_pic] }, () => {
-                        console.log(this.state.savedContactsPics)
+                        //console.log(this.state.savedContactsPics)
                     })
                 })
         })
@@ -181,6 +182,11 @@ class UserProfile extends React.Component {
                 this.setState({ savedContacts: res.data.rows })
                 this.getSavedContactPics(this.state.savedContacts)
             })
+    }
+
+    searchBarPost(e){
+        let keyword = e.target.value;
+        this.setState({search:keyword})
     }
 
     componentDidUpdate() {
@@ -210,8 +216,8 @@ class UserProfile extends React.Component {
                     <div className="userprofile-cards">
                         <div className="sidebar">
                             <div className="search-post">
-                                <input placeholder="Search your posts"></input>
-                                <button><img src='/imgs/loupe.svg'></img></button>
+                                <input placeholder="Search your posts" onChange={(e)=>this.searchBarPost(e)}></input>
+                                <button onClick={()=>{this.setState({search:null})}}><img src='/imgs/loupe.svg'></img></button>
                             </div>
                             <div className="recent-searches">
                                 <div className="title">Latest Searches</div>
@@ -235,9 +241,17 @@ class UserProfile extends React.Component {
                             </div>
                         </div>
                         <div className="main">
-                            {this.state.placesData.map((data) => (
+                            {
+                                this.state.placesData.filter((data)=>{
+                                    if(this.state.search===null){
+                                        return data
+                                    }else if(data.location === this.state.search){
+                                        return data
+                                    }
+                                }).map((data) => (
                                 <PlacesLogged data={data} key={data.location} />
-                            ))}
+                            ))
+                            }
                         </div>
                         <label style={{ position: "absolute", right: '13em', top: '20em' }}>Places logged : {this.state.placesData.length} </label>
                     </div>

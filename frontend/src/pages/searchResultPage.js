@@ -10,15 +10,18 @@ import '../css/maps.css'
 import '../css/placeInfo.css'
 import '../css/searchResults/visitors.css'
 import '../css/searchResults/filter.css'
+import { date } from 'yup'
 
 var userlist = []
 var lastElement
 var userID = 0
+var setFilter = false
 const SearchResults = () => {
     const[year, setyear] = useState(null)
     const[month, setmonth] = useState(null)
     const[visibleFilter, setFilterVisible] = useState(false)
     const[placename,setplacename]=useState('')
+    const[ratingFilter, setRatingFilter]=useState(null)
 
     var token = localStorage.getItem('token')
 
@@ -30,7 +33,7 @@ const SearchResults = () => {
                 })
                 .then((response) => {
                   userID=response.data.id
-                  console.log(userID)
+                  //console.log(userID)
                 }
                 )
         }
@@ -41,6 +44,12 @@ const SearchResults = () => {
         lastElement=e.length-1
         setplacename((userlist[lastElement]).titlePlace)
     }
+
+    const fixRating=(e)=>{
+       setRatingFilter(e.target.value)
+       console.log(ratingFilter)
+    }
+
 
     return (
         <div className='searchResults'>
@@ -56,11 +65,19 @@ const SearchResults = () => {
                 </div>
 
                 <div className="visitor-details-cards">
-                    {userlist.slice(0,lastElement).map((data) => {
+                    {
+                    userlist.slice(0,lastElement).filter((data)=>{
+                        if(ratingFilter==null){
+                            return data
+                        }else if(data.rating>=ratingFilter){
+                            return data
+                        }
+                    }).map((data) => {
                         if(data.user_id!=userID){
                             return <Visitors data={data} key={data.user_id}/>
                         }
-                    })}
+                    })
+                    }
                 </div>
                 <button>More</button>
             </div>}
@@ -70,27 +87,31 @@ const SearchResults = () => {
                         <ReactFlagsSelect
                             placeholder="visitor's nationality"
                             searchable={true}
+                            className="menu-flags"
                         />
                     </div>
                     <div>
                         <MonthPicker
                             defaultValue={'visited month'}
                             value={month}
+                            name={'month'}
+                            classes={'monthClass'}
                             onChange={(month) => {
-                                setmonth(month)
+                                setmonth(month);
                             }}
                         />
 
                         <YearPicker
                             defaultValue={'visited year'}
                             value={year}
+                            name={'year'}
                             onChange={(year) => {
                                 setyear(year)
                             }}
                         />
                     </div>
-                    <input placeholder="visitor's rating"></input>
-                    <button onClick={() => { setFilterVisible(!visibleFilter) }}>Done</button>
+                    <input placeholder="visitor's rating from 1 to 5" onChange={(e)=>{fixRating(e)}}></input>
+                    <button>Done</button>
                 </div>
             }
         </div>)

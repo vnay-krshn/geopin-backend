@@ -3,7 +3,6 @@ import HomepageNav from './homepageNav'
 import '../css/profileContact.css'
 
 const ProfileHead=({props})=>{
-
     return(
         <div className="profileHead">
             <HomepageNav props={props.navbaredit} />
