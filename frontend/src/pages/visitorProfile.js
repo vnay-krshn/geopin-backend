@@ -31,6 +31,7 @@ const VisitorProfile=()=>{
         const saveButton = document.querySelector('#save')
         saveButton.textContent="Save contact"
         saveButton.style.background='#00d3b8' 
+        saveButton.style.border="none"
         deleteFollower()
     }
 
@@ -62,7 +63,8 @@ const VisitorProfile=()=>{
     const enableSaveButton=()=>{
         const saveButton = document.querySelector('#save')
         saveButton.textContent="Saved"
-        saveButton.style.background='red' 
+        saveButton.style.background='#5FA7AB'
+        saveButton.style.border="1px solid white" 
         saveFollower()
     }
 
@@ -102,7 +104,6 @@ const VisitorProfile=()=>{
         })
         .then(res => {
            setvisitorinfo(res.data[0])
-           //console.log(visitorInfo)
            getVisitorActivity()
         })
         const saveButton = document.querySelector('#save')

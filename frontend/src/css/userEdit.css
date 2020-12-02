@@ -2,7 +2,7 @@
 .useredit{
     background: #ffff;
     width: 28vw;
-    height: 82.5vh;
+    height: 87vh;
     position: absolute;
     top: 8.5em;
     left: 29em;
@@ -16,9 +16,14 @@
     border-bottom: #c9c5c5 solid 0.05em;
 }
 
+.useredit .editprofile .profile-pic{
+    /* background: red; */
+    height: 29vh;
+}
+
 .useredit .editprofile .profile-pic #user-pic{
     border-radius: 50%;
-    width: 8em;
+    width: 10.5vw;
     margin: 1em 1em 1em 7em;
 }
 

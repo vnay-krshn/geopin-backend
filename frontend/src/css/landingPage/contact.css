@@ -3,7 +3,7 @@
 .footer-align{
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 105vh;
     background-image: url('/imgs/contact_bg.png');
 }
     
@@ -94,6 +94,60 @@
 }
 
 @media(max-width:768px){
+
+    .footer-align{
+        width: 100.8vw;
+    }
+
+   .footer{
+       flex-direction: column;
+       padding: 1em;
+   }
+
+   .footer .footer-details{
+      margin-left: 3.2em;
+      margin-top: 3em;
+      width: 70vw;
+      font-size: 1.2rem;
+   }
+
+   .footer-details #addr{
+      width: 40vw;
+   }
+
+   .footer .footer-form{
+        width: 60vw;
+        height: 40vh;  
+        margin-top: 4em;     
+   }
+
+   .footer .footer-form input{
+       padding: 1em;
+       font-size: 1.2rem;
+   }
+
+   
+    .footer-form button{
+        margin: 0.2em 0em;
+        padding: 0.8em 0.2em;
+        width: 18vw;
+        font-size: 1rem;
+    }
+
+    .footer .footer-form #textareaFooter{
+        font-size: 1.2rem;
+    }
+
+}
+
+
+
+@media(max-width:376px){
+
+    .footer-align{
+        width: 100vw;
+    }
+
    .footer{
        flex-direction: column;
        padding: 1em;
@@ -112,18 +166,24 @@
 
    .footer .footer-form{
         width: 60vw;
-        height: 50vh;
+        height: 35vh;       
    }
 
    .footer .footer-form input{
        padding: 0.8em;
+       font-size: 0.7rem;
    }
 
    
     .footer-form button{
         margin: 0.15em 0em;
         padding: 0.8em 0.2em;
-        width: 15vw;
+        width: 18vw;
+        font-size: 0.68rem;
+    }
+
+    .footer .footer-form #textareaFooter{
+        font-size: 0.7rem;
     }
 
     .footer-align .connections{

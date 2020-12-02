@@ -29,17 +29,50 @@
     margin: 2.5em;
 }
 
+
 @media (max-width:768px){
-    .icon-container{
-        flex-direction: column;
+    .howItWorks{
+     /* background: red; */
+        width: 92.5vw;
     }
 
     .howItWorks h1{
-        font-size: 1.5rem;
+        font-size: 1.8rem;
     }
 
     .howItWorks h4{
-        font-size: 0.9rem;
+        font-size: 1.2rem;
+    }
+
+    .howItWorks .icon-container{
+        /* background: red; */
+        width: 80vw;
+        margin-left: 2.5em;
+        font-size: 1rem;
+
+    }
+}
+
+@media (max-width:376px){
+    .howItWorks{
+     /* background: red; */
+        width: 83vw;
+    }
+
+    .howItWorks h1{
+        font-size: 1.2rem;
+    }
+
+    .howItWorks h4{
+        font-size: 0.8rem;
+    }
+
+    .howItWorks .icon-container{
+        flex-direction: column;
+        /* background: red; */
+        width: 65vw;
+        margin-left: 2.5em;
+
     }
 }
 

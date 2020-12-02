@@ -22,6 +22,7 @@ const SearchResults = () => {
     const[visibleFilter, setFilterVisible] = useState(false)
     const[placename,setplacename]=useState('')
     const[ratingFilter, setRatingFilter]=useState(null)
+    const[countryFilter, setCountryFilter]=useState("")
 
     var token = localStorage.getItem('token')
 
@@ -39,10 +40,22 @@ const SearchResults = () => {
         }
     },[placename])
 
+    const flagSelect = (e) => {
+        const menuFlags = document.querySelector('.menu-flags')
+        if (menuFlags) {
+            const name = document.querySelector('.flag-select__option__label')
+            setCountryFilter(name.textContent)
+        }
+    }
+
     const getUserList=(e)=>{
-        userlist=e
-        lastElement=e.length-1
-        setplacename((userlist[lastElement]).titlePlace)
+           if(!(Object.keys(e[0]).includes("titlePlace"))){
+            userlist=e
+            lastElement=e.length-1
+            setplacename((userlist[lastElement]).titlePlace)
+           }else{
+               setplacename("")
+           }            
     }
 
     const fixRating=(e)=>{
@@ -88,6 +101,7 @@ const SearchResults = () => {
                             placeholder="visitor's nationality"
                             searchable={true}
                             className="menu-flags"
+                            onSelect={(e) => flagSelect(e)}
                         />
                     </div>
                     <div>
@@ -111,7 +125,7 @@ const SearchResults = () => {
                         />
                     </div>
                     <input placeholder="visitor's rating from 1 to 5" onChange={(e)=>{fixRating(e)}}></input>
-                    <button>Done</button>
+                    <button onClick={() => setFilterVisible(!(visibleFilter))}>Done</button>
                 </div>
             }
         </div>)

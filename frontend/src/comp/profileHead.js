@@ -3,6 +3,8 @@ import HomepageNav from './homepageNav'
 import '../css/profileContact.css'
 
 const ProfileHead=({props})=>{
+    console.log(props)
+
     return(
         <div className="profileHead">
             <HomepageNav props={props.navbaredit} />
@@ -13,7 +15,7 @@ const ProfileHead=({props})=>{
                     <label> {props.email} </label>
                 </div>
                 <div className="profileHead-nationality">
-                    <img src={props.countryIcon}></img>
+                    <img src={props.country_icon}></img>
                     <label>{props.country}</label>
                 </div>
                 <div className='profileHead-contact'>

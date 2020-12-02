@@ -142,7 +142,9 @@ const SearchMap = ({temp}) => {
             .then(res => {
                 output.count = res.data.count
                 output.rating = res.data.rating
-                setPlaceinfo(true)
+                setTimeout(()=>{
+                    setPlaceinfo(true)
+                },1000)                
             })
     }
 

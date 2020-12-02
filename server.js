@@ -263,7 +263,7 @@ app.get('/listusers', (req, res) => {
 
 app.get('/visitorprofile', (req, res) => {
   let visitorID = req.query.userID
-  let qry = `select id,name,phone,country,email,profile_pic from users where id='${visitorID}'`
+  let qry = `select id,name,phone,country,country_icon,email,profile_pic from users where id='${visitorID}'`
   pool.query(qry,
     (err, results) => {
       if (err) {

@@ -21,7 +21,7 @@ class UserProfile extends React.Component {
         name: '',
         email: '',
         country: '',
-        countryIcon: '',
+        country_icon: '',
         countryID: '',
         phone: '',
         profile_pic:'',
@@ -50,7 +50,7 @@ class UserProfile extends React.Component {
                         name: response.data.name,
                         email: response.data.email,
                         country: response.data.country,
-                        countryIcon: response.data.country_icon,
+                        country_icon: response.data.country_icon,
                         countryID: response.data.country_id,
                         phone: response.data.phone,
                         profile_pic:response.data.profile_pic
@@ -122,7 +122,7 @@ class UserProfile extends React.Component {
         const name = document.querySelector('.flag-select__option__label')
         const icon = document.querySelector('.flag-select__option__icon')
         setTimeout(() => {
-            this.setState({ countryIcon: icon.src, countryID: e, country: name.textContent }, () => {
+            this.setState({ country_icon: icon.src, countryID: e, country: name.textContent }, () => {
                 console.log(this.state)
             })
         }, 1)
@@ -221,7 +221,7 @@ class UserProfile extends React.Component {
                             </div>
                             <div className="recent-searches">
                                 <div className="title">Latest Searches</div>
-                                {this.state.dateParseReady && this.state.latestSearch.map((items) => (
+                                {this.state.dateParseReady && this.state.latestSearch.slice(0,3).map((items) => (
                                     <div className="latest-search" key={items.search_id}>
                                         <div className="latest-search-info">
                                             <label>{items.location}</label>
@@ -245,7 +245,7 @@ class UserProfile extends React.Component {
                                 this.state.placesData.filter((data)=>{
                                     if(this.state.search===null){
                                         return data
-                                    }else if(data.location === this.state.search){
+                                    }else if(data.location.toLowerCase().includes(this.state.search.toLowerCase())  ){
                                         return data
                                     }
                                 }).map((data) => (
