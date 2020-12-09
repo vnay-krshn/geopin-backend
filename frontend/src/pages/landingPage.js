@@ -15,16 +15,16 @@ const Landingpage=()=>{
       scroll.scrollToBottom()
   }
 
-  const[loggedin, setlogin]=useState('/register')
+  // const[loggedin, setlogin]=useState('/register')
 
-  const pagelink=()=>{
-    if(localStorage.token===undefined){
-      setlogin('/register')
-    }
-    else{
-      setlogin('/login')
-    }
-  }
+  // const pagelink=()=>{
+  //   if(localStorage.token===undefined){
+  //     setlogin('/register')
+  //   }
+  //   else{
+  //     setlogin('/login')
+  //   }
+  // }
 
     return(
         <div className="landingpage">
@@ -33,7 +33,7 @@ const Landingpage=()=>{
                     <ul>
                         <li onClick={toggleMid}>How it works</li>
                         <li onClick={toggleBttm}>Contact</li>
-                        <Link to={loggedin} onClick={pagelink}>
+                        <Link to='/login'>
                              <img id="login-button" src='/imgs/login_link.png'></img>
                         </Link>
                     </ul>
@@ -41,7 +41,9 @@ const Landingpage=()=>{
                 <img id='logo' src='/imgs/logo_landing_page_banner.png'></img>
                 <div className="tagline">
                     <h1>KNOW YOUR DESTINATION AND PIN YOUR ROUTES</h1>
-                    <button>GET STARTED</button>
+                    <Link to='/register'>
+                      <button>GET STARTED</button>
+                    </Link>                    
                 </div> 
             </div>
           <HowItWorks/>

@@ -32,8 +32,9 @@ const LoginVal=()=>{
                             return <Redirect to='/login'/>
                         }
                         else{
-                            console.log(res.data.token)
+                            console.log(res.data)
                             localStorage.setItem('token',res.data.token)
+                            localStorage.setItem('refreshToken',res.data.refreshToken)
                             setaccount(true)
                         }
                     }

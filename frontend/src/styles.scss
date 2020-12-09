@@ -196,6 +196,16 @@
         color: #ffff;
         padding: 0.5em 0em;
     }
+
+    #successMessage{
+        position: relative;
+        top: 1em;
+        color:#095219;
+        background:#83f59c;
+        border:  1.8px solid #bcf8c9;
+        padding: 0.75em 2em;
+        margin-left:2.65em;
+    }
 }
 
 .register-form{
@@ -233,7 +243,7 @@
 
     .flag-select__options {
         //background: brown;
-        height: 10vh;
+        height: 14vh;
         width: 7vw;
         overflow: hidden;
     }
@@ -796,10 +806,10 @@
     }
 }
 
-.visitor-profile .profileHead-nationality{
-    // background: chartreuse;
-    width:7vw;  
-}
+// .visitor-profile .profileHead-nationality{
+//     // background: chartreuse;
+//     width:7vw;  
+// }
 
 @media(max-width:768px){
     .place-cards{
@@ -995,6 +1005,7 @@
         right: 11em;
         top: 5.5em;
     }
+    
 }
 
 .userprofile #more{

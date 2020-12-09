@@ -95,6 +95,19 @@ const SearchMap = ({temp}) => {
             })
     }
 
+    const getPlaceInfo = (coordinates) => {
+        axios.get('http://localhost:4000/placeinfo', {
+            params: {
+                coordinates: coordinates
+            }
+        })
+            .then(res => {
+                output.count = res.data.count
+                output.rating = res.data.rating
+                setPlaceinfo(true)               
+            })
+    }
+
     useEffect(() => {
         userLoad()
         const button = document.querySelector('.operation')
@@ -126,27 +139,14 @@ const SearchMap = ({temp}) => {
             coordinates.latitude = e.result.geometry.coordinates[1]
             coordinates.longitude = e.result.geometry.coordinates[0]
             getCity(coordinates)
-            getPlaceInfo(coordinates)
+            setTimeout(()=>{
+                getPlaceInfo(coordinates)
+            },1000)            
             listUsers(coordinates)
             setTimeout(sendSearch, 2000)
         })
         map.addControl(geocoder)
     }, [])
-
-    const getPlaceInfo = (coordinates) => {
-        axios.get('http://localhost:4000/placeinfo', {
-            params: {
-                coordinates: coordinates
-            }
-        })
-            .then(res => {
-                output.count = res.data.count
-                output.rating = res.data.rating
-                setTimeout(()=>{
-                    setPlaceinfo(true)
-                },1000)                
-            })
-    }
 
     return (
         <div>

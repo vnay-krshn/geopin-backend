@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { Link, useHistory } from 'react-router-dom'
-import ReactFlagsSelect from 'react-flags-select';
+import ReactFlagsSelect from '../comp/ReactflagSelect/';
 import 'react-flags-select/css/react-flags-select.css';
 import axios from 'axios'
 
@@ -46,7 +46,12 @@ const RegisterVal = () => {
     const history = useHistory();
     let error = { message: '' }
     let country, countryIcon, countryID
+    const [displaySuccess, setDisplaySuccess] = useState(false)
 
+    const goToLogin=()=>{
+        setDisplaySuccess(false)
+        history.push('/login')
+    }
 
     const submit = e => {
         let user = {
@@ -63,26 +68,21 @@ const RegisterVal = () => {
                 if (res.data.message === 'email already exists') {
                     error.message = res.data.message
                     alert(error.message)
-                    console.log(res.data)
+                   
                 }
-                else {
-                    history.push('/login')
+                else if(res.data.token){
+                    setDisplaySuccess(true)
+                    setTimeout(goToLogin,1000)
                 }
-
             }
             )
     }
 
 
     const flagSelect = (e) => {
-        countryID = e
-        const menuFlags = document.querySelector('.menu-flags')
-        if (menuFlags) {
-            const name = document.querySelector('.flag-select__option__label')
-            const icon = document.querySelector('.flag-select__option__icon')
-            country = name.textContent
-            countryIcon = icon.src
-        }
+        countryID = e.countryCode
+        country= e.country
+        countryIcon=e.country_icon    
     }
 
 
@@ -158,7 +158,7 @@ const RegisterVal = () => {
                         </label>
                     </Form>
                 </Formik>
-
+                {displaySuccess && (<span id="successMessage">Registration successful!</span>)}
             </div>
         </div>
 

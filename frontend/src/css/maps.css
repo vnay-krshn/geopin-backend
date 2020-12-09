@@ -57,3 +57,42 @@
 .divContainer button:hover{
 background: #09c2a9;
 }
+
+#message{
+  color:#095219;
+  background:#83f59c;
+  border:  1.8px solid #bcf8c9;
+  position: absolute;
+  bottom: 28.5em;
+  left: 2.5em;
+  padding: 0.8em;
+  z-index: 1000;
+}
+
+#updateConfirm{
+  color:#095219;
+  background:#83f59c;
+  border:  1.8px solid #bcf8c9;
+  position: absolute;
+  bottom: 26.7em;
+  left: 2.5em;
+  padding: 0.8em;
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column;
+}
+
+#confirmChoice{
+  width: 15vw;
+  margin-left: 2em;
+  margin-top: 1em;
+  display: flex;
+  justify-content: space-between;
+  /* background: rebeccapurple; */
+}
+
+#confirmChoice button{
+  width: 5vw;
+  height: 4vh;
+}

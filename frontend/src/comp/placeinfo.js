@@ -3,7 +3,7 @@ import Ratings from './ratings'
 import '../css/ratings.css'
 
 const PlaceInfo=({output})=>{
-    if(output.count===0){
+    if(output.count==0){
         output.count=0
     }
 

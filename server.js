@@ -15,27 +15,7 @@ var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 let users = { password: '' }
-
-app.post('/uploadtodb',(req,res)=>{
-  console.log(req.body)
-  // pool.query(`insert into temp(images) values('${imageFile}')`,(err,results)=>{
-  //   if(err){
-  //     res.send(err)
-  //   }else{
-  //     res.send(results)
-  //   }
-  // })
-})
-
-app.get('/getfromdb',(req,res)=>{
-  pool.query(`select images from temp where id=1`,(err,results)=>{
-    if(err){
-      res.send(err)
-    }else{
-      res.send(results)
-    }
-  })
-})//test
+let refreshTokens = []
 
 app.post('/register', jsonParser, (req, res) => {
   let username = req.body.username
@@ -46,28 +26,63 @@ app.post('/register', jsonParser, (req, res) => {
   let phone = req.body.phone
   let password = req.body.password
   let profilePic = "https://www.flaticon.com/svg/static/icons/svg/848/848043.svg"
- 
+
   let qry1 = `select * from users where email='${email}'`
   pool.query(qry1, async (err, results) => {
     if (results.rows.length > 0) {
       return res.send({ message: "email already exists" })
     }
     hashedPassword = await bcrypt.hash(password, 10)
-    let qry2=`insert into users(name, email, password, country, country_icon, phone,country_id,profile_pic) values('${username}','${email}','${hashedPassword}','${country}','${countryIcon}','${phone}','${countryID}','${profilePic}') returning id`
+    let qry2 = `insert into users(name, email, password, country, country_icon, phone,country_id,profile_pic) values('${username}','${email}','${hashedPassword}','${country}','${countryIcon}','${phone}','${countryID}','${profilePic}') returning id`
     pool.query(qry2, (err, results) => {
       const payload = {
         user: {
           id: results.rows[0].id
         }
       };
-      jwt.sign(payload, "randomString", { expiresIn: 10000 },(err, token) => {
-          if (err) throw err;
-          res.status(200).json({ token });
-        }
-       );
+      jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 10000 }, (err, token) => {
+        if (err) throw err;
+        res.status(200).json({ token });
+      }
+      );
     })
 
   })
+})
+
+app.post('/refreshtoken', (req, res, next) => {
+  const refreshToken = req.header("token")
+  // if (refreshToken == null) return res.sendStatus(401)
+  // if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403)
+  // jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, payload) => {
+  //   if (err) return res.sendStatus(403)
+  //   console.log(payload)
+  //   const accessToken = generateAccessToken(payload)
+  //   res.json({ accessToken: accessToken })
+  // })
+  if (!refreshToken || !refreshTokens.includes(refreshToken)) {
+    return res.json({ message: "Refresh token not found, login again" });
+  }
+
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, payload) => {
+    if (!err) {
+      const payloadUser = {
+        user: {
+          id: payload.user.id
+        }
+      };
+      const accessToken = jwt.sign(payloadUser, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: "60s"
+      });
+      return res.json({ success: true, accessToken });
+    } else {
+      return res.json({
+        success: false,
+        message: "Invalid refresh token"
+      });
+    }
+  });
+
 })
 
 app.post('/login', jsonParser, (req, res) => {
@@ -88,19 +103,16 @@ app.post('/login', jsonParser, (req, res) => {
         id: results.rows[0].id
       }
     };
-    jwt.sign(
-      payload,
-      "randomString", {
-      expiresIn: 3600
-    },
-      (err, token) => {
-        if (err) throw err;
-        res.status(200).json({
-          token
-        });
-      }
-    );
-
+    // jwt.sign( payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 },
+    //   (err, token) => {
+    //     if (err) throw err;
+    //     res.status(200).json({ token });
+    //   }
+    // );
+    let accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "60s" })
+    let refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "7d" })
+    refreshTokens.push(refreshToken)
+    return res.status(201).json({ token: accessToken, refreshToken: refreshToken })
   })
 })
 
@@ -114,18 +126,34 @@ app.get('/userlogin', auth, async (req, res) => {
   }
 })
 
-function auth(req, res, next) {
-  const token = req.header("token");
-  if (!token) return res.status(401).json({ message: "Auth Error" });
-  try {
-    const decoded = jwt.verify(token, "randomString");
-    console.log(decoded)
-    req.user = decoded.user;
-    next();
-  } catch (e) {
-    console.error(e);
-    res.status(500).send({ message: "Invalid Token" });
-  }
+async function auth(req, res, next) {
+  let token = req.header("token");
+  // if (!token) return res.status(401).json({ message: "Auth Error" });
+  // try {
+  //   const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+  //   console.log(decoded)
+  //   req.user = decoded.user;
+  //   next();
+  // } catch (e) {
+  //   console.error(e);
+  //   res.status(500).send({ message: "Invalid Token" });
+  // }
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, payload) => {
+    if (payload) {
+      req.user = payload.user;
+      next();
+    } else if (err.message === "jwt expired") {
+      return res.json({
+        success: false,
+        message: "Access token expired"
+      });
+    } else {
+      console.log(err);
+      return res
+        .status(403)
+        .json({ err, message: "User not authenticated" });
+    }
+  });
 };
 
 app.patch('/update', jsonParser, (req, res) => {
@@ -133,15 +161,15 @@ app.patch('/update', jsonParser, (req, res) => {
   let email = req.body.email
   let country = req.body.country
   let countryID = req.body.countryID
-  let countryIcon = req.body.countryIcon
+  let countryIcon = req.body.country_icon
   let phone = req.body.phone
   let id = req.body.id
-  let profilePic= req.body.profile_pic
-    
+  let profilePic = req.body.profile_pic
+
   let qr = `update users set name = '${username}', email = '${email}', country = '${country}', country_id='${countryID}',country_icon='${countryIcon}', phone='${phone}', profile_pic='${profilePic}' where id='${id}'`
   pool.query(qr, (err, results) => {
     if (err) {
-      res.send({ message: "updation failed" , result:err})
+      res.send({ message: "updation failed", result: err })
     }
     else {
       res.send({ message: "updation success" })
@@ -250,7 +278,7 @@ app.post('/sendsearch', jsonParser, (req, res) => {
 
 app.get('/listusers', (req, res) => {
   let coordinates = JSON.parse(req.query.coordinates)
-  let qry = `select distinct on(user_id) user_id,date,rating,name,phone,profile_pic,country from users inner join checkin on checkin.user_id=users.id where coordinate ->> 'latitude'='${coordinates.latitude}' and coordinate->>'longitude'= '${coordinates.longitude}'`
+  let qry = `select distinct on(user_id) user_id,date,rating,name,phone,profile_pic,country,country_id from users inner join checkin on checkin.user_id=users.id where coordinate ->> 'latitude'='${coordinates.latitude}' and coordinate->>'longitude'= '${coordinates.longitude}'`
   pool.query(qry,
     (err, results) => {
       if (err) {
@@ -276,7 +304,8 @@ app.get('/visitorprofile', (req, res) => {
 
 app.get('/visitoracitvity', (req, res) => {
   let visitorID = req.query.userID
-  let qry = `select distinct on(location) location,user_id,city,review,rating,date,place_id from checkin where user_id='${visitorID}' order by location,place_id desc`
+  //let qry = `select distinct on(location) location,user_id,city,review,rating,date,place_id from checkin where user_id='${visitorID}' order by location,place_id desc`
+  let qry = `select distinct location,user_id,city,review,rating,date,place_id from checkin where user_id='${visitorID}' order by place_id desc;`
   pool.query(qry,
     (err, results) => {
       if (err) {
@@ -347,13 +376,13 @@ app.delete('/deletefollower', (req, res) => {
   })
 })
 
-app.get('/followerpic',(req,res)=>{
-  let userID= req.query.userID
+app.get('/followerpic', (req, res) => {
+  let userID = req.query.userID
   let qry = `select distinct on(visitor_id) visitor_id from followers where user_id='${userID}';`
-  pool.query(qry,(err,results)=>{
-    if(err){
+  pool.query(qry, (err, results) => {
+    if (err) {
       res.send(err)
-    }else{
+    } else {
       res.send(results)
     }
   })

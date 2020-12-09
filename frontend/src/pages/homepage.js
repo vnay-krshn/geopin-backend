@@ -8,7 +8,7 @@ const Homepage= ()=>{
             <div className='homepage'>
                 <HomepageNav/>
                 <div className="home-display">
-                    <p>Do you need to check in your <strong>location</strong> or find a new <strong>desination</strong>?</p>
+                    <p>Do you need to check in your <strong>location</strong> or find a new <strong>destination</strong>?</p>
                     <div className="home-options">
                         <Link to='/search'>
                             <button>SEARCH</button>

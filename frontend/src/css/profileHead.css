@@ -46,7 +46,7 @@
   align-items: center;
   padding:0.5em;
   height: 3vh;
-  width: 10vw;
+  /* width: 10vw; */
   font-size: 0.9rem;
 
   position: relative;
@@ -56,6 +56,9 @@
 
 .profileHead-header .profileHead-nationality img{
     max-width: 2.9vw;
+    margin-right: 1em;
 }
+
+
 
 

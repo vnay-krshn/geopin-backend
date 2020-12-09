@@ -3,7 +3,7 @@ import HomepageNav from './homepageNav'
 import '../css/profileContact.css'
 
 const ProfileHead=({props})=>{
-    console.log(props)
+    //console.log(props)
 
     return(
         <div className="profileHead">
@@ -16,7 +16,7 @@ const ProfileHead=({props})=>{
                 </div>
                 <div className="profileHead-nationality">
                     <img src={props.country_icon}></img>
-                    <label>{props.country}</label>
+                    <span>{props.country}</span>
                 </div>
                 <div className='profileHead-contact'>
                     <label>Contact number</label>

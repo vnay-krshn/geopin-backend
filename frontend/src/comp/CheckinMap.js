@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import CheckinRating from './CheckinRating'
 import PlaceInfo from './placeinfo'
@@ -18,7 +18,6 @@ var coordinates = {
 var userID = 0
 var updateChoice = false
 var firstFeedback = false
-//var showPlaceinfo = false
 var prevCoordinates = {
   "latitude": '',
   "longitude": ''
@@ -35,10 +34,10 @@ const CheckinMap = () => {
   const [visibleReview, setVisibleReview] = useState(false)
   const [review, setreview] = useState('')
   const [rating, setrating] = useState(0)
-  const[showPlaceinfo,setPlaceinfo]=useState(false)
-
-  // const [location, setlocation] = useState('')
-  // const [city, setcity] = useState('')
+  const [showPlaceinfo, setPlaceinfo] = useState(false)
+  const [message, setMessage] = useState("")
+  const [showMessage, setDisplayMessage] = useState(false)
+  const [showUpdateMessage, setUpdateMessage] = useState(false)
 
   const getCity = (coordinates) => {
     var lat = coordinates.latitude;
@@ -64,6 +63,14 @@ const CheckinMap = () => {
           console.log(output.city)
         }
       })
+  }
+
+  const msgDispControlFun=(message)=>{
+    setDisplayMessage(true)
+    setMessage(message)
+    setTimeout(() => {
+      setDisplayMessage(false)
+    }, 1500)
   }
 
   const userLoad = () => {
@@ -98,13 +105,38 @@ const CheckinMap = () => {
     axios.post('http://localhost:4000/checkin', postFeed)
       .then((response) => {
         console.log(response)
-        if (response.data.status === 'fail') {
-          alert(response.data.message)
+        if (response.data.status === 'fail'|| response.data.error) {
+          //alert(response.data.message)
+          // setDisplayMessage(true)
+          // setMessage(response.data.message)
+          // setTimeout(() => {
+          //   setDisplayMessage(false)
+          // }, 3000)
+          msgDispControlFun(response.data.message)
           setVisibleReview(true)
         } else {
           firstFeedback = true
-          alert("Thank you for your response")
+          // setDisplayMessage(true)
+          // setMessage("Thank you for your response")
+          // setTimeout(() => {
+          //   setDisplayMessage(false)
+          // }, 3000)
+          msgDispControlFun("Thank you for your response")
         }
+      })
+  }
+
+  const getPlaceInfo = (coordinates) => {
+    axios.get('http://localhost:4000/placeinfo', {
+      params: {
+        coordinates: coordinates
+      }
+    })
+      .then(res => {
+        console.log(res.data)
+        output.count = res.data.count
+        output.rating = res.data.rating
+        setPlaceinfo(true)
       })
   }
 
@@ -137,7 +169,9 @@ const CheckinMap = () => {
       setPlaceinfo(false)
       coordinates.latitude = e.result.geometry.coordinates[1]
       coordinates.longitude = e.result.geometry.coordinates[0]
-      getPlaceInfo(coordinates)
+      setTimeout(() => {
+        getPlaceInfo(coordinates)
+      }, 1000)
       output.location = e.result.text
       getCity(coordinates)
     })
@@ -148,23 +182,30 @@ const CheckinMap = () => {
     button.addEventListener('click', () => {
       if (mapSearch.value) {
         if ((_.isEqual(prevCoordinates, coordinates)) && (firstFeedback)) {
-          if (window.confirm("Do you wish to update your feedback?")) {
-            updateChoice = true
-            setVisibleReview(!(visibleReview))
-          }
-          else {
-            setVisibleReview(false)
-          }
+          setUpdateMessage(true)
+          updateChoice=true
+          // if (updateChoice) {
+          //   setVisibleReview(!(visibleReview))
+          // }
+          // else {
+          //   setUpdateMessage(false)
+          //   setVisibleReview(false)
+          // }
         } else {
           setrating(0)
           setreview('')
-          setVisibleReview(true)
+          setVisibleReview(true)          
           updateChoice = false
           firstFeedback = false
         }
       }
       else {
-        alert("Please enter a location")
+        // setDisplayMessage(true)
+        // setMessage("Please enter a location")
+        // setTimeout(() => {
+        //   setDisplayMessage(false)
+        // }, 3000)
+        msgDispControlFun("Please enter a location")
       }
       prevCoordinates.latitude = coordinates.latitude
       prevCoordinates.longitude = coordinates.longitude
@@ -186,23 +227,6 @@ const CheckinMap = () => {
     }
   }, [visibleReview])
 
-  const getPlaceInfo = (coordinates) => {
-
-    axios.get('http://localhost:4000/placeinfo', {
-      params: {
-        coordinates: coordinates
-      }
-    })
-      .then(res => {
-        console.log(res.data)
-        output.count = res.data.count
-        output.rating = res.data.rating
-        setTimeout(()=>{
-          setPlaceinfo(true)
-      },1000)
-      })
-  }
-
   const updateProfile = () => {
     let updation = {
       review: review,
@@ -215,22 +239,44 @@ const CheckinMap = () => {
       .then((response) => {
         console.log(response)
         if (response.data.status === 'fail') {
-          alert(response.data.message)
+          //alert(response.data.message)
+          // setDisplayMessage(true)
+          // setMessage(response.data.message)
+          // setTimeout(() => {
+          //   setDisplayMessage(false)
+          // }, 3000)
+          msgDispControlFun(response.data.message)
           setVisibleReview(true)
         } else {
-          setVisibleReview(false)
-          alert("Your feedback has successfully been updated")
+          setVisibleReview(false)  
+          // setDisplayMessage(true)
+          // setMessage("Your feedback has successfully been updated")
+          // setTimeout(() => {
+          //   setDisplayMessage(false)
+          // }, 3000)
+          msgDispControlFun("Your feedback has successfully been updated")
         }
       })
   }
 
-  const temp = () => {
+  const doneReview = () => {
     setVisibleReview(!(visibleReview))
     if (updateChoice === true) {
       updateProfile()
     } else {
       userLoad()
     }
+  }
+
+  const removeUpdateChoice=()=>{
+    setVisibleReview(false)
+    setUpdateMessage(false)
+  }
+
+  const updateChoiceFunction = ()=>{
+    //updateChoice = true
+    setVisibleReview(!(visibleReview))
+    setUpdateMessage(false)
   }
 
   return (
@@ -241,16 +287,24 @@ const CheckinMap = () => {
       <div className="divContainer">
         <button className="operation"></button>
       </div>
+      {showMessage && <span id="message">{message}</span>}
+      {showUpdateMessage && <div id="updateConfirm">
+        <span>Do you wish to update your feedback?</span>
+        <div id="confirmChoice">
+          <button onClick={removeUpdateChoice}>Cancel</button>
+          <button type="submit" onClick={updateChoiceFunction}>OK</button>
+        </div>
+      </div>}
       {visibleReview &&
         <div className="review">
           <div className="review-box">
-            <textarea value={review} placeholder="Add your description" onChange={(e) => { setreview(e.target.value) }}></textarea>
+            <textarea value={review} placeholder="Add your description" onChange={(e) => setreview(e.target.value)}></textarea>
             <div className="review-rating">
               <label>Rate the location</label>
               <CheckinRating value={rating} size={18} selectRating={(e) => { setrating(e) }} />
             </div>
           </div>
-          <button onClick={temp}>Done</button>
+          <button onClick={doneReview}>Done</button>
         </div>}
     </div>
   );

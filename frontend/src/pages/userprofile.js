@@ -13,7 +13,7 @@ class UserProfile extends React.Component {
     constructor(props){
         super(props)
         this.handleChange=this.handleChange.bind(this)
-        //this.searchBarPost=this.searchBarPost.bind(this)
+        this.searchBarPost=this.searchBarPost.bind(this)
     }
 
     state = {
@@ -32,7 +32,10 @@ class UserProfile extends React.Component {
         savedContactsPics: [],
         dateParseReady: false,
         navbaredit: false,
-        search:null
+        search:null,
+        minUserList:[],
+        status:true,
+        checkEmptyMessage:false
     }
 
     token = localStorage.getItem('token')
@@ -55,8 +58,10 @@ class UserProfile extends React.Component {
                         phone: response.data.phone,
                         profile_pic:response.data.profile_pic
                     })
+                    if(this.state.status){
                     this.userActitivity(this.state.id)
                     this.findSavedContacts(this.state.id)
+                    }
                     this.update = this.update.bind(this)
                 }
                 )
@@ -181,6 +186,7 @@ class UserProfile extends React.Component {
             .then(res => {
                 this.setState({ savedContacts: res.data.rows })
                 this.getSavedContactPics(this.state.savedContacts)
+                this.state.status=false
             })
     }
 
@@ -189,7 +195,22 @@ class UserProfile extends React.Component {
         this.setState({search:keyword})
     }
 
+    displayEmpty(){
+        const emptyDashBoard = document.querySelector('#placesLoggedCount')   
+        const extendMoreButton = document.querySelector('#more')
+        if(this.state.placesData.length===0){
+            emptyDashBoard.style.display="none"
+            extendMoreButton.style.display="none"
+            this.state.checkEmptyMessage=true
+        }else{
+            emptyDashBoard.style.display="block"
+            extendMoreButton.style.display="block"
+            this.state.checkEmptyMessage=false
+        }
+    }
+
     componentDidUpdate() {
+        this.displayEmpty()
         const profile = document.querySelector('.profile-blur')
         const editButton = document.querySelector('.edit')
         if (this.state.visibleUserEdit === true) {
@@ -205,6 +226,13 @@ class UserProfile extends React.Component {
 
     componentDidMount() {
         this.userLoad()
+        this.displayEmpty()
+    }
+
+    style={
+        'position':'relative',
+        'right':'15em',
+        'top':'10em'
     }
 
     render() {
@@ -253,7 +281,8 @@ class UserProfile extends React.Component {
                             ))
                             }
                         </div>
-                        <label style={{ position: "absolute", right: '13em', top: '20em' }}>Places logged : {this.state.placesData.length} </label>
+                        {this.state.checkEmptyMessage && <label style={this.style}>You haven't checked in to any places yet.</label>}
+                        <label id="placesLoggedCount" style={{ position: "absolute", right: '13em', top: '20em' }}>Places logged : {this.state.placesData.length} </label>
                     </div>
                     <button id="more">MORE</button>
                 </div>

@@ -1,25 +1,39 @@
-import React from 'react';
+import React, { lazy,Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './styles.css';
-import Homepage from './pages/homepage';
-import Landingpage from './pages/landingPage';
-import RegisterVal from './pages/registerVal';
-import LoginVal from './pages/loginVal';
-import SearchPage from './pages/searchpage';
-import CheckInPage from './pages/checkInPage'
-import SearchResults from './pages/searchResultPage';
-import CheckinResults from './pages/checkinResultPage'
-import VisitorProfile from './pages/visitorProfile'
-import UserProfile from './pages/userprofile'
+import './css/userEdit.css'
+import './css/profileHead.css'
+import './css/placesLogged.css'
+import './css/options.css'
+import './css/homePageNav.css'
+import './css/placeInfo.css'
+
+import 'mapbox-gl/dist/mapbox-gl.css'
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import './css/maps.css'
+
 import Protected from './ProtectedRoutes1'
 import ProtectAuth from './ProtectedRoutes2'
+
+const Landingpage = lazy(()=>import('./pages/landingPage'))
+const RegisterVal = lazy(()=>import('./pages/registerVal'))
+const LoginVal = lazy(()=>import('./pages/loginVal'))
+const Homepage = lazy(()=>import('./pages/homepage'))
+const SearchPage = lazy(()=>import('./pages/searchpage'))
+const CheckInPage = lazy(()=>import('./pages/checkInPage'))
+const SearchResults = lazy(()=>import('./pages/searchResultPage'))
+const CheckinResults = lazy(()=>import('./pages/checkinResultPage'))
+const VisitorProfile = lazy(()=>import('./pages/visitorProfile'))
+const UserProfile = lazy(()=>import('./pages/userprofile'))
+
 
 function App(){
 
   return(
       <Router>
+        <Suspense fallback={<div>Loading...</div>}>
             <Switch>
-              <Route path='/' exact component={Landingpage}/>
+              <ProtectAuth path='/' exact component={Landingpage}/>
               <ProtectAuth path='/register' component={RegisterVal} />
               <ProtectAuth path='/login' component={LoginVal}/>
               <Protected path='/homepage' component={Homepage} />
@@ -30,7 +44,8 @@ function App(){
               <Protected path='/visitorProfile/:id' component={VisitorProfile} />
               <Protected path='/userProfile' component={UserProfile} />
             </Switch>
-        </Router>
+        </Suspense>
+      </Router>
   )
 } 
 

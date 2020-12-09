@@ -79,3 +79,7 @@
   width: 29vw;
   overflow: hidden;
 }
+
+#reset{
+  background: rgb(255, 65, 65);
+}

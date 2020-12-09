@@ -8,8 +8,17 @@ import axios from 'axios'
 const VisitorProfile=()=>{
     const[visitorInfo,setvisitorinfo]=useState({})
     const[placeData,setplaceData]=useState([])
+    const [minUserList, setMinUserList]=useState(2)
+    const [filteredData, setFilteredData] = useState([])
+
+    var visitorId
+
+    if((window.location.pathname).match(/\d/g).length>1){
+        visitorId=(window.location.pathname).match(/\d/g).join("")
+    }else{
+        visitorId=(window.location.pathname).match(/\d/g)[0]
+    }
    
-    var visitorId=(window.location.pathname).match(/\d/g)[0]
     var token = localStorage.getItem('token')
     var userID = ''
     var isfollower=false
@@ -83,6 +92,13 @@ const VisitorProfile=()=>{
         })
     }
 
+    useEffect(()=>{
+        console.log(placeData)
+        let newArr = placeData.slice(0,minUserList)
+        console.log(newArr)
+        setFilteredData(newArr)
+    },[placeData,minUserList])
+
     const getVisitorActivity=()=>{
         axios.get('http://localhost:4000/visitoracitvity',{
             params: {
@@ -115,8 +131,8 @@ const VisitorProfile=()=>{
                     enableSaveButton()
                 }
         })
-    },[])
 
+    },[])
 
     return(
     <div className="visitor-profile">
@@ -125,11 +141,11 @@ const VisitorProfile=()=>{
         <div className="place-cards-container">
             <label id="numberLog">Places Logged : {placeData.length} </label>
             <div className="place-cards">
-                {placeData.map((data)=>(
+                {filteredData.map((data)=>(
                     <PlacesLogged data={data} key={data.place_id}/>
                 ))}
             </div>
-            <button id="more">More</button>
+            <button id="more" onClick={()=>{setMinUserList((previousState)=>previousState+2)}}>More</button>
         </div>
     </div>)
 }

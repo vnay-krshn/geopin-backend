@@ -10,19 +10,19 @@ import '../css/maps.css'
 import '../css/placeInfo.css'
 import '../css/searchResults/visitors.css'
 import '../css/searchResults/filter.css'
-import { date } from 'yup'
 
-var userlist = []
 var lastElement
 var userID = 0
-var setFilter = false
 const SearchResults = () => {
-    const[year, setyear] = useState(null)
-    const[month, setmonth] = useState(null)
+    const[year, setyear] = useState("")
+    const[month, setmonth] = useState("")
     const[visibleFilter, setFilterVisible] = useState(false)
     const[placename,setplacename]=useState('')
-    const[ratingFilter, setRatingFilter]=useState(null)
+    const[ratingFilter, setRatingFilter]=useState("")
     const[countryFilter, setCountryFilter]=useState("")
+    const[filteredData, setFilteredData]=useState([])
+    const[userlist,setUserList]=useState([])
+    const [minUserList, setMinUserList]=useState(5)
 
     var token = localStorage.getItem('token')
 
@@ -41,18 +41,19 @@ const SearchResults = () => {
     },[placename])
 
     const flagSelect = (e) => {
-        const menuFlags = document.querySelector('.menu-flags')
-        if (menuFlags) {
-            const name = document.querySelector('.flag-select__option__label')
-            setCountryFilter(name.textContent)
-        }
+        setCountryFilter(e)
     }
 
     const getUserList=(e)=>{
            if(!(Object.keys(e[0]).includes("titlePlace"))){
-            userlist=e
+           
+            //userlist=e
+           
             lastElement=e.length-1
-            setplacename((userlist[lastElement]).titlePlace)
+            setplacename((e[lastElement]).titlePlace)
+            let listOfUsers=[...e].slice(0,lastElement)
+            
+            setUserList(listOfUsers)
            }else{
                setplacename("")
            }            
@@ -62,6 +63,35 @@ const SearchResults = () => {
        setRatingFilter(e.target.value)
        console.log(ratingFilter)
     }
+
+    const resetFilterState=()=>{
+        setmonth("")
+        setyear("")
+        setRatingFilter("")
+        setCountryFilter("")
+    }
+
+    useEffect(()=>{
+        console.log(countryFilter)
+        let temp= userlist.filter((data)=>{
+
+            const checkRatingFilter = data.rating>=ratingFilter || ratingFilter===""
+            const checkCountryFilter = data.country_id===countryFilter || countryFilter===""
+            let dateVisited = new Date(data.date)
+            const checkMonthFilter = dateVisited.getMonth()==month || month ===""
+            const checkYearFilter=dateVisited.getFullYear()==year || year ===""
+
+            if((ratingFilter==="")&&(countryFilter==="")&&(year==="")&&(month==="")){
+                return data
+            }else if(checkRatingFilter && checkCountryFilter && checkYearFilter && checkMonthFilter){
+                console.log(data.location,countryFilter)
+                return data
+            }
+        })
+       temp=temp.slice(0,minUserList)
+        setFilteredData(temp)
+
+    },[countryFilter,ratingFilter,userlist,year,month,minUserList])
 
 
     return (
@@ -78,21 +108,15 @@ const SearchResults = () => {
                 </div>
 
                 <div className="visitor-details-cards">
-                    {
-                    userlist.slice(0,lastElement).filter((data)=>{
-                        if(ratingFilter==null){
-                            return data
-                        }else if(data.rating>=ratingFilter){
-                            return data
-                        }
-                    }).map((data) => {
+                    { 
+                     filteredData.map((data) => {
                         if(data.user_id!=userID){
                             return <Visitors data={data} key={data.user_id}/>
                         }
                     })
                     }
                 </div>
-                <button>More</button>
+                {minUserList<userlist.length && (<button onClick={()=>{setMinUserList((previousState)=>previousState+2)}}>More</button>)}
             </div>}
             {visibleFilter &&
                 <div className="filter">
@@ -124,8 +148,9 @@ const SearchResults = () => {
                             }}
                         />
                     </div>
-                    <input placeholder="visitor's rating from 1 to 5" onChange={(e)=>{fixRating(e)}}></input>
+                    <input type="number" placeholder="visitor's rating from 1 to 5" onChange={(e)=>{fixRating(e)}}></input>
                     <button onClick={() => setFilterVisible(!(visibleFilter))}>Done</button>
+                    <button id="reset" onClick={()=>{resetFilterState()}}>Reset</button>
                 </div>
             }
         </div>)
