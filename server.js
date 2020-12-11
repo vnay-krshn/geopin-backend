@@ -72,7 +72,7 @@ app.post('/refreshtoken', (req, res, next) => {
         }
       };
       const accessToken = jwt.sign(payloadUser, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: "60s"
+        expiresIn: "100s"
       });
       return res.json({ success: true, accessToken });
     } else {
@@ -109,7 +109,7 @@ app.post('/login', jsonParser, (req, res) => {
     //     res.status(200).json({ token });
     //   }
     // );
-    let accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "60s" })
+    let accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "100s" })
     let refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "7d" })
     refreshTokens.push(refreshToken)
     return res.status(201).json({ token: accessToken, refreshToken: refreshToken })
@@ -350,8 +350,9 @@ app.get('/checkfollower', (req, res) => {
 app.post('/savefollower', jsonParser, (req, res) => {
   let userID = req.body.userID
   let visitorID = req.body.visitorId
+  let visitorName = req.body.visitor_name
 
-  let qr = `insert into followers(user_id,visitor_id) values ('${userID}','${visitorID}')`
+  let qr = `insert into followers(user_id,visitor_id,visitor_name) values ('${userID}','${visitorID}','${visitorName}')`
   pool.query(qr, (err, results) => {
     if (err) {
       res.send({ message: "error", error: err })
@@ -378,7 +379,7 @@ app.delete('/deletefollower', (req, res) => {
 
 app.get('/followerpic', (req, res) => {
   let userID = req.query.userID
-  let qry = `select distinct on(visitor_id) visitor_id from followers where user_id='${userID}';`
+  let qry = `select distinct visitor_id,visitor_name from followers where user_id='${userID}';`
   pool.query(qry, (err, results) => {
     if (err) {
       res.send(err)

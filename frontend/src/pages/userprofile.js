@@ -10,10 +10,10 @@ import '../css/userEdit.css'
 
 class UserProfile extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.handleChange=this.handleChange.bind(this)
-        this.searchBarPost=this.searchBarPost.bind(this)
+        this.handleChange = this.handleChange.bind(this)
+        this.searchBarPost = this.searchBarPost.bind(this)
     }
 
     state = {
@@ -24,7 +24,7 @@ class UserProfile extends React.Component {
         country_icon: '',
         countryID: '',
         phone: '',
-        profile_pic:'',
+        profile_pic: '',
         visibleUserEdit: false,
         placesData: [],
         latestSearch: [],
@@ -32,14 +32,14 @@ class UserProfile extends React.Component {
         savedContactsPics: [],
         dateParseReady: false,
         navbaredit: false,
-        search:null,
-        minUserList:[],
-        status:true,
-        checkEmptyMessage:false
+        search: null,
+        minUserList: [],
+        status: true,
+        checkEmptyMessage: false
     }
 
     token = localStorage.getItem('token')
-    baseconverted=""
+    baseconverted = ""
 
     userLoad() {
         if (this.token !== undefined) {
@@ -48,7 +48,7 @@ class UserProfile extends React.Component {
                     headers: { "token": this.token }
                 })
                 .then((response) => {
-                   this.setState({
+                    this.setState({
                         id: response.data.id,
                         name: response.data.name,
                         email: response.data.email,
@@ -56,11 +56,11 @@ class UserProfile extends React.Component {
                         country_icon: response.data.country_icon,
                         countryID: response.data.country_id,
                         phone: response.data.phone,
-                        profile_pic:response.data.profile_pic
+                        profile_pic: response.data.profile_pic
                     })
-                    if(this.state.status){
-                    this.userActitivity(this.state.id)
-                    this.findSavedContacts(this.state.id)
+                    if (this.state.status) {
+                        this.userActitivity(this.state.id)
+                        this.findSavedContacts(this.state.id)
                     }
                     this.update = this.update.bind(this)
                 }
@@ -68,23 +68,23 @@ class UserProfile extends React.Component {
         }
     }
 
-   handleChange(e){
-       var arr=e.target.files[0]
-      // this.setState({profile_pic:URL.createObjectURL(arr)})       
-       var reader = new FileReader();
-       if (arr) {
-              reader.readAsDataURL(arr);
-              reader.onload = () => {
+    handleChange(e) {
+        var arr = e.target.files[0]
+        // this.setState({profile_pic:URL.createObjectURL(arr)})       
+        var reader = new FileReader();
+        if (arr) {
+            reader.readAsDataURL(arr);
+            reader.onload = () => {
                 //var Base64 = reader.result;
                 //this.baseconverted=reader.result
-                this.setState({profile_pic: reader.result})
-                
-              };
-              reader.onerror = (error) => {
+                this.setState({ profile_pic: reader.result })
+
+            };
+            reader.onerror = (error) => {
                 console.log("error: ", error);
-              };
-            }
-      
+            };
+        }
+
     }
 
     dateParser() {
@@ -153,9 +153,9 @@ class UserProfile extends React.Component {
         axios.patch('http://localhost:4000/update', this.state)
             .then(res => {
                 console.log(res)
-                if(res.data.message==="updation success"){
-                     
-                     this.userLoad()
+                if (res.data.message === "updation success") {
+
+                    this.userLoad()
                 }
                 this.setState({ navbaredit: false })
             })
@@ -169,8 +169,11 @@ class UserProfile extends React.Component {
                 }
             })
                 .then(res => {
-                    this.setState({ savedContactsPics: [...this.state.savedContactsPics, res.data[0].profile_pic] }, () => {
-                        //console.log(this.state.savedContactsPics)
+                    this.setState({ savedContactsPics: [...this.state.savedContactsPics, {
+                        profile_pic:res.data[0].profile_pic,
+                        visitor_name:res.data[0].name
+                    }] }, () => {
+                        console.log(this.state.savedContactsPics)
                     })
                 })
         })
@@ -186,26 +189,26 @@ class UserProfile extends React.Component {
             .then(res => {
                 this.setState({ savedContacts: res.data.rows })
                 this.getSavedContactPics(this.state.savedContacts)
-                this.state.status=false
+                this.state.status = false
             })
     }
 
-    searchBarPost(e){
+    searchBarPost(e) {
         let keyword = e.target.value;
-        this.setState({search:keyword})
+        this.setState({ search: keyword })
     }
 
-    displayEmpty(){
-        const emptyDashBoard = document.querySelector('#placesLoggedCount')   
+    displayEmpty() {
+        const emptyDashBoard = document.querySelector('#placesLoggedCount')
         const extendMoreButton = document.querySelector('#more')
-        if(this.state.placesData.length===0){
-            emptyDashBoard.style.display="none"
-            extendMoreButton.style.display="none"
-            this.state.checkEmptyMessage=true
-        }else{
-            emptyDashBoard.style.display="block"
-            extendMoreButton.style.display="block"
-            this.state.checkEmptyMessage=false
+        if (this.state.placesData.length === 0) {
+            emptyDashBoard.style.display = "none"
+            extendMoreButton.style.display = "none"
+            this.state.checkEmptyMessage = true
+        } else {
+            emptyDashBoard.style.display = "block"
+            extendMoreButton.style.display = "block"
+            this.state.checkEmptyMessage = false
         }
     }
 
@@ -229,10 +232,10 @@ class UserProfile extends React.Component {
         this.displayEmpty()
     }
 
-    style={
-        'position':'relative',
-        'right':'15em',
-        'top':'10em'
+    style = {
+        'position': 'relative',
+        'right': '15em',
+        'top': '10em'
     }
 
     render() {
@@ -244,12 +247,12 @@ class UserProfile extends React.Component {
                     <div className="userprofile-cards">
                         <div className="sidebar">
                             <div className="search-post">
-                                <input placeholder="Search your posts" onChange={(e)=>this.searchBarPost(e)}></input>
-                                <button onClick={()=>{this.setState({search:null})}}><img src='/imgs/loupe.svg'></img></button>
+                                <input placeholder="Search your posts" onChange={(e) => this.searchBarPost(e)}></input>
+                                <button onClick={() => { this.setState({ search: null }) }}><img src='/imgs/loupe.svg'></img></button>
                             </div>
                             <div className="recent-searches">
                                 <div className="title">Latest Searches</div>
-                                {this.state.dateParseReady && this.state.latestSearch.slice(0,3).map((items) => (
+                                {this.state.dateParseReady && this.state.latestSearch.slice(0, 3).map((items) => (
                                     <div className="latest-search" key={items.search_id}>
                                         <div className="latest-search-info">
                                             <label>{items.location}</label>
@@ -263,22 +266,25 @@ class UserProfile extends React.Component {
                                 <div className="title">Saved contacts</div>
                                 <div className="contact-images">
                                     {this.state.savedContactsPics.map((items, key) => (
-                                        <img src={items} key={key}></img>
+                                        <div className="displayContacts">
+                                            <img src={items.profile_pic} key={key} id="followerImage"></img>
+                                            <span id="followerName">{items.visitor_name}</span>
+                                        </div>
                                     ))}
                                 </div>
                             </div>
                         </div>
                         <div className="main">
                             {
-                                this.state.placesData.filter((data)=>{
-                                    if(this.state.search===null){
+                                this.state.placesData.filter((data) => {
+                                    if (this.state.search === null) {
                                         return data
-                                    }else if(data.location.toLowerCase().includes(this.state.search.toLowerCase())  ){
+                                    } else if (data.location.toLowerCase().includes(this.state.search.toLowerCase())) {
                                         return data
                                     }
                                 }).map((data) => (
-                                <PlacesLogged data={data} key={data.location} />
-                            ))
+                                    <PlacesLogged data={data} key={data.location} />
+                                ))
                             }
                         </div>
                         {this.state.checkEmptyMessage && <label style={this.style}>You haven't checked in to any places yet.</label>}

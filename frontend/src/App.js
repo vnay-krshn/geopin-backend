@@ -1,4 +1,4 @@
-import React, { lazy,Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './styles.css';
 import './css/userEdit.css'
@@ -15,39 +15,43 @@ import './css/maps.css'
 import Protected from './ProtectedRoutes1'
 import ProtectAuth from './ProtectedRoutes2'
 
-const Landingpage = lazy(()=>import('./pages/landingPage'))
-const RegisterVal = lazy(()=>import('./pages/registerVal'))
-const LoginVal = lazy(()=>import('./pages/loginVal'))
-const Homepage = lazy(()=>import('./pages/homepage'))
-const SearchPage = lazy(()=>import('./pages/searchpage'))
-const CheckInPage = lazy(()=>import('./pages/checkInPage'))
-const SearchResults = lazy(()=>import('./pages/searchResultPage'))
-const CheckinResults = lazy(()=>import('./pages/checkinResultPage'))
-const VisitorProfile = lazy(()=>import('./pages/visitorProfile'))
-const UserProfile = lazy(()=>import('./pages/userprofile'))
+const Landingpage = lazy(() => import('./pages/landingPage'))
+const RegisterVal = lazy(() => import('./pages/registerVal'))
+const LoginVal = lazy(() => import('./pages/loginVal'))
+const ForgotPassword = lazy(() => import('./pages/forgotPassword'))
+const ResetPassword = lazy(() => import('./pages/resetPassword'))
+const Homepage = lazy(() => import('./pages/homepage'))
+const SearchPage = lazy(() => import('./pages/searchpage'))
+const CheckInPage = lazy(() => import('./pages/checkInPage'))
+const SearchResults = lazy(() => import('./pages/searchResultPage'))
+const CheckinResults = lazy(() => import('./pages/checkinResultPage'))
+const VisitorProfile = lazy(() => import('./pages/visitorProfile'))
+const UserProfile = lazy(() => import('./pages/userprofile'))
 
 
-function App(){
+function App() {
 
-  return(
-      <Router>
-        <Suspense fallback={<div>Loading...</div>}>
-            <Switch>
-              <ProtectAuth path='/' exact component={Landingpage}/>
-              <ProtectAuth path='/register' component={RegisterVal} />
-              <ProtectAuth path='/login' component={LoginVal}/>
-              <Protected path='/homepage' component={Homepage} />
-              <Protected path='/search' component={SearchPage}  />
-              <Protected path='/checkIn' component={CheckInPage} />
-              <Protected path='/searchResults' component={SearchResults} />
-              <Protected path='/checkinResults' component={CheckinResults} />
-              <Protected path='/visitorProfile/:id' component={VisitorProfile} />
-              <Protected path='/userProfile' component={UserProfile} />
-            </Switch>
-        </Suspense>
-      </Router>
+  return (
+    <Router>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>
+          <Route path="/resetpass" component={ResetPassword} />
+          <ProtectAuth path='/' exact component={Landingpage} />
+          <ProtectAuth path='/register' component={RegisterVal} />
+          <ProtectAuth path='/login' component={LoginVal} />
+          <ProtectAuth path='/forgotpass' component={ForgotPassword} />
+          <Protected path='/homepage' component={Homepage} />
+          <Protected path='/search' component={SearchPage} />
+          <Protected path='/checkIn' component={CheckInPage} />
+          <Protected path='/searchResults' component={SearchResults} />
+          <Protected path='/checkinResults' component={CheckinResults} />
+          <Protected path='/visitorProfile/:id' component={VisitorProfile} />
+          <Protected path='/userProfile' component={UserProfile} />
+        </Switch>
+      </Suspense>
+    </Router>
   )
-} 
+}
 
 
 export default App;

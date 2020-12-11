@@ -11,7 +11,7 @@ const VisitorProfile=()=>{
     const [minUserList, setMinUserList]=useState(2)
     const [filteredData, setFilteredData] = useState([])
 
-    var visitorId
+    var visitorId, visitor_name=""
 
     if((window.location.pathname).match(/\d/g).length>1){
         visitorId=(window.location.pathname).match(/\d/g).join("")
@@ -60,7 +60,8 @@ const VisitorProfile=()=>{
     const saveFollower=()=>{
         let postFeed={
             userID:userID,
-            visitorId:visitorId
+            visitorId:visitorId,
+            visitor_name:visitor_name
         }
         axios.post('http://localhost:4000/savefollower',postFeed)
             .then(res=>{
@@ -119,6 +120,7 @@ const VisitorProfile=()=>{
             }
         })
         .then(res => {
+            visitor_name=res.data[0].name
            setvisitorinfo(res.data[0])
            getVisitorActivity()
         })

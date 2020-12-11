@@ -39,8 +39,7 @@ class HomepageNav extends React.Component {
     requestLogin = async (token, refreshToken) => {
         console.log(token, refreshToken);
         return new Promise((resolve, reject) => {
-            axios
-                .get(
+            axios.get(
                     "http://localhost:4000/userlogin",
                     {
                         headers: { "token": token }

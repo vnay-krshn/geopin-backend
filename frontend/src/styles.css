@@ -352,6 +352,16 @@
   padding: 0.5em 0em;
 }
 
+.login-box #successMessage {
+  position: relative;
+  top: 1em;
+  color: #095219;
+  background: #83f59c;
+  border: 1.8px solid #bcf8c9;
+  padding: 0.75em 2em;
+  margin-left: 2.65em;
+}
+
 .login-form {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1007,6 +1017,35 @@
   background: #d3e9eb;
   margin-top: 1em;
   width: 25vw;
+}
+
+.userprofile .saved-contacts .contact-images {
+  -ms-flex-line-pack: start;
+      align-content: flex-start;
+}
+
+.userprofile .saved-contacts .displayContacts {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 7vw;
+  height: 18vh;
+  padding: 0.3em;
+  margin: 0.1em;
+}
+
+.userprofile .saved-contacts .displayContacts #followerImage {
+  margin: 0 auto;
+  width: 5vw;
+  height: 11vh;
+}
+
+.userprofile .saved-contacts .displayContacts #followerName {
+  text-align: center;
 }
 
 .userprofile .title {

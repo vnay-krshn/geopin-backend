@@ -44,12 +44,13 @@ const validationSchema = Yup.object({
 
 const RegisterVal = () => {
     const history = useHistory();
-    let error = { message: '' }
+    //let error = { message: '' }
     let country, countryIcon, countryID
-    const [displaySuccess, setDisplaySuccess] = useState(false)
+    const [displayStatus, setDisplayStatus] = useState(false)
+    const [statusMessage, setStatusMessage]= useState("")
 
     const goToLogin=()=>{
-        setDisplaySuccess(false)
+        setDisplayStatus(false)
         history.push('/login')
     }
 
@@ -66,12 +67,16 @@ const RegisterVal = () => {
         axios.post('http://localhost:4000/register', user)
             .then(res => {
                 if (res.data.message === 'email already exists') {
-                    error.message = res.data.message
-                    alert(error.message)
+                    // error.message = res.data.message
+                    // alert(error.message)
+                    setDisplayStatus(true)
+                    setStatusMessage(res.data.message)
+                    setTimeout(()=>setDisplayStatus(false),3000)
                    
                 }
                 else if(res.data.token){
-                    setDisplaySuccess(true)
+                    setDisplayStatus(true)
+                    setStatusMessage("Registration was successful!")
                     setTimeout(goToLogin,1000)
                 }
             }
@@ -158,7 +163,7 @@ const RegisterVal = () => {
                         </label>
                     </Form>
                 </Formik>
-                {displaySuccess && (<span id="successMessage">Registration successful!</span>)}
+                {displayStatus && (<span id="successMessage">{statusMessage}</span>)}
             </div>
         </div>
 
