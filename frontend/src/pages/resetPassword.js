@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-import { Link, Redirect, Route } from 'react-router-dom'
+import { Link, Redirect, Route, useHistory } from 'react-router-dom'
+import axios from 'axios'
 
 const initialValues = {
     password: '',
@@ -28,10 +29,42 @@ const ResetPassword = () => {
 
     const [displayStatus, setDisplayStatus] = useState(false)
     const [statusMessage, setStatusMessage] = useState("")
+    const history = useHistory()
+    let urlToken = (window.location.pathname).slice(7, (window.location.pathname.length))
+
+    const routeBack = (message) => {
+        setDisplayStatus(true)
+        setStatusMessage(message)
+        setTimeout(() => setDisplayStatus(false), 3000)
+        setTimeout(()=>{
+            history.push('/login')
+        },6000)        
+    }
+
+    const checkAuth = () => {
+        axios.get(`http://localhost:4000/reset/${urlToken}`)
+            .then(res => {
+                console.log(res)
+                if (res.data.message === "password expired") {
+                    routeBack(res.data.message)
+                }
+            })
+    }
 
     const submit = e => {
         let user = { password: e.password }
+        axios.post(`http://localhost:4000/reset/${urlToken}`, user)
+            .then(res => {
+                console.log(res)
+                if (res.data.message === "password expired" || res.data.message === "Success! Your password has been changed") {
+                    routeBack(res.data.message)
+                }
+            })
     }
+
+    useEffect(() => {
+        checkAuth()
+    }, [])
 
     return (
         <div className="login">
@@ -61,7 +94,13 @@ const ResetPassword = () => {
                         <button type="submit">UPDATE PASSWORD</button>
                     </Form>
                 </Formik>
-                {displayStatus && (<span id="successMessage">{statusMessage}</span>)}
+                {displayStatus && (
+                    <div id="successMessage" style={{'textAlign':"center"}}>
+                        <span>
+                            {statusMessage}
+                        </span>
+                    </div>
+                )}
             </div>
         </div>
     )

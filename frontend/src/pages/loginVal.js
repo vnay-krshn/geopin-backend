@@ -93,7 +93,13 @@ const LoginVal = () => {
                         </label>
                     </Form>
                 </Formik>
-                {displayStatus && (<span id="successMessage">{statusMessage}</span>)}
+                {displayStatus && (
+                    <div id="successMessage" style={{'textAlign':"center"}}>
+                        <span>
+                            {statusMessage}
+                        </span>
+                    </div>
+                )}
             </div>
         </div>
     )
