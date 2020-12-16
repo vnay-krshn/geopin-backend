@@ -10,6 +10,7 @@ import '../css/maps.css'
 import '../css/placeInfo.css'
 import '../css/searchResults/visitors.css'
 import '../css/searchResults/filter.css'
+import Footer from '../comp/landingPage/footer'
 
 var lastElement
 var userID = 0
@@ -153,6 +154,7 @@ const SearchResults = () => {
                     <button id="reset" onClick={()=>{resetFilterState()}}>Reset</button>
                 </div>
             }
+            {placename && <Footer/>}
         </div>)
 }
 

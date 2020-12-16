@@ -182,9 +182,19 @@
     height: 100vh;
     @include bgndposition();
 
-    img{
-        margin: 2em 35.6em;
+    #logoImage{
+        margin: 2em 0em 0em 35.6em;
     }
+
+    .connections{
+        //background: blueviolet;
+        position: absolute;
+        bottom: 0em;
+        img{
+            width: 100vw;
+        }
+    }
+
 }
 
 .register-box{
@@ -342,6 +352,113 @@
     }
 }
 
+// Forgot password
+
+.forgotPasswd{
+    background-image: url('/imgs/bg.png');
+    height: 100vh;
+    @include bgndposition();
+
+    #logoImage{
+        margin: 2em 0em 0em 35.6em;
+    }
+
+    .connections{
+        //background: blueviolet;
+        position: absolute;
+        bottom : 0em;
+
+        img{
+            width: 100vw;
+        }
+    }
+}
+
+.forgotPasswd-box{
+    width: 25vw;
+    margin: 5em 30em;
+
+    h3{
+        font-weight: 400;
+        color: #ffff;
+        padding: 0.5em 0em;
+    }
+    
+    #successMessage{
+        position: relative;
+        font-size: 0.9rem;
+        top: 1em;
+        color:#095219;
+        background:#83f59c;
+        border:  1.8px solid #bcf8c9;
+        padding: 0.3em;        
+    }
+}
+
+.forgotPasswd-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    input{
+        padding: 0.75em;
+        margin: 0.25em 0;
+        border: none;
+        outline: none;
+        border-radius: 0.2em;
+        width: 23.5vw;
+    }
+
+    label{
+        color:#ffff;
+        margin:1em 1.5em;
+
+        a{
+            text-decoration: none;
+            color: #00d3b8;
+            margin-left: 0.2em;
+            cursor: pointer;
+
+            &:hover{
+                color: #ffff;
+            }
+        }
+    }
+
+    button{
+        width: 25vw;
+        padding: 0.8em;
+        margin-top: 0.25em;
+        cursor: pointer;
+        @include buttonStyle();
+
+        &:hover{
+            background: #09c2a9;
+        }
+    }
+}
+
+@media(max-width:768px){
+    .forgotPasswd-box{
+        margin-left: 7em;
+        width: 60vw;
+    }
+
+    .forgotPasswd img{
+        margin:2em 0em 2em 11.5em;
+    }
+
+    .forgotPasswd-form button{
+        width: 60vw;
+    }
+
+    .forgotPasswd-form label{
+        width: 54vw;
+        margin-left: 1em;
+    }
+}
+
+
 /* Login */
 
 .login{
@@ -349,8 +466,17 @@
     height: 100vh;
     @include bgndposition();
 
-    img{
-        margin: 2em 35.6em;
+    #logoImage{
+        margin: 2em 0em 0em 35.6em;
+    }
+
+    .connections{
+        //background: blueviolet;
+        position: absolute;
+        bottom: 0em;
+        img{
+            width: 100vw;
+        }
     }
 }
 
@@ -444,6 +570,16 @@
     background-image: url('/imgs/bg.png');
     height: 100vh;
     @include bgndposition();
+
+    .connections{
+        position: relative;
+        margin-top: -8.6em;
+        //background: blue; 
+        
+        img{
+            width: 100vw;
+        }
+    }
 }
 
 .home-display{
@@ -504,6 +640,16 @@
     background-image: url('/imgs/bg.png');
     height: 100vh;
 
+    .connections{
+        position: relative;
+        margin-top: 6.9em;
+        //background: blue; 
+        
+        img{
+            width: 100vw;
+        }
+    }
+
     h2{
         margin: 5em  0em 2em 19em;
         color:#ffff;
@@ -538,6 +684,16 @@
 .checkInPage{
     background-image: url('/imgs/bg.png');
     height: 100vh;
+
+    .connections{
+        position: relative;
+        margin-top: 6.9em;
+        //background: blue; 
+        
+        img{
+            width: 100vw;
+        }
+    }
 
     h2{
         margin: 5em  0em 2em 19em;
@@ -710,6 +866,7 @@
     width: 78.95em;
     position: absolute;
     z-index: 100;
+
 }
 
 @media(max-width:768px){
@@ -905,6 +1062,7 @@
 
 .userprofile-cards{
    display: flex; 
+   //background: blue;
 
    .latest-search-info{
         display: flex;
@@ -1029,17 +1187,17 @@
 }
 
 .userprofile-cards .main{
-    width: 20vw;
-    margin-bottom: 5.2em;
+    width: 48vw;
     position: relative;
-    right: -1.2em;
+    //background: red;
+    margin: 5.6em 0em 1.8em -6em;
 
     .placesLogged{
-        width: 44vw;
-        margin-bottom: 0.3em;
-        position: relative;
-        right: 11em;
-        top: 5.5em;
+        width: 47vw;
+        // margin-bottom: 0.3em;
+        //position: relative;
+        // right: 11em;
+        //top: 5.5em;
     }
     
 }
@@ -1047,10 +1205,10 @@
 .userprofile #more{
     padding: 0.2em 2em;
     height: 2.5em;
-    margin: 0.5em;
+    position: absolute;
+    margin-top: -1em;
+    right: 6.9em;
     font-size: 1em;
-    position: relative;
-    left: 58.5em;
     cursor: pointer;
     @include buttonStyle();
 

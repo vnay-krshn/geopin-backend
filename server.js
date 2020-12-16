@@ -229,7 +229,7 @@ app.get('/reset/:token', function (req, res) {
       res.send(err)
     }
     if (!results.rows.length) {
-      return res.send({ message: "password expired" })
+      return res.send({ message: "session expired" })
     }
     res.send({ token: req.params.token });
   })
@@ -248,7 +248,7 @@ app.post('/reset/:token',jsonParser, function (req, res) {
         }
         hashedPassword = await bcrypt.hash(req.body.password, 10)
         if (!results.rows.length) {
-          return res.send({ message: "password expired" })
+          return res.send({ message: "session expired" })
         }
       let email = results.rows[0].email
       console.log(email, hashedPassword)

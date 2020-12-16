@@ -5,6 +5,7 @@ import { Link, useHistory } from 'react-router-dom'
 import ReactFlagsSelect from '../comp/ReactflagSelect/';
 import 'react-flags-select/css/react-flags-select.css';
 import axios from 'axios'
+import Footer from '../comp/landingPage/footer'
 
 
 const initialValues = {
@@ -64,6 +65,7 @@ const RegisterVal = () => {
             countryIcon: countryIcon,
             countryID: countryID
         }
+        
         axios.post('http://localhost:4000/register', user)
             .then(res => {
                 if (res.data.message === 'email already exists') {
@@ -94,7 +96,7 @@ const RegisterVal = () => {
     return (
         <div className="register">
             <Link to='/'>
-                <img src='/imgs/logo.svg'></img>
+                <img id="logoImage" src='/imgs/logo.svg'></img>
             </Link>
             <div className="register-box">
                 <h3>REGISTER</h3>
@@ -170,10 +172,11 @@ const RegisterVal = () => {
                         </span>
                     </div>
                 )}
-            </div>
+            </div>  
+            <Footer/>       
         </div>
-
     )
+    
 }
 
 export default RegisterVal

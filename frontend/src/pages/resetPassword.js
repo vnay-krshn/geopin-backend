@@ -45,7 +45,7 @@ const ResetPassword = () => {
         axios.get(`http://localhost:4000/reset/${urlToken}`)
             .then(res => {
                 console.log(res)
-                if (res.data.message === "password expired") {
+                if (res.data.message === "session expired") {
                     routeBack(res.data.message)
                 }
             })
@@ -56,7 +56,7 @@ const ResetPassword = () => {
         axios.post(`http://localhost:4000/reset/${urlToken}`, user)
             .then(res => {
                 console.log(res)
-                if (res.data.message === "password expired" || res.data.message === "Success! Your password has been changed") {
+                if (res.data.message === "session expired" || res.data.message === "Success! Your password has been changed") {
                     routeBack(res.data.message)
                 }
             })

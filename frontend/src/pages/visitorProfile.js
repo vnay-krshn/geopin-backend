@@ -4,6 +4,7 @@ import ProfileHead from '../comp/profileHead'
 import '../css/profileHead.css'
 import '../css/placesLogged.css'
 import axios from 'axios'
+import Footer from '../comp/landingPage/footer'
 
 const VisitorProfile=()=>{
     const[visitorInfo,setvisitorinfo]=useState({})
@@ -147,8 +148,9 @@ const VisitorProfile=()=>{
                     <PlacesLogged data={data} key={data.place_id}/>
                 ))}
             </div>
-            <button id="more" onClick={()=>{setMinUserList((previousState)=>previousState+2)}}>More</button>
+            {minUserList<placeData.length && <button id="more" onClick={()=>{setMinUserList((previousState)=>previousState+2)}}>More</button>}
         </div>
+    <Footer/>
     </div>)
 }
 

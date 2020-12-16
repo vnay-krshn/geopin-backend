@@ -5,8 +5,7 @@
     color: white;
     display: flex;
     justify-content: space-evenly;
-    width: 69vw;
-         
+    width: 69vw;         
 
     position: absolute;
     z-index: 100;

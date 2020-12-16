@@ -5,6 +5,7 @@ import 'react-flags-select/css/react-flags-select.css';
 import Ratings from '../comp/ratings'
 import PlacesLogged from '../comp/placesLogged'
 import { usersData } from '../mockData/userData'
+import Footer from '../comp/landingPage/footer'
 import axios from 'axios'
 import '../css/userEdit.css'
 
@@ -35,7 +36,8 @@ class UserProfile extends React.Component {
         search: null,
         minUserList: [],
         status: true,
-        checkEmptyMessage: false
+        checkEmptyMessage: false,
+        minUserList: 2
     }
 
     token = localStorage.getItem('token')
@@ -169,10 +171,12 @@ class UserProfile extends React.Component {
                 }
             })
                 .then(res => {
-                    this.setState({ savedContactsPics: [...this.state.savedContactsPics, {
-                        profile_pic:res.data[0].profile_pic,
-                        visitor_name:res.data[0].name
-                    }] }, () => {
+                    this.setState({
+                        savedContactsPics: [...this.state.savedContactsPics, {
+                            profile_pic: res.data[0].profile_pic,
+                            visitor_name: res.data[0].name
+                        }]
+                    }, () => {
                         console.log(this.state.savedContactsPics)
                     })
                 })
@@ -205,11 +209,20 @@ class UserProfile extends React.Component {
             emptyDashBoard.style.display = "none"
             extendMoreButton.style.display = "none"
             this.state.checkEmptyMessage = true
-        } else {
+        }
+        else if (this.state.minUserList > this.state.placesData.length) {
+            extendMoreButton.style.display = "none"
+        }
+        else {
             emptyDashBoard.style.display = "block"
             extendMoreButton.style.display = "block"
             this.state.checkEmptyMessage = false
         }
+    }
+
+    updateLogList() {
+        this.setState({ minUserList: this.state.minUserList + 2 })
+        setTimeout(console.log(this.state.minUserList), 1000)
     }
 
     componentDidUpdate() {
@@ -282,15 +295,15 @@ class UserProfile extends React.Component {
                                     } else if (data.location.toLowerCase().includes(this.state.search.toLowerCase())) {
                                         return data
                                     }
-                                }).map((data) => (
+                                }).slice(0, this.state.minUserList).map((data) => (
                                     <PlacesLogged data={data} key={data.location} />
                                 ))
                             }
                         </div>
                         {this.state.checkEmptyMessage && <label style={this.style}>You haven't checked in to any places yet.</label>}
-                        <label id="placesLoggedCount" style={{ position: "absolute", right: '13em', top: '20em' }}>Places logged : {this.state.placesData.length} </label>
+                        <label id="placesLoggedCount" style={{ position: "absolute", right: '6.5em', top: '20em' }}>Places logged : {this.state.placesData.length} </label>
                     </div>
-                    <button id="more">MORE</button>
+                    <button id="more" onClick={() => { this.updateLogList() }}>MORE</button>
                 </div>
                 {this.state.visibleUserEdit &&
                     <div className="useredit">
@@ -333,6 +346,7 @@ class UserProfile extends React.Component {
                         >DONE</button>
                     </div>
                 }
+                <Footer/>
             </div>)
 
     }

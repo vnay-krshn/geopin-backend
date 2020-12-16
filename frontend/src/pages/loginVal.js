@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { Link, Redirect, Route } from 'react-router-dom'
 import axios from 'axios'
+import Footer from '../comp/landingPage/footer'
 
 const initialValues = {
     email: '',
@@ -53,7 +54,7 @@ const LoginVal = () => {
     return (
         <div className="login">
             <Link to='/'>
-                <img src='/imgs/logo.svg'></img>
+                <img id="logoImage" src='/imgs/logo.svg'></img>
             </Link>
             <div className="login-box">
                 <h3>LOGIN</h3>
@@ -101,6 +102,7 @@ const LoginVal = () => {
                     </div>
                 )}
             </div>
+            <Footer/>
         </div>
     )
 }

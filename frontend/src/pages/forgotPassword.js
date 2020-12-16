@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { Link, Redirect, Route } from 'react-router-dom'
 import axios from 'axios'
+import Footer from '../comp/landingPage/footer'
 
 const initialValues = {
     email: ''
@@ -32,14 +33,14 @@ const ForgotPassword = () => {
     }
 
     return (
-        <div className="login">
+        <div className="forgotPasswd">
             <Link to='/'>
-                <img src='/imgs/logo.svg'></img>
+                <img id="logoImage" src='/imgs/logo.svg'></img>
             </Link>
-            <div className="login-box">
+            <div className="forgotPasswd-box">
                 <h3>RESET PASSWORD</h3>
                 <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={(e) => submit(e)}>
-                    <Form className="login-form">
+                    <Form className="forgotPasswd-form">
                         <div className="form-control">
                             <Field
                                 placeholder="Email"
@@ -61,6 +62,7 @@ const ForgotPassword = () => {
                     </div>
                 )}
             </div>
+            <Footer/>
         </div>
     )
 }

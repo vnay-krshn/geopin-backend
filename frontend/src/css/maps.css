@@ -6,6 +6,10 @@
   display: none;
 } 
 
+.mapboxgl-ctrl-attrib-inner,.mapboxgl-ctrl .mapboxgl-ctrl-logo{
+  display: none;
+}
+
 .mapboxgl-ctrl-top-right{
   position: absolute;
   width: 100vw;

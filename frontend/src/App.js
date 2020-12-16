@@ -35,11 +35,11 @@ function App() {
     <Router>
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
-          <Route path="/reset/:token" component={ResetPassword} />
           <ProtectAuth path='/' exact component={Landingpage} />
           <ProtectAuth path='/register' component={RegisterVal} />
           <ProtectAuth path='/login' component={LoginVal} />
           <ProtectAuth path='/forgotpass' component={ForgotPassword} />
+          <ProtectAuth path="/reset/:token" component={ResetPassword} />
           <Protected path='/homepage' component={Homepage} />
           <Protected path='/search' component={SearchPage} />
           <Protected path='/checkIn' component={CheckInPage} />
