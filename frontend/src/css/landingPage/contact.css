@@ -144,6 +144,11 @@
 
 @media(max-width:376px){
 
+    .footer-details-info label{
+        /* background: #00d3b8; */
+        width: 30vw;
+    }
+
     .footer-align{
         width: 100vw;
     }
@@ -167,6 +172,11 @@
    .footer .footer-form{
         width: 60vw;
         height: 35vh;       
+   }
+
+   .footer .footer-form .errorFooter{
+       font-size: 0.7rem;
+       margin: 0.2em;
    }
 
    .footer .footer-form input{

@@ -24,7 +24,7 @@ const validationSchema = Yup.object({
         .email('Invalid email format')
         .required('Required'),
     phone: Yup.string()
-        .matches(phoneRegExp, 'Phone number is not valid')
+        .matches(phoneRegExp, 'Invalid phone number')
         .required('Required'),
     password: Yup.string()
         .min(6, 'Password has to be longer than 6 characters')
@@ -68,7 +68,7 @@ const RegisterVal = () => {
         
         axios.post('http://localhost:4000/register', user)
             .then(res => {
-                if (res.data.message === 'email already exists') {
+                if (res.data.message === 'Email already exists') {
                     // error.message = res.data.message
                     // alert(error.message)
                     setDisplayStatus(true)

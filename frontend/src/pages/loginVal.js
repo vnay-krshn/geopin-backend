@@ -66,7 +66,7 @@ const LoginVal = () => {
                                 type="email"
                                 id="email"
                                 name="email" />
-                            <div style={{ color: 'rgb(241, 151, 151)' }}>
+                            <div style={{ color: 'rgb(241, 151, 151)' }} className="error">
                                 <ErrorMessage name='email' />
                             </div>
                         </div>
@@ -76,7 +76,7 @@ const LoginVal = () => {
                                 type="password"
                                 id="password"
                                 name="password" />
-                            <div style={{ color: 'rgb(241, 151, 151)' }}>
+                            <div style={{ color: 'rgb(241, 151, 151)' }} className="error">
                                 <ErrorMessage name='password' />
                             </div>
                         </div>
@@ -87,7 +87,7 @@ const LoginVal = () => {
                                 Register Now
                             </Link>
                         </label>
-                        <label style={{margin:'0em 0em 0em 6em',fontSize:'0.9rem',width:'12vw'}}>
+                        <label id="forgotpass-label">
                             <Link to='/forgotpass' style={{color:'#acfff4'}}>
                                 Forgotten password?
                             </Link>

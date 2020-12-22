@@ -33,7 +33,7 @@ app.post('/register', jsonParser, (req, res) => {
   let qry1 = `select * from users where email='${email}'`
   pool.query(qry1, async (err, results) => {
     if (results.rows.length > 0) {
-      return res.send({ message: "email already exists" })
+      return res.send({ message: "Email already exists" })
     }
     hashedPassword = await bcrypt.hash(password, 10)
     let qry2 = `insert into users(name, email, password, country, country_icon, phone,country_id,profile_pic) values('${username}','${email}','${hashedPassword}','${country}','${countryIcon}','${phone}','${countryID}','${profilePic}') returning id`

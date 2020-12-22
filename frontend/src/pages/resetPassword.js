@@ -67,20 +67,20 @@ const ResetPassword = () => {
     }, [])
 
     return (
-        <div className="login">
+        <div className="resetPasswd">
             <Link to='/'>
-                <img src='/imgs/logo.svg'></img>
+                <img id="logoImage" src='/imgs/logo.svg'></img>
             </Link>
-            <div className="login-box">
+            <div className="resetPasswd-box">
                 <h3>RESET PASSWORD</h3>
                 <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={(e) => submit(e)}>
-                    <Form className="login-form">
+                    <Form className="resetPasswd-form">
                         <Field
                             placeholder="Password"
                             type="password"
                             id="password"
                             name="password" />
-                        <div style={{ color: 'rgb(241, 151, 151)' }}>
+                        <div style={{ color: 'rgb(241, 151, 151)' }} className="error">
                             <ErrorMessage name='password' />
                         </div>
                         <Field
@@ -88,7 +88,7 @@ const ResetPassword = () => {
                             type="password"
                             id="re_password"
                             name="re_password" />
-                        <div style={{ color: 'rgb(241, 151, 151)' }}>
+                        <div style={{ color: 'rgb(241, 151, 151)' }} className="error">
                             <ErrorMessage name='re_password' />
                         </div>
                         <button type="submit">UPDATE PASSWORD</button>

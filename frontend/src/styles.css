@@ -147,7 +147,7 @@
 /* Register */
 .register-box .error {
   color: #f19797;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 .register {
@@ -168,6 +168,7 @@
 }
 
 .register .connections img {
+  opacity: 0.3;
   width: 100vw;
 }
 
@@ -258,6 +259,7 @@
   padding: 0.8em;
   margin-top: 0.25em;
   cursor: pointer;
+  z-index: 1;
   background: #00d3b8;
   border: none;
   outline: none;
@@ -298,12 +300,14 @@
 
 .register-form .contact .errorPhone {
   color: #f19797;
-  margin-left: 0.5em;
+  margin-left: 0.4em;
+  font-size: 0.8rem;
 }
 
 .register-form label {
   color: #ffff;
   margin: 1em 2.9em;
+  z-index: 1;
 }
 
 .register-form label a {
@@ -318,22 +322,168 @@
 }
 
 @media (max-width: 768px) {
+  .register {
+    width: 100vw;
+  }
+  .register #logoImage {
+    margin: 8em 0em 0em 19em;
+    height: 5vh;
+  }
+  .register .connections .copyright {
+    font-size: 0.9rem;
+    top: 2.3em;
+  }
+  .register .connections .connect {
+    position: relative;
+    top: -0.1em;
+    width: 75vw;
+  }
+  .register .connections .connect .networks {
+    position: relative;
+  }
+  .register .connections .connect .networks img {
+    opacity: 0.3;
+    width: 1.5em;
+  }
   .register-box {
-    margin-left: 7em;
+    margin: 5em 0em 0em 10.8em;
     width: 60vw;
   }
-  .register img {
-    margin: 2em 0em 2em 11.5em;
+  .register-box h3 {
+    font-size: 1.4rem;
   }
-  .register-form .phone input {
-    width: 45vw;
+  .register-box label {
+    width: 42vw;
+    font-size: 1.2rem;
+    margin-left: 4.8em;
   }
-  .register-form button {
+  .register-box input {
+    width: 55vw;
+    font-size: 1.2rem;
+  }
+  .register-box button {
+    font-size: 1rem;
+    width: 59vw;
+  }
+  .register-box .contact .flag-select__btn {
+    width: 17vw;
+    margin-top: 0.3em;
+    height: 4.8vh;
+  }
+  .register-box .contact .flag-select__option--placeholder {
+    display: block;
+    font-size: 1.2rem;
+    width: 15vw;
+    padding: 0;
+    margin-top: 0.6em;
+    margin-left: -0.1em;
+  }
+  .register-box .contact .flag-select__options {
+    height: 14vh;
+    width: 17vw;
+    overflow: hidden;
+  }
+  .register-box .contact .flag-select__option img {
+    width: 15vw;
+    margin-left: -0.2em;
+    margin-bottom: -0.1em;
+    font-size: 1.2rem;
+  }
+  .register-box .contact .flag-select__options .filterBox input {
+    border: solid 1px black;
+    width: 14.5vw;
+    text-indent: 0.6em;
+  }
+  .register-box .contact .flag-select__option .flag-select__option__label {
+    display: none;
+  }
+  .register-box .contact .flag-select__btn:after, .register-box .contact .flag-select__btn[aria-expanded="true"]:after {
+    margin: -1.8em 0em 1em 5.4em;
+  }
+  .register-box .contact .phone input {
+    width: 37vw;
+  }
+}
+
+@media (max-width: 376px) {
+  .connections {
+    display: none;
+  }
+  .register {
+    width: 100vw;
+  }
+  .register #logoImage {
+    margin: 4em 0em 0em 8.5em;
+    height: 5vh;
+  }
+  .register #successMessage {
+    font-size: 0.75rem;
+  }
+  .register .register-box {
+    margin-top: 1.5em;
+    margin-left: 5.2em;
+  }
+  .register .register-box h3 {
+    font-size: 0.95rem;
+  }
+  .register .register-box label {
+    width: 57vw;
+    font-size: 0.8rem;
+    margin-left: 1.75em;
+  }
+  .register .register-box #forgotpass-label {
+    width: 33vw;
+    font-size: 0.8rem;
+    margin-left: 4em;
+  }
+  .register .register-box input {
+    width: 55vw;
+    font-size: 0.75rem;
+  }
+  .register .register-box button {
+    font-size: 0.75rem;
     width: 60vw;
   }
-  .register-form label {
-    width: 48vw;
-    margin-left: 2em;
+  .register .register-box .contact .phone .errorPhone {
+    width: 35vw;
+  }
+  .register .register-box .contact .flag-select__btn {
+    width: 20vw;
+    margin-top: 0.15em;
+  }
+  .register .register-box .contact .flag-select__option--placeholder {
+    display: block;
+    width: 15vw;
+    padding: 0;
+    margin-top: 0.7em;
+    margin-left: 0.2em;
+    font-size: 0.75rem;
+  }
+  .register .register-box .contact .flag-select__options {
+    height: 14vh;
+    width: 18vw;
+    overflow: hidden;
+  }
+  .register .register-box .contact .flag-select__option img {
+    width: 15vw;
+    margin-left: -0.2em;
+    margin-bottom: 0em;
+    font-size: 0.75rem;
+  }
+  .register .register-box .contact .flag-select__options .filterBox input {
+    border: solid 1px black;
+    width: 14.5vw;
+    text-indent: 0.6em;
+  }
+  .register .register-box .contact .flag-select__option .flag-select__option__label {
+    display: none;
+  }
+  .register .register-box .contact .flag-select__btn:after, .register .register-box .contact .flag-select__btn[aria-expanded="true"]:after {
+    margin: -1.4em 0em 1em 3.4em;
+  }
+  .register .register-box .contact .phone input {
+    width: 34vw;
+    margin-left: 0.3em;
   }
 }
 
@@ -450,6 +600,218 @@
   }
 }
 
+@media (max-width: 376px) {
+  .forgotPasswd {
+    width: 100vw;
+  }
+  .forgotPasswd #logoImage {
+    margin: 4em 0em 0em 8.5em;
+    height: 5vh;
+  }
+  .forgotPasswd #successMessage {
+    width: 57vw;
+    font-size: 0.75em;
+  }
+  .forgotPasswd .forgotPasswd-box {
+    margin-left: 5.2em;
+  }
+  .forgotPasswd .forgotPasswd-box h3 {
+    font-size: 0.95rem;
+  }
+  .forgotPasswd .forgotPasswd-box label {
+    width: 57vw;
+    font-size: 0.8rem;
+    margin-left: 0.5em;
+  }
+  .forgotPasswd .forgotPasswd-box #forgotpass-label {
+    width: 33vw;
+    font-size: 0.8rem;
+    margin-left: 4em;
+  }
+  .forgotPasswd .forgotPasswd-box .error {
+    font-size: 0.75rem;
+    width: 65vw;
+  }
+  .forgotPasswd .forgotPasswd-box input {
+    width: 55vw;
+    font-size: 0.75rem;
+  }
+  .forgotPasswd .forgotPasswd-box button {
+    font-size: 0.75rem;
+    width: 60vw;
+  }
+  .forgotPasswd .connections {
+    display: none;
+    margin: 0;
+  }
+  .forgotPasswd .connections img {
+    margin: 0;
+  }
+}
+
+.resetPasswd {
+  background-image: url("/imgs/bg.png");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.resetPasswd #logoImage {
+  margin: 2em 0em 0em 35.6em;
+}
+
+.resetPasswd .connections {
+  position: absolute;
+  bottom: 0em;
+}
+
+.resetPasswd .connections img {
+  width: 100vw;
+}
+
+.resetPasswd-box {
+  width: 25vw;
+  margin: 5em 30em;
+}
+
+.resetPasswd-box h3 {
+  font-weight: 400;
+  color: #ffff;
+  padding: 0.5em 0em;
+}
+
+.resetPasswd-box #successMessage {
+  position: relative;
+  font-size: 0.9rem;
+  top: 1em;
+  color: #095219;
+  background: #83f59c;
+  border: 1.8px solid #bcf8c9;
+  padding: 0.3em;
+}
+
+.resetPasswd-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.resetPasswd-form input {
+  padding: 0.75em;
+  margin: 0.25em 0;
+  border: none;
+  outline: none;
+  border-radius: 0.2em;
+  width: 23.5vw;
+}
+
+.resetPasswd-form label {
+  color: #ffff;
+  margin: 1em 1.5em;
+}
+
+.resetPasswd-form label a {
+  text-decoration: none;
+  color: #00d3b8;
+  margin-left: 0.2em;
+  cursor: pointer;
+}
+
+.resetPasswd-form label a:hover {
+  color: #ffff;
+}
+
+.resetPasswd-form button {
+  width: 25vw;
+  padding: 0.8em;
+  margin-top: 0.25em;
+  cursor: pointer;
+  background: #00d3b8;
+  border: none;
+  outline: none;
+  color: #ffff;
+  border-radius: 0.2em;
+}
+
+.resetPasswd-form button:hover {
+  background: #09c2a9;
+}
+
+@media (max-width: 768px) {
+  .forgotPasswd-box {
+    margin-left: 7em;
+    width: 60vw;
+  }
+  .forgotPasswd img {
+    margin: 2em 0em 2em 11.5em;
+  }
+  .forgotPasswd-form button {
+    width: 60vw;
+  }
+  .forgotPasswd-form label {
+    width: 54vw;
+    margin-left: 1em;
+  }
+}
+
+@media (max-width: 376px) {
+  .resetPasswd {
+    width: 100vw;
+  }
+  .resetPasswd #logoImage {
+    margin: 4em 0em 0em 8.5em;
+    height: 5vh;
+  }
+  .resetPasswd #successMessage {
+    width: 57vw;
+    font-size: 0.75em;
+  }
+  .resetPasswd .resetPasswd-box {
+    margin-left: 5.2em;
+  }
+  .resetPasswd .resetPasswd-box h3 {
+    font-size: 0.95rem;
+    width: 60vw;
+  }
+  .resetPasswd .resetPasswd-box label {
+    width: 57vw;
+    font-size: 0.8rem;
+    margin-left: 0.5em;
+  }
+  .resetPasswd .resetPasswd-box #forgotpass-label {
+    width: 33vw;
+    font-size: 0.8rem;
+    margin-left: 4em;
+  }
+  .resetPasswd .resetPasswd-box .error {
+    font-size: 0.75rem;
+    width: 65vw;
+  }
+  .resetPasswd .resetPasswd-box input {
+    width: 55vw;
+    font-size: 0.75rem;
+  }
+  .resetPasswd .resetPasswd-box button {
+    font-size: 0.75rem;
+    width: 60vw;
+  }
+  .resetPasswd .connections {
+    display: none;
+    margin: 0;
+  }
+  .resetPasswd .connections img {
+    margin: 0;
+  }
+}
+
 /* Login */
 .login {
   background-image: url("/imgs/bg.png");
@@ -469,6 +831,7 @@
 }
 
 .login .connections img {
+  opacity: 0.3;
   width: 100vw;
 }
 
@@ -481,6 +844,12 @@
   font-weight: 400;
   color: #ffff;
   padding: 0.5em 0em;
+}
+
+.login-box #forgotpass-label {
+  margin: 0em 0em 0em 6em;
+  font-size: 0.9rem;
+  width: 12vw;
 }
 
 .login-box #successMessage {
@@ -548,19 +917,101 @@
 }
 
 @media (max-width: 768px) {
-  .login-box {
-    margin-left: 7em;
+  .login {
+    width: 100vw;
+  }
+  .login #logoImage {
+    margin: 8em 0em 0em 19em;
+    height: 5vh;
+  }
+  .login .login-box {
+    margin: 5em 0em 0em 10.8em;
+  }
+  .login .login-box h3 {
+    font-size: 1.4rem;
+  }
+  .login .login-box label {
+    width: 42vw;
+    font-size: 1.2rem;
+    margin-left: 3.4em;
+  }
+  .login .login-box #forgotpass-label {
+    width: 25vw;
+    font-size: 1.2rem;
+    margin-left: 6.8em;
+  }
+  .login .login-box input {
+    width: 55vw;
+    font-size: 1.2rem;
+  }
+  .login .login-box button {
+    font-size: 1rem;
+    width: 59vw;
+  }
+  .login .connections .copyright {
+    font-size: 0.9rem;
+    top: 2.3em;
+  }
+  .login .connections .connect {
+    position: relative;
+    top: -0.15em;
+    width: 75vw;
+  }
+  .login .connections .connect .networks {
+    position: relative;
+  }
+  .login .connections .connect .networks img {
+    opacity: 0.3;
+    width: 1.5em;
+  }
+}
+
+@media (max-width: 376px) {
+  .login {
+    width: 100vw;
+  }
+  .login #logoImage {
+    margin: 4em 0em 0em 8.5em;
+    height: 5vh;
+  }
+  .login #successMessage {
+    width: 57vw;
+    font-size: 0.75em;
+  }
+  .login .login-box {
+    margin-left: 5.2em;
+  }
+  .login .login-box h3 {
+    font-size: 0.95rem;
+  }
+  .login .login-box label {
+    width: 57vw;
+    font-size: 0.8rem;
+    margin-left: 0.5em;
+  }
+  .login .login-box #forgotpass-label {
+    width: 33vw;
+    font-size: 0.8rem;
+    margin-left: 4em;
+  }
+  .login .login-box .error {
+    font-size: 0.75rem;
+    width: 65vw;
+  }
+  .login .login-box input {
+    width: 55vw;
+    font-size: 0.75rem;
+  }
+  .login .login-box button {
+    font-size: 0.75rem;
     width: 60vw;
   }
-  .login img {
-    margin: 2em 0em 2em 11.5em;
+  .login .connections {
+    display: none;
+    margin: 0;
   }
-  .login-form button {
-    width: 60vw;
-  }
-  .login-form label {
-    width: 54vw;
-    margin-left: 1em;
+  .login .connections img {
+    margin: 0;
   }
 }
 
@@ -580,6 +1031,10 @@
 
 .homepage .connections img {
   width: 100vw;
+}
+
+.homepage .forResponsive {
+  display: none;
 }
 
 .home-display {
@@ -644,10 +1099,59 @@
   }
 }
 
+@media (max-width: 376px) {
+  .homepage {
+    margin-top: -6.8em;
+  }
+  .home-display {
+    position: relative;
+    top: 8em;
+    z-index: 1;
+  }
+  .home-display p {
+    font-size: 0.9rem;
+  }
+  .home-options {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .home-options button {
+    font-size: 0.75rem;
+    width: 55vw;
+  }
+  .homepage .homepage-nav {
+    display: none;
+  }
+  .homepage .forResponsive {
+    display: block;
+  }
+  .homepage .forResponsive #menu-icon {
+    position: relative;
+    bottom: 15em;
+    left: 2em;
+    height: 4vh;
+    width: 8vw;
+    padding: 0.5em;
+    border: 1px solid #4adac6;
+  }
+  .homepage .connections {
+    display: none;
+  }
+  .homepage .connections img {
+    display: none;
+  }
+}
+
 /* searchPage */
 .searchpage {
   background-image: url("/imgs/bg.png");
   height: 100vh;
+}
+
+.searchpage .forResponsive {
+  display: none;
 }
 
 .searchpage .connections {
@@ -657,6 +1161,10 @@
 
 .searchpage .connections img {
   width: 100vw;
+}
+
+.searchpage .connections .forResponsive {
+  display: none;
 }
 
 .searchpage h2 {
@@ -686,10 +1194,70 @@
   }
 }
 
+@media (max-width: 376px) {
+  .searchpage {
+    margin-top: -5.9em;
+  }
+  .searchpage h2 {
+    position: relative;
+    top: 11em;
+    font-size: 1.2rem;
+    margin-left: 2.5em;
+  }
+  .searchpage .options {
+    position: relative;
+    top: 15em;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  .searchpage .options input {
+    width: 70vw;
+    font-size: 0.8rem;
+  }
+  .searchpage .options button {
+    font-size: 0.8rem;
+    width: 75vw;
+    margin: 1em 0em 0em -0.5em;
+  }
+  .searchpage .forResponsive {
+    display: block;
+  }
+  .searchpage .forResponsive #menu-icon {
+    position: relative;
+    left: 2em;
+    bottom: 6em;
+    height: 4vh;
+    width: 8vw;
+    padding: 0.5em;
+    border: 1px solid #4adac6;
+  }
+  .searchpage .forResponsive .sidebar {
+    top: 8.4em;
+  }
+  .searchpage .searchpage .connections {
+    display: none;
+  }
+  .searchpage .searchpage .connections img {
+    display: none;
+  }
+  .searchpage .homepage-nav {
+    display: none;
+  }
+}
+
 /* check in page */
 .checkInPage {
   background-image: url("/imgs/bg.png");
   height: 100vh;
+}
+
+.checkInPage .forResponsive {
+  display: none;
 }
 
 .checkInPage .connections {
@@ -725,6 +1293,62 @@
   }
   .checkInPage .options button {
     width: 15vw;
+  }
+}
+
+@media (max-width: 376px) {
+  .checkInPage {
+    margin-top: -5.9em;
+  }
+  .checkInPage h2 {
+    position: relative;
+    top: 10em;
+    font-size: 1.2rem;
+    margin-left: 1.8em;
+  }
+  .checkInPage .options {
+    position: relative;
+    top: 15em;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  .checkInPage .options input {
+    width: 70vw;
+    font-size: 0.8rem;
+  }
+  .checkInPage .options button {
+    font-size: 0.8rem;
+    width: 75vw;
+    margin: 1em 0em 0em -0.5em;
+  }
+  .checkInPage .forResponsive {
+    display: block;
+  }
+  .checkInPage .forResponsive #menu-icon {
+    position: relative;
+    left: 2em;
+    bottom: 6.4em;
+    height: 4vh;
+    width: 8vw;
+    padding: 0.5em;
+    border: 1px solid #4adac6;
+  }
+  .checkInPage .forResponsive .sidebar {
+    top: 8.4em;
+  }
+  .checkInPage .checkInPage .connections {
+    display: none;
+  }
+  .checkInPage .checkInPage .connections img {
+    display: none;
+  }
+  .checkInPage .homepage-nav {
+    display: none;
   }
 }
 
@@ -873,6 +1497,12 @@
   }
   .searchResults .filter div input {
     width: 32.5vw;
+  }
+}
+
+@media (max-width: 376px) {
+  .searchResults .homepage-nav {
+    display: none;
   }
 }
 

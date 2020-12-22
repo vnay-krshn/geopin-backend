@@ -1,0 +1,32 @@
+.sidebar{
+    background: white;
+    width: 60vw;
+    height: 100.2vh;
+    position: relative;
+    z-index: 2;
+    margin-top: -20em;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar .routePage{
+    padding: 1em;
+    border-bottom: 0.1px solid black;
+    font-size: 0.85rem;
+}
+
+.sidebar .user-details{
+    background: rgb(223, 222, 222);
+    display: flex;
+    justify-content: space-around;
+}
+
+.sidebar .user-details img{
+    width: 15vw;
+    border-radius: 5em;
+    margin:1em;
+}
+
+.sidebar .user-details span{
+  margin: 2.2em 2em 0em 0em;
+}

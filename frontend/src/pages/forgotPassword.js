@@ -38,7 +38,7 @@ const ForgotPassword = () => {
                 <img id="logoImage" src='/imgs/logo.svg'></img>
             </Link>
             <div className="forgotPasswd-box">
-                <h3>RESET PASSWORD</h3>
+                <h3>FORGOT PASSWORD</h3>
                 <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={(e) => submit(e)}>
                     <Form className="forgotPasswd-form">
                         <div className="form-control">
@@ -47,7 +47,7 @@ const ForgotPassword = () => {
                                 type="email"
                                 id="email"
                                 name="email" />
-                            <div style={{ color: 'rgb(241, 151, 151)' }}>
+                            <div style={{ color: 'rgb(241, 151, 151)' }} className="error">
                                 <ErrorMessage name='email' />
                             </div>
                         </div>

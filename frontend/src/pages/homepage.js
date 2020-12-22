@@ -1,10 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import HomepageNav from '../comp/homepageNav'
 import '../css/homePageNav.css'
 import Footer from '../comp/landingPage/footer'
+import Sidebar from '../comp/sidebar'
+import { callbackPromise } from 'nodemailer/lib/shared'
+import flash from 'express-flash'
 
 const Homepage = () => {
+
+ const [menuVisible, setMenuVisible] = useState(false)
+
+ const checkMenuVisible=(e)=>{
+    if(e===false){
+        setMenuVisible(false)
+    }
+ }
+
     return (
         <div className='homepage'>
             <HomepageNav />
@@ -19,7 +31,11 @@ const Homepage = () => {
                     </Link>
                 </div>
             </div>
-                <Footer/>
+            <div className="forResponsive">
+                <img src={'/imgs/menu.svg'} id="menu-icon" onClick={()=>setMenuVisible(!menuVisible)}></img>
+                {menuVisible && <Sidebar setMenuBarClick={(e)=>checkMenuVisible(e)}/>}
+            </div>
+            <Footer/>
         </div>
     )
 }
