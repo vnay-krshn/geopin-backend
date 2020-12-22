@@ -42,7 +42,7 @@ const ResetPassword = () => {
     }
 
     const checkAuth = () => {
-        axios.get(`http://localhost:4000/reset/${urlToken}`)
+        axios.get(`http://localhost:4000/password/reset/${urlToken}`)
             .then(res => {
                 console.log(res)
                 if (res.data.message === "session expired") {
@@ -53,7 +53,7 @@ const ResetPassword = () => {
 
     const submit = e => {
         let user = { password: e.password }
-        axios.post(`http://localhost:4000/reset/${urlToken}`, user)
+        axios.post(`http://localhost:4000/password/reset/${urlToken}`, user)
             .then(res => {
                 console.log(res)
                 if (res.data.message === "session expired" || res.data.message === "Success! Your password has been changed") {

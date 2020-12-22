@@ -76,7 +76,7 @@ const CheckinMap = () => {
   const userLoad = () => {
     let token = localStorage.getItem('token')
     if (token !== undefined) {
-      axios.get('http://localhost:4000/userlogin',
+      axios.get('http://localhost:4000/user/userinfo',
         {
           headers: { "token": token }
         })
@@ -102,7 +102,7 @@ const CheckinMap = () => {
       userID: userID
     }
     console.log(postFeed)
-    axios.post('http://localhost:4000/checkin', postFeed)
+    axios.post('http://localhost:4000/checkin/save', postFeed)
       .then((response) => {
         console.log(response)
         if (response.data.status === 'fail'|| response.data.error) {
@@ -127,7 +127,7 @@ const CheckinMap = () => {
   }
 
   const getPlaceInfo = (coordinates) => {
-    axios.get('http://localhost:4000/placeinfo', {
+    axios.get('http://localhost:4000/searches/placeinfo', {
       params: {
         coordinates: coordinates
       }
@@ -235,7 +235,7 @@ const CheckinMap = () => {
       coordinates: coordinates
     }
     console.log(updation)
-    axios.patch('http://localhost:4000/updatefeed', updation)
+    axios.patch('http://localhost:4000/checkin/update', updation)
       .then((response) => {
         console.log(response)
         if (response.data.status === 'fail') {

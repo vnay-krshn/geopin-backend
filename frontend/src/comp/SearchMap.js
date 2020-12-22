@@ -54,7 +54,7 @@ const SearchMap = ({temp}) => {
     const userLoad = async () => {
         let token = localStorage.getItem('token')
         if (token !== undefined) {
-            await axios.get('http://localhost:4000/userlogin',
+            await axios.get('http://localhost:4000/user/userinfo',
                 {
                     headers: { "token": token }
                 })
@@ -76,14 +76,14 @@ const SearchMap = ({temp}) => {
             avgRating:output.rating
         }
         console.log(postFeed)
-        axios.post('http://localhost:4000/sendsearch', postFeed)
+        axios.post('http://localhost:4000/searches/save', postFeed)
             .then((response) => {
                 console.log(response)
             })
     }
 
     const listUsers = (coordinates) => {
-        axios.get('http://localhost:4000/listusers', {
+        axios.get('http://localhost:4000/searches/userslist', {
             params: {
                 coordinates: coordinates
             }
@@ -96,7 +96,7 @@ const SearchMap = ({temp}) => {
     }
 
     const getPlaceInfo = (coordinates) => {
-        axios.get('http://localhost:4000/placeinfo', {
+        axios.get('http://localhost:4000/searches/placeinfo', {
             params: {
                 coordinates: coordinates
             }

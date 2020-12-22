@@ -45,7 +45,7 @@ class UserProfile extends React.Component {
 
     userLoad() {
         if (this.token !== undefined) {
-            axios.get('http://localhost:4000/userlogin',
+            axios.get('http://localhost:4000/user/userinfo',
                 {
                     headers: { "token": this.token }
                 })
@@ -102,7 +102,7 @@ class UserProfile extends React.Component {
     }
 
     latestSearch(id) {
-        axios.get('http://localhost:4000/latestsearch', {
+        axios.get('http://localhost:4000/userprofile/recentsearch', {
             params: {
                 userID: id
             }
@@ -114,7 +114,7 @@ class UserProfile extends React.Component {
     }
 
     userActitivity(id) {
-        axios.get('http://localhost:4000/visitoracitvity', {
+        axios.get('http://localhost:4000/visitor/acitvity', {
             params: {
                 userID: id
             }
@@ -152,7 +152,7 @@ class UserProfile extends React.Component {
         this.setState({ navbaredit: true })
         this.setState({ visibleUserEdit: !(this.state.visibleUserEdit) })
         console.log(this.state)
-        axios.patch('http://localhost:4000/update', this.state)
+        axios.patch('http://localhost:4000/userprofile/update', this.state)
             .then(res => {
                 console.log(res)
                 if (res.data.message === "updation success") {
@@ -165,7 +165,7 @@ class UserProfile extends React.Component {
 
     getSavedContactPics(arr) {
         arr.map(item => {
-            axios.get('http://localhost:4000/visitorprofile', {
+            axios.get('http://localhost:4000/visitor/profile', {
                 params: {
                     userID: item.visitor_id
                 }
@@ -185,7 +185,7 @@ class UserProfile extends React.Component {
     }
 
     findSavedContacts(id) {
-        axios.get('http://localhost:4000/followerpic', {
+        axios.get('http://localhost:4000/followers/info', {
             params: {
                 userID: id
             }

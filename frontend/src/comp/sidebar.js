@@ -19,7 +19,7 @@ const Sidebar = ({setMenuBarClick}) => {
 
         return new Promise((resolve, reject) => {
             axios
-                .post("http://localhost:4000/refreshtoken", {},
+                .post("http://localhost:4000/user/refreshtoken", {},
                     {
                         headers: { "token": refreshToken }
                     })
@@ -42,7 +42,7 @@ const Sidebar = ({setMenuBarClick}) => {
         console.log(token, refreshToken);
         return new Promise((resolve, reject) => {
             axios.get(
-                "http://localhost:4000/userlogin",
+                "http://localhost:4000/user/userinfo",
                 {
                     headers: { "token": token }
                 }

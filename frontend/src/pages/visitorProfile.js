@@ -26,7 +26,7 @@ const VisitorProfile=()=>{
    
     const onLoadUser=()=>{
         if (token !== undefined) {
-            axios.get('http://localhost:4000/userlogin',
+            axios.get('http://localhost:4000/user/userinfo',
                 {
                     headers: { "token": token }
                 })
@@ -46,7 +46,7 @@ const VisitorProfile=()=>{
     }
 
     const deleteFollower=()=>{
-        axios.delete('http://localhost:4000/deletefollower',{
+        axios.delete('http://localhost:4000/followers/delete',{
             params: {
                 userID:userID,
                 visitorId:visitorId
@@ -64,7 +64,7 @@ const VisitorProfile=()=>{
             visitorId:visitorId,
             visitor_name:visitor_name
         }
-        axios.post('http://localhost:4000/savefollower',postFeed)
+        axios.post('http://localhost:4000/followers/save',postFeed)
             .then(res=>{
                 console.log(res)
                 isfollower=true
@@ -80,7 +80,7 @@ const VisitorProfile=()=>{
     }
 
     const checkFollower=()=>{
-        axios.get('http://localhost:4000/checkfollower',{
+        axios.get('http://localhost:4000/followers/check',{
             params: {
                 userID:userID,
                 visitorId:visitorId
@@ -102,7 +102,7 @@ const VisitorProfile=()=>{
     },[placeData,minUserList])
 
     const getVisitorActivity=()=>{
-        axios.get('http://localhost:4000/visitoracitvity',{
+        axios.get('http://localhost:4000/visitor/acitvity',{
             params: {
                 userID:visitorId
             }
@@ -115,7 +115,7 @@ const VisitorProfile=()=>{
 
     useEffect(()=>{
         onLoadUser()
-        axios.get('http://localhost:4000/visitorprofile',{
+        axios.get('http://localhost:4000/visitor/profile',{
             params: {
                 userID:visitorId
             }

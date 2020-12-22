@@ -66,7 +66,7 @@ const RegisterVal = () => {
             countryID: countryID
         }
         
-        axios.post('http://localhost:4000/register', user)
+        axios.post('http://localhost:4000/user/register', user)
             .then(res => {
                 if (res.data.message === 'Email already exists') {
                     // error.message = res.data.message

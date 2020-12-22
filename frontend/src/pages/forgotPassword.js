@@ -22,7 +22,7 @@ const ForgotPassword = () => {
 
     const submit = e => {
         let user = { email: e.email }
-        axios.post('http://localhost:4000/forgot', user)
+        axios.post('http://localhost:4000/password/forgot', user)
             .then(res => {
                 if (res.data.message === "User does not exist" || res.data.message === "Password reset link has been sent to your mail") {
                     setDisplayStatus(true)

@@ -29,7 +29,7 @@ const SearchResults = () => {
 
     useEffect(()=>{
         if (token !== undefined) {
-            axios.get('http://localhost:4000/userlogin',
+            axios.get('http://localhost:4000/user/userinfo',
                 {
                     headers: { "token": token }
                 })

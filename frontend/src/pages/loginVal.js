@@ -27,7 +27,7 @@ const LoginVal = () => {
 
     const submit = e => {
         let user = { email: e.email, password: e.password }
-        axios.post('http://localhost:4000/login', user)
+        axios.post('http://localhost:4000/user/login', user)
             .then(res => {
                 if ((res.data.message === 'user does not exist') || (res.data.message === 'Incorrect Password !')) {
                     //alert(res.data.message)
