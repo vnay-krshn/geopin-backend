@@ -11,6 +11,7 @@ import axios from 'axios'
 import '../css/review.css'
 import _ from 'lodash'
 
+
 var coordinates = {
   "latitude": '',
   "longitude": ''
@@ -65,7 +66,7 @@ const CheckinMap = () => {
       })
   }
 
-  const msgDispControlFun=(message)=>{
+  const msgDispControlFun = (message) => {
     setDisplayMessage(true)
     setMessage(message)
     setTimeout(() => {
@@ -105,7 +106,7 @@ const CheckinMap = () => {
     axios.post('http://localhost:4000/checkin/save', postFeed)
       .then((response) => {
         console.log(response)
-        if (response.data.status === 'fail'|| response.data.error) {
+        if (response.data.status === 'fail' || response.data.error) {
           //alert(response.data.message)
           // setDisplayMessage(true)
           // setMessage(response.data.message)
@@ -183,7 +184,7 @@ const CheckinMap = () => {
       if (mapSearch.value) {
         if ((_.isEqual(prevCoordinates, coordinates)) && (firstFeedback)) {
           setUpdateMessage(true)
-          updateChoice=true
+          updateChoice = true
           // if (updateChoice) {
           //   setVisibleReview(!(visibleReview))
           // }
@@ -194,7 +195,7 @@ const CheckinMap = () => {
         } else {
           setrating(0)
           setreview('')
-          setVisibleReview(true)          
+          setVisibleReview(true)
           updateChoice = false
           firstFeedback = false
         }
@@ -248,7 +249,7 @@ const CheckinMap = () => {
           msgDispControlFun(response.data.message)
           setVisibleReview(true)
         } else {
-          setVisibleReview(false)  
+          setVisibleReview(false)
           // setDisplayMessage(true)
           // setMessage("Your feedback has successfully been updated")
           // setTimeout(() => {
@@ -268,19 +269,19 @@ const CheckinMap = () => {
     }
   }
 
-  const removeUpdateChoice=()=>{
+  const removeUpdateChoice = () => {
     setVisibleReview(false)
     setUpdateMessage(false)
   }
 
-  const updateChoiceFunction = ()=>{
+  const updateChoiceFunction = () => {
     //updateChoice = true
     setVisibleReview(!(visibleReview))
     setUpdateMessage(false)
   }
 
   return (
-    <div>
+    <div className="checkinmap">
       <div id="map">
         {showPlaceinfo && <PlaceInfo output={output} />}
       </div>

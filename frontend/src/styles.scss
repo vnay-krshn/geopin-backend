@@ -1323,7 +1323,7 @@
 
 @media(max-width:376px){
     .searchpage{
-        margin-top: -5.9em;
+        margin-top: -5.5em;
 
         h2{
             position: relative;
@@ -1365,7 +1365,7 @@
             }
 
             .sidebar{
-                top: 8.4em;
+                top: 8.6em;
             }
         }
 
@@ -1437,7 +1437,7 @@
 
 @media(max-width:376px){
     .checkInPage{
-        margin-top: -5.9em;
+        margin-top: -5.5em;
 
         h2{
             position: relative;
@@ -1479,7 +1479,7 @@
             }
 
             .sidebar{
-                top: 8.4em;
+                top: 8.6em;
             }
         }
 
@@ -1636,6 +1636,33 @@
         .homepage-nav{
             display: none;
         }
+
+        .divContainer {
+            button{
+            display: none;
+            }
+         }
+
+         .mapboxgl-ctrl-top-right{
+            //background: yellow;
+            position: relative;
+            z-index: 1;
+            left: 2em;
+            top: -7.5em;
+            width: 91vw; 
+            height: 8vh;       
+        }
+
+        .mapboxgl-ctrl-geocoder--input{
+            font-size: 0.75rem;
+            height: 5vh;
+          }
+
+          .mapboxgl-ctrl-group{
+            position: relative;
+            right: 26em;
+            top: 48em;
+          }
     }
 }
 
@@ -1708,6 +1735,67 @@
     }
 
 }
+
+@media(max-width:376px){
+    .checkinResults .checkin-blur{
+
+        .forResponsive{
+            display: block;
+
+            #menu-icon{
+                position: absolute;
+                z-index: 400;
+                bottom: 38.2em;
+                left: 1em;
+                height: 4vh;
+                width: 8vw;
+                padding: 0.5em;
+                border: 1px solid #4adac6;
+    
+            }
+
+            .sidebar{
+               position: absolute;
+               bottom: 0em;
+               height: 100vh;
+               z-index: 400;
+            }
+        }
+
+
+        .homepage-nav{
+            display: none;
+        }
+
+        .divContainer {
+            button{
+            display: none;
+            }
+         }
+
+         .mapboxgl-ctrl-top-right{
+            //background: yellow;
+            position: relative;
+            z-index: 1;
+            left: 2em;
+            top: -7.5em;
+            width: 91vw; 
+            height: 8vh;       
+        }
+
+        .mapboxgl-ctrl-geocoder--input{
+            font-size: 0.75rem;
+            height: 5vh;
+          }
+
+          .mapboxgl-ctrl-group{
+            position: relative;
+            right: 26em;
+            top: 48em;
+          }
+    }
+}
+
 
 /* visitor profile */
 

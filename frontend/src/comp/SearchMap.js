@@ -7,12 +7,13 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import 'mapbox-gl/dist/mapbox-gl.css'
 import axios from 'axios'
+import Sidebar from './sidebar'
 
 var coordinates = {
     "latitude": '',
     "longitude": ''
 }
-var users=[]
+var users = []
 var userID = 0
 var output = {
     count: '',
@@ -20,9 +21,16 @@ var output = {
     location: '',
     city: ''
 }
-const SearchMap = ({temp}) => {
+const SearchMap = ({ temp }) => {
 
     const [showPlaceinfo, setPlaceinfo] = useState(false)
+    const [menuVisible, setMenuVisible] = useState(false)
+
+    const checkMenuVisible=(e)=>{
+       if(e===false){
+           setMenuVisible(false)
+       }
+    }
 
     const getCity = (coordinates) => {
         var lat = coordinates.latitude;
@@ -73,7 +81,7 @@ const SearchMap = ({temp}) => {
             city: output.city,
             coordinates: coordinates,
             userID: userID,
-            avgRating:output.rating
+            avgRating: output.rating
         }
         console.log(postFeed)
         axios.post('http://localhost:4000/searches/save', postFeed)
@@ -89,9 +97,9 @@ const SearchMap = ({temp}) => {
             }
         })
             .then(res => {
-               users = res.data
-               users.push({'titlePlace':output.location})
-               temp(users)
+                users = res.data
+                users.push({ 'titlePlace': output.location })
+                temp(users)
             })
     }
 
@@ -104,7 +112,7 @@ const SearchMap = ({temp}) => {
             .then(res => {
                 output.count = res.data.count
                 output.rating = res.data.rating
-                setPlaceinfo(true)               
+                setPlaceinfo(true)
             })
     }
 
@@ -139,9 +147,9 @@ const SearchMap = ({temp}) => {
             coordinates.latitude = e.result.geometry.coordinates[1]
             coordinates.longitude = e.result.geometry.coordinates[0]
             getCity(coordinates)
-            setTimeout(()=>{
+            setTimeout(() => {
                 getPlaceInfo(coordinates)
-            },1000)            
+            }, 1000)
             listUsers(coordinates)
             setTimeout(sendSearch, 2000)
         })
@@ -155,6 +163,10 @@ const SearchMap = ({temp}) => {
             </div>
             <div className="divContainer">
                 <button className="operation"></button>
+                <div className="forResponsive">
+                    <img src={'/imgs/menu.svg'} id="menu-icon" onClick={() => setMenuVisible(!menuVisible)}></img>
+                    {menuVisible && <Sidebar setMenuBarClick={(e) => checkMenuVisible(e)} />}
+                </div>
             </div>
         </div>
     );

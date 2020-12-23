@@ -27,7 +27,6 @@
 .mapboxgl-ctrl-geocoder--input{
   border: none;
   right: 20em;
-  padding: 1.4em;
   padding: 1em;
 }
 
@@ -99,4 +98,35 @@ background: #09c2a9;
 #confirmChoice button{
   width: 5vw;
   height: 4vh;
+}
+
+.divContainer .forResponsive{
+  display: none;
+}
+
+@media(max-width:376px){
+  .divContainer{
+    height: 5vh;
+  }
+
+  .divContainer .forResponsive{
+    display: block;
+  }
+
+  .divContainer .forResponsive #menu-icon{
+    position: relative;
+    top: -0.8em;
+    right: 12.5em;
+    height: 4vh;
+    width: 8vw;
+    padding: 0.5em;
+    border: 1px solid #4adac6;
+}
+
+.divContainer .forResponsive .sidebar{
+  top: 14.1em;
+  right: 6.3em;;
+  height: 100vh;
+}
+
 }

@@ -1196,7 +1196,7 @@
 
 @media (max-width: 376px) {
   .searchpage {
-    margin-top: -5.9em;
+    margin-top: -5.5em;
   }
   .searchpage h2 {
     position: relative;
@@ -1237,7 +1237,7 @@
     border: 1px solid #4adac6;
   }
   .searchpage .forResponsive .sidebar {
-    top: 8.4em;
+    top: 8.6em;
   }
   .searchpage .searchpage .connections {
     display: none;
@@ -1298,7 +1298,7 @@
 
 @media (max-width: 376px) {
   .checkInPage {
-    margin-top: -5.9em;
+    margin-top: -5.5em;
   }
   .checkInPage h2 {
     position: relative;
@@ -1339,7 +1339,7 @@
     border: 1px solid #4adac6;
   }
   .checkInPage .forResponsive .sidebar {
-    top: 8.4em;
+    top: 8.6em;
   }
   .checkInPage .checkInPage .connections {
     display: none;
@@ -1504,6 +1504,26 @@
   .searchResults .homepage-nav {
     display: none;
   }
+  .searchResults .divContainer button {
+    display: none;
+  }
+  .searchResults .mapboxgl-ctrl-top-right {
+    position: relative;
+    z-index: 1;
+    left: 2em;
+    top: -7.5em;
+    width: 91vw;
+    height: 8vh;
+  }
+  .searchResults .mapboxgl-ctrl-geocoder--input {
+    font-size: 0.75rem;
+    height: 5vh;
+  }
+  .searchResults .mapboxgl-ctrl-group {
+    position: relative;
+    right: 26em;
+    top: 48em;
+  }
 }
 
 /* check in result page */
@@ -1571,6 +1591,51 @@
   .checkinResults .placeInfo .information p {
     font-size: 0.8em;
     margin-left: 0em;
+  }
+}
+
+@media (max-width: 376px) {
+  .checkinResults .checkin-blur .forResponsive {
+    display: block;
+  }
+  .checkinResults .checkin-blur .forResponsive #menu-icon {
+    position: absolute;
+    z-index: 400;
+    bottom: 38.2em;
+    left: 1em;
+    height: 4vh;
+    width: 8vw;
+    padding: 0.5em;
+    border: 1px solid #4adac6;
+  }
+  .checkinResults .checkin-blur .forResponsive .sidebar {
+    position: absolute;
+    bottom: 0em;
+    height: 100vh;
+    z-index: 400;
+  }
+  .checkinResults .checkin-blur .homepage-nav {
+    display: none;
+  }
+  .checkinResults .checkin-blur .divContainer button {
+    display: none;
+  }
+  .checkinResults .checkin-blur .mapboxgl-ctrl-top-right {
+    position: relative;
+    z-index: 1;
+    left: 2em;
+    top: -7.5em;
+    width: 91vw;
+    height: 8vh;
+  }
+  .checkinResults .checkin-blur .mapboxgl-ctrl-geocoder--input {
+    font-size: 0.75rem;
+    height: 5vh;
+  }
+  .checkinResults .checkin-blur .mapboxgl-ctrl-group {
+    position: relative;
+    right: 26em;
+    top: 48em;
   }
 }
 
